@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Nav, Button, Offcanvas, Form, Dropdown } from 'react-bootstrap'; 
 import { FaHome, FaShoppingCart, FaCog,  FaBars, FaUser, FaCommentDots, FaHistory, FaCalendarAlt, FaSignOutAlt } from 'react-icons/fa';
-import "./style.css";
+import "../assests/style.css";
 
 class VerticalNavbar extends Component {
   constructor(props) {
@@ -57,7 +57,6 @@ class VerticalNavbar extends Component {
         </Nav>
         
         {/* Bouton pour afficher la sidebar sur les appareils mobiles */}
-        <Button onClick={this.handleToggleOffcanvas} className="d-md-none" style={{ color: '#000' }}><FaBars /></Button>
         
         {/* Sidebar avec des boutons */}
         <Offcanvas show={showOffcanvas} onHide={() => this.setState({ showOffcanvas: false })} placement="end" className="d-md-none">
@@ -104,7 +103,10 @@ class VerticalNavbar extends Component {
           </Form>
           <Button variant="primary" style={{ color: '#fff' }}>Rechercher</Button>
         </Nav>
+        <Button onClick={this.handleToggleOffcanvas} className="d-md-none" style={{ color: '#000' }}><FaBars /></Button>
+
       </Container>
+      
     );
   }
 }
