@@ -1,44 +1,62 @@
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Offcanvas from 'react-bootstrap/Offcanvas';
+import React, { useState } from 'react';
+import React, { useState } from 'react';
+import { Container, Nav, Button, Offcanvas, Form, NavDropdown } from 'react-bootstrap'; 
+import { FaHome, FaShoppingCart, FaClipboardList, FaFileAlt, FaHistory, FaSearch } from 'react-icons/fa';
 
-function OffcanvasExample() {
+function VerticalNavbar() {
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
+
+  const handleToggleOffcanvas = () => setShowOffcanvas(!showOffcanvas);
+
   return (
-    <Navbar bg="bg-body-tertiary" expand="lg" fixed="top" className="mb-3">
-      <Container fluid>
-        <Navbar.Brand href="#">Mon Compte</Navbar.Brand>
-        <Navbar.Toggle aria-controls="offcanvasNavbar" />
-        <Navbar.Offcanvas
-          id="offcanvasNavbar"
-          aria-labelledby="offcanvasNavbarLabel"
-          placement="end"
-        >
-          <Offcanvas.Header closeButton>
-            <Offcanvas.Title id="offcanvasNavbarLabel">Menu</Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            <Nav className="justify-content-end flex-grow-1 pe-3">
-              <Nav.Link href="#">Mon Compte</Nav.Link>
-              <Nav.Link href="#">Demande de Devis</Nav.Link>
-              <Nav.Link href="#">Historique</Nav.Link>
-              <NavDropdown title="Consulter les Produits" id="offcanvasNavbarDropdown">
-                <NavDropdown.Item href="#">Tous les Produits</NavDropdown.Item>
-                <NavDropdown.Item href="#">Mes Produits Favoris</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-            <Form className="d-flex">
-              <Form.Control type="search" placeholder="Rechercher" className="me-2" aria-label="Search" />
-              <Button variant="outline-success">Rechercher</Button>
+    <Container fluid>
+      {/* Barre de navigation principale avec des liens */}
+      <Nav className="mb-3 d-none d-md-flex align-items-center">
+        <Nav.Item className="me-3">
+          <Nav.Link href="#"><FaHome /> Home</Nav.Link>
+        </Nav.Item>
+        <Nav.Item className="me-3">
+          <Nav.Link href="#"><FaShoppingCart /> produit</Nav.Link>
+        </Nav.Item>
+        <Nav.Item className="me-3">
+          <Nav.Link href="#"><FaClipboardList /> service</Nav.Link>
+        </Nav.Item>
+        <Nav.Item className="me-3">
+          <NavDropdown title={<div><FaFileAlt /> consulter</div>} align="end">
+            <NavDropdown.Item><FaFileAlt /> demande devis</NavDropdown.Item>
+            <NavDropdown.Item><FaHistory /> historique client</NavDropdown.Item>
+            <NavDropdown.Divider />
+          </NavDropdown>
+        </Nav.Item>
+      </Nav>
+      
+      {/* Bouton pour afficher la sidebar sur les appareils mobiles */}
+      <Button onClick={handleToggleOffcanvas} className="d-md-none">Afficher</Button>
+      
+      {/* Sidebar avec des boutons */}
+      <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} placement="end" className="d-md-none">
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>client</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div className="d-grid gap-2">
+            <Button variant="primary" size="lg" className="mb-2"><FaHome /> Home</Button>
+            <Button variant="primary" size="lg" className="mb-2"><FaShoppingCart /> produit</Button>
+            <Button variant="primary" size="lg" className="mb-2"><FaClipboardList /> service</Button>
+            <NavDropdown title={<div><FaFileAlt /> consulter</div>}>
+              <NavDropdown.Item><FaFileAlt /> demande devis</NavDropdown.Item>
+              <NavDropdown.Item><FaHistory /> historique client</NavDropdown.Item>
+              <NavDropdown.Divider />
+            </NavDropdown>
+            <Form className="mb-3">
+              <Form.Control type="search" placeholder="Search" />
             </Form>
-          </Offcanvas.Body>
-        </Navbar.Offcanvas>
-      </Container>
-    </Navbar>
+            <Button variant="success" size="lg"><FaSearch /> Search</Button>
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
+    </Container>
   );
 }
 
-export default OffcanvasExample;
+export default VerticalNavbar;
