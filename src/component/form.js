@@ -1,5 +1,6 @@
 
-function GridComplexExample() {
+function GridComplexExample(){
+  
     return (
       
            <div className="form">
@@ -26,7 +27,7 @@ function GridComplexExample() {
     <option value="homme">homme</option>
     <option value="femme">femme</option>
   </select><br/><br/>
-     <input type="submit" value="inscrit"/>   <input type="reset" value="annuler"/>
+     <input type="submit" value="inscrit" />  <input type="reset" value="annuler"/>
      
             </form>
   

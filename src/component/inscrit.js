@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
-export default class Inscrit extends Component {
+export default class Inscrit extends Component(){
+     
   render() {
     return (
       <div>
@@ -31,6 +32,7 @@ export default class Inscrit extends Component {
         <p className='inscription'>je n'ai pas de <span>compte</span>.je m'en <span>cree </span>un.</p>
         <div align="center">
          <button type='submit'>se connecter</button>
+        
         </div>
         </form>
         </div>
