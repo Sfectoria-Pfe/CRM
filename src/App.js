@@ -22,6 +22,22 @@ this.state ={
     this.setState({showForm:false})
 
   }
+  async componentDidMount() {
+    // axios
+    //   .get("http://localhost:3000/data/data.json")
+    //   .then((response) => {
+    //     this.setState({data:response.data});
+    //   })
+    //   .catch((err) => console.log(err));
+
+    try {
+      await this.setState({isLoading:true})
+      let response = await axios.get("http://localhost:3000/data/data.json");
+      this.setState({ data: response.data,isLoading:false });
+    } catch (err){
+       console.log(err);
+    }
+  }
   render(){
   return (
     <div className="App">
@@ -36,8 +52,21 @@ this.state ={
       <GridComplexExample showHome={this.showHome}/>
      
       </div>:<Ajouter showForm={this.showForm} />}
+      <div className="d-flex justify-content-center flex-wrap">
+          {this.state.isLoading===true?<Spinner animation="border" variant="primary" />:this.state.data.map((elem, i) => (
+            <Card style={{ width: "18rem" }} key={i}>
+              <Card.Img variant="top" src={elem.imageURL} />
+              <Card.Body>
+                <Card.Title>{elem.productName}</Card.Title>
+                <Card.Text>{elem.discription}</Card.Text>
+                <Button variant="primary">Go somewhere</Button>
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
       
     </div>
+    
     
   )};
 }
