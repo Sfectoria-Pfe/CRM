@@ -1,7 +1,6 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import GridComplexExample from "./component/form";
-import Ajouter from "./component/Ajouter";
 import Inscrit from "./component/inscrit";
 import { Component } from "react";
 class App extends Component {
