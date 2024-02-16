@@ -2,7 +2,7 @@
 function GridComplexExample() {
     return (
       
-    <div className="form">
+           <div className="form">
             <h3 className="titre">inscription client</h3>
             <form>
   

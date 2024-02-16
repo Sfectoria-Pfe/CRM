@@ -1,18 +1,18 @@
 .form{
     position: absolute;
-    top: 80%;
-    left: 55%;
+    top: 200%;
+    left: 50%;
     transform: translate(-50%,-50%);
     width: 500px;
     height: 900px;
     box-sizing: border-box;
-    background-color: rgba(48, 0, 63, 0.5);
+    background-color: rgb(100,0,0,0.5);
     padding: 40px;
     border-radius: 15px;
     border: 1px, solid ,coral;
 }
 .form:hover{
-    background-color: rgb(100,0,0,0.5);
+    background-color: rgba(81, 3, 97, 0.5);
 }
 .titre{
     margin: 0;
@@ -22,10 +22,12 @@
     text-align: center;
 }
 .form p{
+   
     margin: 0;
     padding: 0;
     color: white;
     font-weight: bold;
+    text-align: left;
 }
 .form input ,select{
     margin-bottom: 20px;
