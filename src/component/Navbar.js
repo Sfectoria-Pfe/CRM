@@ -39,7 +39,7 @@ class VerticalNavbar extends Component {
           {/* Paramètres */}
           <Nav.Item className="ms-auto">
             <Dropdown>
-              <Dropdown.Toggle variant="transparent" id="dropdown-basic" style={{ color: '#000', fontSize: '18px', marginRight: '10px' }}>
+              <Dropdown.Toggle variant="transparent" id="dropdown-basic" style={{ color: '#000', fontSize: '18px', right: '20px' }}>
                 <FaCog />
                 <span style={{ marginLeft: '5px' }}>Paramètres</span>
               </Dropdown.Toggle>
