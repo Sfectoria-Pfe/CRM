@@ -1,40 +1,35 @@
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import GridComplexExample from "./component/form";
-import Ajouter from "./component/Ajouter";
-import Inscrit from "./component/inscrit";
-import { Component } from "react";
+import './App.css';
+import MyCard from './component/Home';
+import VerticalNavbar from './component/Navbar';
+import { Component } from "react"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Demande_devis from './component/page/demandedevis.js';
+import NotFound from "./component/page/NotFound.js";
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      showform: false,
-      showHome: true,
+      searchValue: "",
     };
-    this.showHome = this.showHome.bind(this);
-    this.showform = this.showHome.bind(this);
+    this.changeSearchValue = this.changeSearchValue.bind(this);
   }
-  showHome() {
-    this.setState({ showHome: true });
+
+  changeSearchValue(e) {
+    this.setState({ searchValue: e.target.value });
   }
-  showForm() {
-    this.setState({ showForm: false });
-  }
+
   render() {
     return (
       <div className="App">
-        <Inscrit />
-        <div>
-          <GridComplexExample />
-        </div>
-
-        {this.state.showform === false ? (
-          <div>
-            <GridComplexExample showHome={this.showHome} />
-          </div>
-        ) : (
-          <Ajouter showForm={this.showForm} />
-        )}
+        <BrowserRouter>
+      
+          <Routes>
+          <Route path="/" element={<VerticalNavbar searchValue={this.state.searchValue} changeValueSearch={this.changeSearchValue} />} />
+            <Route path="/demandedevis" element={<Demande_devis />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+        <MyCard searchValue={this.state.searchValue} />
       </div>
     );
   }

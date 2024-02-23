@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Container, Nav, Button, Offcanvas, Form, Dropdown } from 'react-bootstrap'; 
-import { FaHome, FaShoppingCart, FaCog,  FaBars, FaUser, FaCommentDots, FaHistory, FaCalendarAlt, FaSignOutAlt } from 'react-icons/fa';
-import "../assests/style.css";
+import { FaHome, FaShoppingCart, FaCog, FaBars, FaUser, FaCommentDots, FaHistory, FaCalendarAlt, FaSignOutAlt } from 'react-icons/fa';
+import { Link } from "react-router-dom";
+// import Demande_devis from './component/page/demandedevis.js';
 
 class VerticalNavbar extends Component {
   constructor(props) {
@@ -27,13 +28,13 @@ class VerticalNavbar extends Component {
           
           {/* Liens pour produits et services */}
           <Nav.Item>
-            <Nav.Link href="#" style={{ color: '#000', fontSize: '18px', marginRight: '10px' }}><FaHome /> Home</Nav.Link>
+            <Nav.Link as={Link} to="/" style={{ color: '#000', fontSize: '18px', marginRight: '10px' }}><FaHome /> Home</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link href="#" style={{ color: '#000', fontSize: '18px', marginRight: '10px' }}><FaShoppingCart /> Produits</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link href="#" style={{ color: '#000', fontSize: '18px', marginRight: '10px' }}><FaHome /> Service</Nav.Link>
+          <Nav.Link as={ Link } to="/demandedevis" style={{ color: '#000', fontSize: '18px', marginRight: '10px' }}><FaHome /> Service</Nav.Link>
           </Nav.Item>
           
           {/* Paramètres */}
@@ -68,7 +69,14 @@ class VerticalNavbar extends Component {
               {/* Barre de recherche */}
               <Nav className="mb-3">
                 <Form>
-                  <Form.Control type="search" placeholder="Rechercher" style={{ marginRight: '10px', backgroundColor: 'transparent', border: 'none' }} />
+                  <Form.Control 
+                    type="text"
+                    placeholder="Search Product"
+                    onChange={(e) => {
+                      this.props.changeValueSearch(e);
+                    }} 
+                    style={{ marginRight: '10px', backgroundColor: 'transparent', border: 'none' }} 
+                  />
                   <Button variant="primary" style={{ color: '#fff' }}>Rechercher</Button>
                 </Form>
               </Nav>
@@ -99,9 +107,13 @@ class VerticalNavbar extends Component {
         </Offcanvas>
         <Nav className="mb-3 d-none d-md-flex align-items-center justify-content-center" style={{ padding: '10px', borderRadius: '5px' }}>
           <Form>
-            <Form.Control type="search" placeholder="Rechercher" style={{ marginRight: '10px', backgroundColor: 'transparent', border: 'none' }} />
+            <Form.Control 
+              type="text"
+              placeholder="Rechercher"
+              onChange={(e) => {
+              this.props.changeValueSearch(e);}} style={{ marginRight: '10px', backgroundColor: 'transparent', border: 'none' }} />
           </Form>
-          <Button variant="primary" style={{ color: '#fff' }}>Rechercher</Button>
+          <Button onClick={this.changeSearchValue} variant="primary" style={{ color: '#fff' }}>Rechercher</Button>
         </Nav>
         <Button onClick={this.handleToggleOffcanvas} className="d-md-none" style={{ color: '#000' }}><FaBars /></Button>
 

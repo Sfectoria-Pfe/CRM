@@ -1,44 +1,89 @@
-import React, { Component } from 'react';
-import { Card, Container, Row, Col,Button } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { Card, Col, Container, Row } from 'react-bootstrap';
 import Example from './Modal';
-import { cardsData } from '../constante/cardsdata';
-class MyCard extends Component {
-  constructor(props){
-  super()
-  }
-  render(){
+// import { cardsData } from '../constante/cardsdata';
+import axios from "axios";
+
+export function MyCard(props) {
+  const [state, setState] = useState({
+    data: [],
+    isLoading: true,
+  });
+
+  useEffect(() => {
+    if (props.searchValue && props.searchValue.length) {
+      SearchData();
+    } else {
+      getData();
+    }
+  }, [props.searchValue]);
+
+  const getData = async () => {
+    try {
+      setState({ ...state, isLoading: true });
+      let response = await axios.get("http://localhost:3100/products");
+      setState({ data: response.data, isLoading: false });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const SearchData = async () => {
+    try {
+      setState({ ...state, isLoading: true });
+      let response = await axios.post("http://localhost:3100/search", {
+        text: props.searchValue,
+      });
+      setState({ data: response.data, isLoading: false });
+    } catch (error) {
+      console.error("Error fetching search data:", error);
+    }
+  };
+
   return (
-    <Col>
-      <Card style={{ width: '18rem' }}>
-        
-        <Card.Img variant="top" src={this.props.image} />
+    <Col xs={12} sm={6} md={4} className="g-4">
+      <Card className="h-100">
+        <Card.Img variant="top"style={{ height: '200px', objectFit: 'cover' }} src={props.image} />
         <Card.Body>
-          <Card.Title>{this.props.title}</Card.Title>
-          <Card.Text>{this.props.text}</Card.Text>
-          {/* <Button variant="primary" onClick={props.onClick}>Button</Button> */}
+          <Card.Title>{props.title}</Card.Title>
+          <Card.Text>{props.text}</Card.Text>
           <Example />
         </Card.Body>
       </Card>
     </Col>
-  );}
+  );
 }
 
-class CardList extends Component {
-  constructor(props){
-  super()
+function CardList() {
+  const [state, setState] = useState({
+    data: [],
+    isLoading: true,
+  });
 
-  }
-  render(){
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    try {
+      setState({ ...state, isLoading: true });
+      let response = await axios.get("http://localhost:3100/products");
+      setState({ data: response.data, isLoading: false });
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   return (
     <div>
     <Container fluid>
-      <Row xs={1} sm={2} md={4}>
-        {cardsData.map((card, index) => (
-          <MyCard key={index} image={card.image} title={card.title} text={card.text} />
-       ))}
-      </Row>
-    </Container></div>
+      <Row xs={1} md={3} className="g-7">
+      {state.data.map((product, index) => (
+            <MyCard key={index} image={product.image} title={product.title} text={product.text} />
+          ))}
+        </Row>
+      </Container>
+    </div>
   );
 }
-}
+
 export default CardList;
