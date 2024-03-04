@@ -1,0 +1,14 @@
+.bg-teal{
+  background-color: #41a3ac;
+  
+}
+.bg-navy {
+  background-color: #001f3f; /* Remplacez cette valeur par votre couleur bleu marine */
+}
+/* styles.css */
+
+.profile-details-background {
+  background-color: rgba(255, 255, 255, 0.9); /* Couleur de fond semi-transparente */
+  padding: 20px; /* Marge intérieure */
+  border-radius: 10px; /* Coins arrondis */
+}
