@@ -1,0 +1,79 @@
+header {
+  background-color: #fff;
+  height: 10vh;
+  box-shadow: 0 5px 30px rgb(0 22 84 / 10%);
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 99999;
+}
+header img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px; /* Ajout d'un espace entre le logo et les éléments suivants */
+}
+header .nav ul {
+  margin-left: 20px; /* Ajout d'un espace entre le logo et le début de la liste de navigation */
+}
+header a {
+  transition: 0.5s;
+  font-weight: 500;
+  margin-right: 10px;
+}
+header a:hover {
+  color: #27ae60;
+}
+header span {
+  width: auto;
+  padding: 0px 6px;
+  background: #ffffff;
+  border-radius: 50px;
+  color: #25A760;
+  margin-right: 4px;
+  font-weight: 400;
+  font-weight: bold;
+}
+header h4 {
+  font-weight: 500;
+  margin-right: 20px;
+}
+header .toggle {
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  header {
+    padding: 0;
+  }
+  header img {
+    margin-top: 30px;
+    margin-right: 0;
+  }
+  header .button {
+    display: none;
+  }
+  header .nav .flex {
+    display: none;
+  }
+  header .toggle {
+    display: block;
+    margin-top: 20px;
+  }
+  header .small {
+    position: absolute;
+    top: 10vh;
+    left: 0;
+    width: 100%;
+    background-color: #27ae60;
+    padding: 20px;
+  }
+  header li a {
+    display: block;
+    margin-bottom: 20px;
+    color: #fff;
+    margin-right: 0;
+  }
+}
+.nav-link {
+  font-weight: bold;
+  font-size: 18px;
+}

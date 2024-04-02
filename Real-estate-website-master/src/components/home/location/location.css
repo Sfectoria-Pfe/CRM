@@ -1,0 +1,75 @@
+/* .recent .text {
+  padding: 30px;
+} */
+.recent .category span {
+    padding: 4px 15px;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 13px;
+    display: inline-block;
+  }
+  .recent .category i {
+    font-size: 20px;
+    color: #bec7d8;
+  }
+  .recent p {
+    color: #72809d;
+  }
+  .recent .button {
+    border-top: 1px solid #e4e8f3;
+    padding: 10px 30px;
+  }
+  .custom-name {
+    color: #186bc3; /* Couleur bleue */
+    font-size:20px; /* Texte en gras */
+  }
+  
+  .custom-button {
+    background-color: #007bff; /* Couleur de fond bleue */
+    border-color: #007bff; /* Couleur de bordure bleue */
+    color: white; /* Couleur du texte */
+    font-weight: bold; /* Texte en gras */
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s; /* Transition en douceur des couleurs au survol */
+  }
+  
+  .custom-button:hover {
+    background-color: #0056b3; /* Couleur de fond bleue plus foncée au survol */
+    border-color: #0056b3; /* Couleur de bordure bleue plus foncée au survol */
+  }.custom-card {
+    height: 100%; /* Hauteur fixe pour toutes les cartes */
+  }
+  
+  .custom-card-img {
+    height: 200px; /* Hauteur fixe pour toutes les images */
+    object-fit: cover; /* Redimensionner les images pour remplir l'espace disponible sans déformer */
+  }
+  .custom-card {
+    position: relative; /* Assurez-vous que le positionnement relatif est défini pour que l'arrière-plan absolu fonctionne */
+  }
+  
+  .custom-card-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(176, 195, 231, 0.77) 0%, rgba(255, 255, 255, 0) 100%); /* Dégradé de couleur douce */
+    z-index: -1; /* Assurez-vous que l'élément de fond est derrière le contenu de la carte */
+  }
+  .custom-address {
+    display: flex; /* Utilisez flexbox pour aligner les éléments sur la même ligne */
+    align-items: center; /* Alignez les éléments verticalement au centre */
+  }
+  
+  .custom-address-icon {
+    margin-right: 10px; /* Espace entre l'icône et le libellé de l'adresse */
+  }
+  
+  .custom-address-label {
+    font-weight: bold;
+    margin-right: 5px; /* Espace entre le libellé et le texte de l'adresse */
+  }
+  
+  .custom-address-text {
+    color: #6c757d; /* Couleur du texte de l'adresse */
+  }

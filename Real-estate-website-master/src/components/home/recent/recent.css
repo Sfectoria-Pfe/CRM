@@ -1,0 +1,79 @@
+/* Styles généraux pour la section "recent" */
+.recent .category span {
+  padding: 4px 15px;
+  border-radius: 2px;
+  font-weight: 600;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.recent .category i {
+  font-size: 20px;
+  color: #bec7d8;
+}
+
+.recent p {
+  color: #72809d;
+}
+
+.recent .button {
+  border-top: 1px solid #e4e8f3;
+  padding: 10px 30px;
+}
+
+/* Styles spécifiques pour les cartes */
+.custom-name {
+  color: #186bc3;
+  font-size: 20px;
+}
+
+.custom-button {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.custom-button:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.custom-card {
+  position: relative;
+  height: 100%;
+}
+
+.custom-card-img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.custom-card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(176, 195, 231, 0.77) 0%, rgba(255, 255, 255, 0) 100%);
+  z-index: -1;
+}
+
+.custom-address {
+  display: flex;
+  align-items: center;
+}
+
+.custom-address-icon {
+  margin-right: 10px;
+}
+
+.custom-address-label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.custom-address-text {
+  color: #6c757d;
+}
