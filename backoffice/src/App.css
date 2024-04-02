@@ -1,0 +1,143 @@
+.bg-teal{
+  background-color: #41a3ac;
+  
+}
+.bg-navy {
+  background-color: #001f3f; /* Remplacez cette valeur par votre couleur bleu marine */
+}
+/* styles.css */
+
+.profile-details-background {
+  background-color: rgba(255, 255, 255, 0.9); /* Couleur de fond semi-transparente */
+  padding: 20px; /* Marge intérieure */
+  border-radius: 10px; /* Coins arrondis */
+}
+.form-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-input {
+  margin-bottom: 10px;
+}
+
+.form-input input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #ffc107;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-button:hover {
+  background-color: #ffca28;
+}
+
+.toast-success {
+  background-color: #4caf50;
+}
+
+.toast-error {
+  background-color: #f44336;
+}
+
+.toast-content {
+  color: #fff;
+}
+.service-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.service-table th,
+.service-table td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.service-table th {
+  background-color: #f2f2f2;
+}
+
+.service-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.service-table tr:hover {
+  background-color: #dddddd;
+}
+.search-input {
+  padding: 8px;
+  margin-bottom: 16px;
+  width: 30%;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+  
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px #007bff40;
+}
+.delete-icon {
+  color: #d13512;}
+  /* ServiceList.css */
+
+.add-service-link {
+  position: relative; /* Permet de positionner le tooltip par rapport à ce lien */
+}
+
+.add-service-tooltip {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Place le tooltip au-dessus de l'icône */
+  left: 50%;
+  transform: translateX(-50%); /* Centre le tooltip horizontalement */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.add-service-link:hover .add-service-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+.save-button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #45a049;
+}
+
+/* Ajoutez d'autres styles CSS ici selon vos besoins */

@@ -1,0 +1,192 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  nom       String
+  prenom    String
+  email     String  @unique
+  telephone Int
+  adresse   String?
+  password  String
+  Role      Role?   @relation(fields: [roleId], references: [id])
+  roleId    Int?
+}
+
+// Définition de l'entité Admin
+model Admin {
+  id            Int       @id @default(autoincrement())
+  cin           Int
+  nom           String
+  prenom        String
+  nomEntreprise String
+  adresse       String
+  email         String
+  telephone     Int
+  datenaissance DateTime
+  services      Service[]
+}
+
+// Définition de l'entité Service
+model Service {
+  id          Int    @id @default(autoincrement())
+  nom         String
+  prix        Float
+  lieu        String
+  description String
+
+  admin   Admin @relation(fields: [adminId], references: [id])
+  adminId Int
+}
+
+model Vente {
+  id                Int      @id @default(autoincrement())
+  nom               String
+  prix              Float
+  lieu              String
+  image             String // Chemin de l'image dans le système de fichiers
+  description       String
+  date_vente        DateTime
+  nom_vendeur       String
+  telephone_vendeur Int
+}
+
+model Location {
+  id                Int      @id @default(autoincrement())
+  nom               String
+  prix              Float
+  lieu              String
+  image             String // Chemin de l'image dans le système de fichiers
+  description       String
+  nom_vendeur       String
+  telephone_vendeur Int
+  date_debut        DateTime // Date de début de la location
+  date_fin          DateTime // Date de fin de la location
+}
+
+model Client {
+  id          Int              @id @default(autoincrement())
+  nom         String
+  prenom      String
+  email       String
+  adresse     String
+  telephone   Int
+  password    String
+  image       String?
+  categorie   CategorieClient? @relation(fields: [categorieId], references: [id])
+  categorieId Int?
+  devis       devis[]
+  rendezvous  rendezvous[]
+  stages      Stage_Client[]
+}
+
+model CategorieClient {
+  id          Int      @id @default(autoincrement())
+  nom         String
+  description String
+  clients     Client[]
+}
+
+model devis {
+  id              Int      @id @default(autoincrement())
+  numero_devis    Int
+  date_estimation DateTime
+  montant_total   Float
+  prix_unitaire   Float
+  service         String
+  TVA             Float
+  client          Client   @relation(fields: [clientId], references: [id])
+  clientId        Int // Clé étrangère vers l'id de l'entité Client
+}
+
+model rendezvous {
+  id          Int      @id @default(autoincrement())
+  telephone   Int
+  email       String
+  temps       DateTime
+  date        DateTime
+  description String
+  client      Client   @relation(fields: [clientId], references: [id])
+  clientId    Int // Clé étrangère vers l'id de l'entité Admin
+}
+
+model chef {
+  id                Int                 @id @default(autoincrement())
+  cin               Int
+  nom               String
+  prenom            String
+  nomEntreprise     String
+  adresse           String
+  email             String
+  telephone         Int
+  datenaissance     DateTime
+  password          String
+  equipecommerciale equipecommerciale[]
+}
+
+model commerciale {
+  id                Int                 @id @default(autoincrement())
+  nom               String
+  prenom            String
+  adresse           String
+  email             String
+  telephone         Int
+  password          String
+  equipecommerciale equipecommerciale[]
+}
+
+model equipecommerciale {
+  id Int @id @default(autoincrement())
+
+  nom_equipe String
+  nombre     Int
+
+  commerciale   commerciale   @relation(fields: [commercialeId], references: [id])
+  commercialeId Int // Clé étrangère vers l'id de l'entité Admin
+  chef          chef          @relation(fields: [chefId], references: [id])
+  chefId        Int // Clé étrangère vers l'id de l'entité Admin
+  opportunites  Opportunite[] // Relation avec l'entité Opportunite
+}
+
+model Opportunite {
+  id                  Int               @id @default(autoincrement())
+  title               String
+  equipeCommerciale   equipecommerciale @relation(fields: [equipeCommercialeId], references: [id])
+  equipeCommercialeId Int
+  stage               Stage[]
+}
+
+model Stage {
+  id            Int            @id @default(autoincrement())
+  nom           String
+  Opportunite   Opportunite?   @relation(fields: [opportuniteId], references: [id])
+  opportuniteId Int
+  clients       Stage_Client[]
+}
+
+model Role {
+  id   Int    @id @default(autoincrement())
+  name String
+  user User[]
+}
+
+model Stage_Client {
+  id       Int     @id @default(autoincrement())
+  description String
+  Client   Client? @relation(fields: [clientId], references: [id])
+  clientId Int?
+  Stage    Stage?  @relation(fields: [stageId], references: [id])
+  stageId  Int?
+}

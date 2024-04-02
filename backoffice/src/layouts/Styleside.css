@@ -1,0 +1,103 @@
+.navbar {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  position: fixed;
+}
+
+.menu-bars {
+  margin-left: 2rem;
+  font-size: 2rem;
+  background: none;
+}
+
+.nav-menu {
+  background-image: url('https://www.whatspaper.com/wp-content/uploads/2023/09/hd-one-piece-wallpaper-whatspaper-4.jpg') ;
+  background-repeat: no-repeat;
+  background-size:300px 100vh ;
+  width: 300px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  transition: 850ms;
+}
+
+.nav-menu.active {
+  left: 0;
+  transition: 350ms;
+}
+
+.nav-text {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 8px 0px 8px 16px;
+  list-style: none;
+  height: 60px;
+}
+
+.nav-text a {
+  text-decoration: none;
+  color: #faf2f2;
+  font-size: 18px;
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: 4px;
+}
+
+.nav-text a:hover {
+  background-color: #3f73f6;
+}
+
+.nav-menu-items {
+  width: 100%;
+}
+
+.navbar-toggle {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+span {
+  margin-left: 16px;
+}
+.dropdown-menu {
+  background-color: #fff; /* Couleur de fond */
+  border: 1px solid #ddd; /* Bordure */
+  border-radius: 5px; /* Coins arrondis */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ombre */
+}
+
+.dropdown-menu a {
+  color: #333; /* Couleur du texte */
+  padding: 10px 20px; /* Espacement intérieur */
+  font-size: 16px; /* Taille de la police */
+}
+
+.dropdown-menu a:hover {
+  background-color: #f5f5f5; /* Couleur de fond au survol */
+}
+
+/* Styles pour le toggle des dropdowns */
+.dropdown-toggle {
+  color: #fff; /* Couleur du texte */
+  background-color: transparent; /* Fond transparent */
+  border: none; /* Suppression de la bordure */
+  font-size: 18px; /* Taille de la police */
+}
+
+.dropdown-toggle:hover {
+  color: #fff; /* Couleur du texte au survol */
+  background-color: transparent; /* Fond transparent au survol */
+}
