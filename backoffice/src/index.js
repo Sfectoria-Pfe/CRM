@@ -6,13 +6,16 @@ import "font-awesome/css/font-awesome.min.css"; // Import du fichier CSS de Font
 import './App.css'
 import reportWebVitals from './reportWebVitals';
 import Router from './router/Router';
+import { Provider } from "react-redux";
+import { store } from "./store/store";
 import App from './apps/App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Router/>
-
+   <Provider store={store}>
+      <Router />
+    </Provider>
   </React.StrictMode>
 );
 

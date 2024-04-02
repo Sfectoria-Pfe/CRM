@@ -14,8 +14,6 @@ export const fetchProducts = createAsyncThunk("fetchProducts",async ()=>{
 
 
 
-
-
 export const counterSlice = createSlice({
     name: 'products',
     initialState:{

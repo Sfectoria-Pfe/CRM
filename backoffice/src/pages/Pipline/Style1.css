@@ -1,0 +1,58 @@
+/* Container principal du tableau de bord CRM */
+.crm-board {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+  background-color: #f5f5f5; /* Couleur de fond bleu douce */
+}
+
+/* Conteneur des étapes (stages) */
+.stages-container {
+  display: flex;
+  overflow-x: auto; /* Ajouter une barre de défilement horizontale si nécessaire */
+}
+
+/* Style des étapes (stages) */
+.stage {
+  flex: 0 0 auto; /* Taille flexible pour s'adapter au contenu */
+  background-color: #e0e0e0; /* Couleur de fond pour les étapes */
+  padding: 20px;
+  margin-right: 20px;
+  border-radius: 8px;
+  width: 200px; /* Largeur uniforme pour toutes les étapes */
+}
+
+/* Style des opportunités */
+.opportunity {
+  background-color: #f2f5f9; /* Couleur de fond bleu marine */
+  color: #090909; /* Couleur du texte blanc */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+/* Style lors du survol */
+.opportunity:hover {
+  background-color: #27ae60; /* Variation de couleur de fond au survol */
+}
+
+/* Style lors du clic */
+.opportunity:active {
+  background-color: #27ae60; /* Variation de couleur de fond lors du clic */
+}
+
+/* Style lorsque l'opportunité est en cours de déplacement */
+.opportunity.dragging {
+  opacity: 0.5;
+  z-index: 999; /* Mettre au premier plan pendant le déplacement */
+}
+
+/* Nouvelle étape (stage) */
+.new-stage {
+  margin-bottom: 20px;
+  text-align: center;
+}

@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 import { FaBars } from "react-icons/fa";
 import { UserContext } from "../router/Router";
+import { useSelector } from "react-redux";
 
 export default function Navbar({ isOpen, setIsOpen }) {
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
+  const user=useSelector(store=>store.auth.me)
   return (
     <div
       className={`bg-navy text-white d-flex ${isOpen? "justify-content-end":"justify-content-between"} align-items-center`}
       style={{
-        position: "fixed",
+         position: "fixed",
         width: "100%",
         paddingLeft: isOpen ? 300 : 0,
         height: 70,
