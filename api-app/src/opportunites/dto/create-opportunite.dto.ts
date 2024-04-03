@@ -8,6 +8,6 @@ export class CreateOpportuniteDto {
     title:string;
     @ApiProperty()
     @IsNotEmpty()
-    equipeCommercialeId: number;
+    equipeId: number;
     
 }

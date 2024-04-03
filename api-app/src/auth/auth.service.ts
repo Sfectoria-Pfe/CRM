@@ -12,11 +12,36 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async login(dto: LoginDto) {
+  async loginEmployee(dto: LoginDto) {
     const user = await this.prisma.user.findUnique({
       where: {
         email: dto.email,
+        isClient: false,
       },
+      include: { Employee: true },
+    });
+
+    if (!user) {
+      throw new HttpException('Invalid email', HttpStatus.UNAUTHORIZED);
+    }
+
+    const { password, ...rest } = user;
+
+    const isPasswordValid = await bcrypt.compare(dto.password, password);
+    if (typeof dto.password !== 'string' || dto.password.trim() === '') {
+      throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
+    }
+
+    const token = this.jwtService.sign(rest);
+    return token;
+  }
+  async loginClient(dto: LoginDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email,
+        isClient: true,
+      },
+      include: { Client: true },
     });
 
     if (!user) {
@@ -41,7 +66,8 @@ export class AuthService {
     } catch (error) {
       throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
     }
-  } async updateMe(dto: UpdateAuthDto, id: number) {
+  }
+  async updateMe(dto: UpdateAuthDto, id: number) {
     if (dto.password) {
       throw new HttpException("u can't touch password", HttpStatus.BAD_REQUEST);
     }
@@ -61,23 +87,22 @@ export class AuthService {
     });
     const { password, ...rest } = user;
     const token = this.jwtService.sign(rest);
-    return token
+    return token;
   }
-
 }
 
-  // findAll() {
-  //   return This action returns all auth;
-  // }
+// findAll() {
+//   return This action returns all auth;
+// }
 
-  // findOne(id: number) {
-  //   return This action returns a #${id} auth;
-  // }
+// findOne(id: number) {
+//   return This action returns a #${id} auth;
+// }
 
-  // update(id: number, updateAuthDto: UpdateAuthDto) {
-  //   return This action updates a #${id} auth;
-  // }
+// update(id: number, updateAuthDto: UpdateAuthDto) {
+//   return This action updates a #${id} auth;
+// }
 
-  // remove(id: number) {
-  //   return This action removes a #${id} auth;
-  // }
+// remove(id: number) {
+//   return This action removes a #${id} auth;
+// }

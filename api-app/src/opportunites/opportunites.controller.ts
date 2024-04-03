@@ -1,7 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { OpportunitesService } from './opportunites.service';
 import { CreateOpportuniteDto } from './dto/create-opportunite.dto';
 import { UpdateOpportuniteDto } from './dto/update-opportunite.dto';
+import { Role } from 'src/auth/decorator/role';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('opportunites')
 export class OpportunitesController {
@@ -12,8 +23,9 @@ export class OpportunitesController {
     return this.opportunitesService.create(createOpportuniteDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
+  findAll(@Role(['admin','chef']) role) {
     return this.opportunitesService.findAll();
   }
 
@@ -23,7 +35,10 @@ export class OpportunitesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOpportuniteDto: UpdateOpportuniteDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateOpportuniteDto: UpdateOpportuniteDto,
+  ) {
     return this.opportunitesService.update(+id, updateOpportuniteDto);
   }
 

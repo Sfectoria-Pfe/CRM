@@ -9,7 +9,7 @@ export class EquipecommercialeService {
 
   async create(createEquipecommercialeDto: CreateEquipecommercialeDto) {
     try {
-      const newEquipecommerciale = await this.prisma.equipecommerciale.create({
+      const newEquipecommerciale = await this.prisma.equipe.create({
         data: createEquipecommercialeDto,
       });
       return newEquipecommerciale;
@@ -19,18 +19,18 @@ export class EquipecommercialeService {
     }
   }   
   async findAll() {
-    return await this.prisma.equipecommerciale.findMany();
+    return await this.prisma.equipe.findMany();
   }
 
   async findOne(id: number) {
-    return await this.prisma.equipecommerciale.findUnique({
+    return await this.prisma.equipe.findUnique({
       where: { id },
     });
   }
 
   async update(id: number, updateEquipecommercialeDto: UpdateEquipecommercialeDto) {
     try {
-      const updatedEquipecommerciale = await this.prisma.equipecommerciale.update({
+      const updatedEquipecommerciale = await this.prisma.equipe.update({
         where: { id },
         data: updateEquipecommercialeDto,
       });
@@ -43,7 +43,7 @@ export class EquipecommercialeService {
 
   async remove(id: number) {
     try {
-      await this.prisma.equipecommerciale.delete({ where: { id } });
+      await this.prisma.equipe.delete({ where: { id } });
       return `L'équipe commerciale avec l'ID ${id} a été supprimée avec succès.`;
     } catch (error) {
       console.error('Erreur lors de la suppression de l\'équipe commerciale :', error);

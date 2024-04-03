@@ -9,7 +9,7 @@ export class StageClientService {
 
   async create(createStageClientDto: CreateStageClientDto) {
     try {
-      const newStage = await this.prisma.stage_Client.create({
+      const newStage = await this.prisma.stageClient.create({
         data: createStageClientDto,
       });
       return newStage;
@@ -20,11 +20,11 @@ export class StageClientService {
   }
 
   async findAll() {
-    return await this.prisma.stage_Client.findMany();
+    return await this.prisma.stageClient.findMany();
   }
 
   async findOne(id: number) {
-    const stageClient = await this.prisma.stage_Client.findUnique({
+    const stageClient = await this.prisma.stageClient.findUnique({
       where: { id },
     });
     if (!stageClient) {
@@ -35,7 +35,7 @@ export class StageClientService {
 
   async update(id: number, updateStageClientDto: UpdateStageClientDto) {
     try {
-      const updatedStageClient = await this.prisma.stage_Client.update({
+      const updatedStageClient = await this.prisma.stageClient.update({
         where: { id },
         data: updateStageClientDto,
       });
@@ -48,7 +48,7 @@ export class StageClientService {
 
   async remove(id: number) {
     try {
-      const deletedStageClient = await this.prisma.stage_Client.delete({
+      const deletedStageClient = await this.prisma.stageClient.delete({
         where: { id },
       });
       return deletedStageClient;

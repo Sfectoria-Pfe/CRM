@@ -20,22 +20,24 @@ import { CurrentUser } from './decorator/current-user';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('login')
-  login(@Body() dto: LoginDto) {
-    return this.authService.login(dto);
+  @Post('login/employee')
+  loginEmployee(@Body() dto: LoginDto) {
+    return this.authService.loginEmployee(dto);
+  }
+  @Post('login/client')
+  loginClient(@Body() dto: LoginDto) {
+    return this.authService.loginClient(dto);
   }
   @UseGuards(JwtAuthGuard)
   @Post('update-me')
-  updateMe(@Body() dto: UpdateAuthDto,@CurrentUser() user) {
-    return this.authService.updateMe(dto,user.id);
+  updateMe(@Body() dto: UpdateAuthDto, @CurrentUser() user) {
+    return this.authService.updateMe(dto, user.id);
   }
   @ApiSecurity('apiKey') // for swagger
   @UseGuards(JwtAuthGuard) // the get don't work without token
   @Get('me')
   async findMe(@Request() req, @CurrentUser() user) {
     // get all oject of request
-    console.log(user);
-
     return await this.authService.getMyInfo(
       req.get('Authorization').replace('Bearer ', ''),
     );

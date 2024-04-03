@@ -16,7 +16,7 @@ export class UsersService {
   }
 
   findAll() {
-    return this.prisma.user.findMany({include:{Role:true}});
+    return this.prisma.user.findMany({});
   }
 
   findOne(id: number) {

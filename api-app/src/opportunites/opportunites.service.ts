@@ -14,7 +14,7 @@ export class OpportunitesService {
       });
       return newOpportunite;
     } catch (error) {
-      console.error('Erreur lors de la création de l\'opportunité :', error);
+      console.error("Erreur lors de la création de l'opportunité :", error);
       throw error;
     }
   }
@@ -26,6 +26,13 @@ export class OpportunitesService {
   async findOne(id: number) {
     return await this.prisma.opportunite.findUnique({
       where: { id },
+      include: {
+        stage: {
+          include: {
+            StageClient: { include: { Client: true, Comment: true } },
+          },
+        },
+      },
     });
   }
 
@@ -36,7 +43,7 @@ export class OpportunitesService {
         data: UpdateOpportuniteDto,
       });
     } catch (error) {
-      console.error('Erreur lors de la mise à jour de l\'opportunité :', error);
+      console.error("Erreur lors de la mise à jour de l'opportunité :", error);
       throw error;
     }
   }
@@ -48,11 +55,8 @@ export class OpportunitesService {
       });
       return `L'opportunité avec l'ID ${id} a été supprimée avec succès.`;
     } catch (error) {
-      console.error('Erreur lors de la suppression de l\'opportunité :', error);
+      console.error("Erreur lors de la suppression de l'opportunité :", error);
       throw error;
     }
   }
-
-
-
 }
