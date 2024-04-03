@@ -10,7 +10,7 @@ const OpportunityCard = ({ opportunity, onDragStart }) => {
       <h4>{opportunity.client}</h4>
       <p><FontAwesomeIcon icon={faEnvelope} /> {opportunity.email}</p>
       <p><FontAwesomeIcon icon={faPhone} /> {opportunity.tel}</p>
-      <p><FontAwesomeIcon icon={faMoneyBillAlt} /> {opportunity.revenus_esperes}</p>
+      {/* <p><FontAwesomeIcon icon={faMoneyBillAlt} /> {opportunity.revenus_esperes}</p> */}
       {/* Ajoutez d'autres attributs ici si nécessaire */}
     </div>
   );

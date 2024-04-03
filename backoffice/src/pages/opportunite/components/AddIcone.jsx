@@ -5,7 +5,7 @@ import { faPhone, faEnvelope, faMoneyBillAlt } from "@fortawesome/free-solid-svg
 
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStages, updateStage } from "../../store/stage";
+import { fetchStages, updateStage } from "../../../store/stage";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,7 +15,7 @@ import {
   fetchOpportunites,
   sendOpportunite,
   updateOpportunite,
-} from "../../store/opportunite";
+} from "../../../store/opportunite";
 import { useDrag } from "react-dnd";
 import axios from "axios";
 

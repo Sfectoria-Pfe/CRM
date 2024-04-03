@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from "axios"
 
 export const login = createAsyncThunk("login",async (args,{dispatch})=>{
-    const response = await axios.post("http://localhost:7000/auth/login",args)
+    const response = await axios.post("http://localhost:7000/auth/login/employee",args)
     localStorage.setItem('token',response.data)
     dispatch(getMe())
 

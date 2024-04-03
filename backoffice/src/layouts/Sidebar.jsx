@@ -15,7 +15,7 @@ export default function Sidebar({ setIsOpen }) {
         <div>
           <p className="px-3"><FaHome className="mr-2" /> Dashboard</p>
           <div className="px-3 position-relative">
-            <Dropdown>
+            {/* <Dropdown>
               <Dropdown.Toggle variant="transparent" id="dropdown-opportunities" className="d-flex align-items-center text-white">
                 <FaHandshake className="mr-2" /> 
                 <span>Opportunités</span>
@@ -25,7 +25,7 @@ export default function Sidebar({ setIsOpen }) {
                 <Dropdown.Item href="#/action-2">Liste de Opportunités</Dropdown.Item>
                 <Dropdown.Item href="#/action-3">Vue Pipeline</Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
           </div>
           <Dropdown className="px-3">
             <Dropdown.Toggle variant="transparent" id="dropdown-quotes" className="text-white">

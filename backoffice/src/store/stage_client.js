@@ -16,8 +16,9 @@ export const sendStage_client = createAsyncThunk("stage-client/addStage", async 
   return response.data;
 });
 
-export const updateStage_client = createAsyncThunk("stage-client/updateStage", async ({ id, body }) => {
-  const response = await axios.patch(`http://localhost:7000/stage-client/${id}`, body);
+export const updateStage_client = createAsyncThunk("stage-client/updateStage", async ({ id, stageId }) => {
+  console.log(stageId);
+  const response = await axios.patch(`http://localhost:7000/stage-client/${id}`, {stageId});
   return response.data;
 });
 

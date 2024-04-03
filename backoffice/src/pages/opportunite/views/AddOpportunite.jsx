@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { sendOpportunite } from "../../store/opportunite";
+import { sendOpportunite } from "../../../store/opportunite";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,7 +13,7 @@ const AddOpportunite = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === "equipeCommercialeId" ? parseInt(value) : value;
+    const newValue = name === "equipeId" ? parseInt(value) : value;
 
     setOpportunite({ ...opportunite, [name]:newValue });
   };
@@ -50,7 +50,7 @@ const AddOpportunite = () => {
         <input
           className="form-control"
           placeholder="ID équipe commerciale"
-          name="equipeCommercialeId"
+          name="equipeId"
           type="number"
           onChange={handleChange}
         />
