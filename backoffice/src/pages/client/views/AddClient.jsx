@@ -13,9 +13,8 @@ export default function AddClient() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === "telephone" ? parseInt(value) : value;
 
-    setClient({ ...client, [name]: newValue });
+    setClient({ ...client, [name]: value });
 };
  const handleAddClient = () => {
     dispatch(sendClient(client))
@@ -75,7 +74,7 @@ export default function AddClient() {
           className="form-control"
           placeholder="Téléphone"
           name="telephone"
-          type="number"
+          type="text"
           onChange={handleChange}
         />
       </div>

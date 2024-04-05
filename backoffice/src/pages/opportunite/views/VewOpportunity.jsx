@@ -1,4 +1,3 @@
-// Board.js
 
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -7,23 +6,22 @@ import "../Style1.css";
 import {
   fetchOpportunite,
   fetchOpportunites,
-  updateOpportunite,
 } from "../../../store/opportunite"; // Importez la fonction d'updateOpportunite
 import OpportunityCard from "../components/card"; // Importez la composante OpportunityCard
-import { updateStage_client } from "../../../store/stage_client";
-
+import { fetchStage_client, updateStage_client } from "../../../store/stage_client";
+import { FiPlus } from "react-icons/fi"; // Importez l'icône Plus de react-icons
+import AddStage from "../../stage/AddStage";
 const ViewOpportunity = () => {
   const { opportunityId } = useParams();
   const [newStageName, setNewStageName] = useState("");
   const [stages, setStages] = useState([]);
-
+  const [showAddStageForm, setShowAddStageForm] = useState(false); // Etat pour afficher ou masquer le formulaire d'ajout de stage
   const dispatch = useDispatch();
   const opportunity = useSelector((state) => state.opportunite.opportunite);
-
   useEffect(() => {
     dispatch(fetchOpportunite(opportunityId));
   }, [dispatch]);
-
+  
   useEffect(() => {
     if (opportunity?.stage) setStages(opportunity.stage);
   }, [opportunity]);
@@ -32,7 +30,9 @@ const ViewOpportunity = () => {
     setNewStageName(event.target.value);
   };
 
-  const handleAddStage = () => {};
+  const handleToggleAddStageForm = () => {
+    setShowAddStageForm(!showAddStageForm);
+  };
 
   const handleDragStart = (event, stageClient, stage, index) => {
     console.log(stageClient, stage, index, "drag");
@@ -103,17 +103,12 @@ const ViewOpportunity = () => {
           </div>
         ))}
         <div className="stage new-stage">
-          <h3>New Stage</h3>
-          <input
-            type="text"
-            value={newStageName}
-            onChange={handleStageNameChange}
-            placeholder="Enter stage name"
-          />
-          <button onClick={handleAddStage}>Add Stage</button>
-        </div>
+          <FiPlus onClick={handleToggleAddStageForm} />
+       
+        {showAddStageForm && <AddStage />}
+        
       </div>
-    </div>
+      </div></div>
   );
 };
 

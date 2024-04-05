@@ -28,18 +28,18 @@
   color: #108be7;
   font-size: 17px;
   position: absolute;
-  top: 35px;
+  top: 84px;
   right: -10px;
 }
 .team .img::after {
   content: "";
   position: absolute;
-  top: -15px;
-  left: -15px;
+  /* top: -15px;
+  left: -13px;
   width: 110px;
   height: 110px;
   border: 5px solid #edf0f5;
-  border-radius: 50%;
+  border-radius: 50%; */
 }
 .team label {
   display: inline-block;
@@ -69,4 +69,10 @@
 .team .button i {
   color: white;
   font-size: 20px;
+}
+.team-card {
+  border: 1px solid #1b0c0c; /* Couleur douce pour la bordure */
+  border-radius: 8px; /* Ajout de coins arrondis */
+  padding: 20px; /* Espacement à l'intérieur de la carte */
+  background-color:#c3d1c7 ;
 }

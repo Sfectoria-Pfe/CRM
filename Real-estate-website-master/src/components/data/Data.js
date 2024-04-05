@@ -188,16 +188,15 @@ export const team = [
     icon: [<i class='fa-brands fa-facebook-f'></i>, <i class='fa-brands fa-linkedin'></i>, <i class='fa-brands fa-twitter'></i>, <i class='fa-brands fa-instagram'></i>],
   },
   {
-    cover: "",
-    address: " ",
-    name: "Harijeet M. Siller",
+    cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFj9PpaTXjxbZ7dUjVPPAZ1hTIBO7Nrbq1Zw&s",
+    address: " Tunis,Sousse",
+    name: "Ayhem benali",
     icon: [<i class='fa-brands fa-facebook-f'></i>, <i class='fa-brands fa-linkedin'></i>, <i class='fa-brands fa-twitter'></i>, <i class='fa-brands fa-instagram'></i>],
   },
   {
-    list: "80",
-    cover: "../images/customer/team-3.jpg",
-    address: "",
-    name: "Anna K. Young",
+    cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNCtMp6TVrfEX-JLpmsb_nXuNRBaG-uiGxSQ&s",
+    address: "Tunisie,Sfax",
+    name: "Anas suilhi",
     icon: [<i class='fa-brands fa-facebook-f'></i>, <i class='fa-brands fa-linkedin'></i>, <i class='fa-brands fa-twitter'></i>, <i class='fa-brands fa-instagram'></i>],
   },
   {
@@ -302,16 +301,13 @@ export const price = [
   },
 ]
 export const footer = [
+  
   {
-    title: "LAYOUTS",
-    text: [{ list: "Home Page" }, { list: "About Page" }, { list: "Service Page" }, { list: "Property Page" }, { list: "Contact Page" }, { list: "Single Blog" }],
+    title: "Contactez nous sur:",
+    text: [{ list: "+216 20358357" }, { list: "+216 58003584" }, { list: "+216 20437872" }],
   },
   {
-    title: "ALL SECTIONS",
-    text: [{ list: "Headers" }, { list: "Features" }, { list: "Attractive" }, { list: "Testimonials" }, { list: "Videos" }, { list: "Footers" }],
-  },
-  {
-    title: "COMPANY",
+    title: "",
     text: [{ list: "About" }, { list: "Blog" }, { list: "Pricing" }, { list: "Affiliate" }, { list: "Login" }, { list: "Changelog" }],
   },
 ]

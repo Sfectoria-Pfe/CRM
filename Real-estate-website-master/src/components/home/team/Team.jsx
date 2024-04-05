@@ -1,19 +1,18 @@
-import React from "react"
-import Heading from "../../common/Heading"
-import { team } from "../../data/Data"
-import "./team.css"
+import React from "react";
+import Heading from "../../common/Heading";
+import { team } from "../../data/Data";
+import "./team.css";
 
 const Team = () => {
   return (
     <>
-      <section className='team background'>
+      <section className='team background '>
         <div className='container'>
           <Heading title='Notre equipe commerciale' subtitle=' Notre équipe Mubawab est à votre service '/>
-          <div className='content mtop grid3'>
+          <div className='content mtop grid3 '>
             {team.map((val, index) => (
-              <div className='box' key={index}>
-                <button className='btn3'>{val.list} Listings</button>
-                <div className='details'>
+              <div className='team-card' key={index}>  {/* Ajout de la classe 'team-card' */}
+                <div className='details '>
                   <div className='img'>
                     <img src={val.cover} alt='' />
                     <i className='fa-solid fa-circle-check'></i>
@@ -27,15 +26,7 @@ const Team = () => {
                       <li key={index}>{icon}</li>
                     ))}
                   </ul>
-                  <div className='button flex'>
-                    <button>
-                      <i className='fa fa-envelope'></i>
-                      Message
-                    </button>
-                    <button className='btn4'>
-                      <i className='fa fa-phone-alt'></i>
-                    </button>
-                  </div>
+                 
                 </div>
               </div>
             ))}
@@ -43,7 +34,7 @@ const Team = () => {
         </div>
       </section>
     </>
-  )
+  );
 }
 
-export default Team
+export default Team;

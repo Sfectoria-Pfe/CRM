@@ -141,3 +141,13 @@
 }
 
 /* Ajoutez d'autres styles CSS ici selon vos besoins */
+/* App.css */
+.sidebar {
+  background-color: #00154F; /* Couleur de fond de la barre latérale en bleu marine */
+  color: white; /* Couleur du texte en blanc */
+}
+
+.sidebar .MuiSvgIcon-root {
+  color: white;
+  font-size:x-large; /* Couleur des icônes en blanc */
+}

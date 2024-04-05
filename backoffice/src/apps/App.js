@@ -107,6 +107,7 @@ const Drawer = styled(MuiDrawer, {
 })(({ theme, open }) => ({
   width: drawerWidth,
   flexShrink: 0,
+
   whiteSpace: "nowrap",
   boxSizing: "border-box",
   ...(open && {
@@ -137,9 +138,10 @@ export default function App() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar className=" d-flex justify-content-between">
+        <Toolbar style={{ backgroundColor:"#e1f5fe",color:'black'
+}}className=" d-flex justify-content-between ">
           <IconButton
-            color="inherit"
+            color="#ffffff"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
@@ -151,15 +153,17 @@ export default function App() {
             <MenuIcon />
           </IconButton>
 
-          <div className="d-flex align-items-center justify-content-end w-100 gap-3">
+          <div className="d-flex align-items-center justify-content-end w-100 gap-3 ">
             <p className="m-0">
               Welcome {user?.Employee?.nom + " " + user?.Employee?.prenom}{" "}
             </p>
             <Dropdown className="d-flex ">
               <Dropdown.Toggle
+
                 variant=""
                 id="dropdownMenu2"
                 className="d-flex gap-3 align-items-center"
+
               >
                 <img
                   src={user.imageUrl}
@@ -174,7 +178,7 @@ export default function App() {
                 <Dropdown.Item>Setting</Dropdown.Item>
                 <Dropdown.Item
                   onClick={() => {
-                    localStorage.removeItem("token");
+                    localStorage.removeItem('token');
                     window.location.pathname = "/";
                   }}
                 >
@@ -187,7 +191,7 @@ export default function App() {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} >
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
@@ -196,7 +200,7 @@ export default function App() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List sx={{backgroundColor:"#00154f", flex:1}} >
           {sidebarData.map((elem, index) => (
             <>
               {elem.access.includes(user?.Employee.role) ? (
@@ -214,13 +218,16 @@ export default function App() {
                         minWidth: 0,
                         mr: open ? 3 : "auto",
                         justifyContent: "center",
+                        color:"#ffffff"
                       }}
                     >
                       {elem.icon}
                     </ListItemIcon>
                     <ListItemText
                       primary={elem.title}
-                      sx={{ opacity: open ? 1 : 0 }}
+                      sx={{ opacity: open ? 1 : 0,  
+                      color:"#ffffff"
+                    }}
                     />
                   </ListItemButton>
                 </ListItem>
@@ -231,30 +238,8 @@ export default function App() {
           ))}
         </List>
         <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        
+  
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
