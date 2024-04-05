@@ -36,6 +36,8 @@ import ListOpportunities from "../pages/opportunite/views/ListOpportunities.jsx"
 import ViewOpportunity from "../pages/opportunite/views/VewOpportunity.jsx";
 import Opportunity from "../pages/opportunite/opportunity.jsx";
 import AccesDenied from "../pages/AccesDenied.jsx";
+import SignUp from "../pages/auth/SignUp.js";
+import Test from "../pages/To doList/Test.js";
 export const UserContext = createContext();
 
 function PrivateRoute({ Component, roles }) {
@@ -43,7 +45,6 @@ function PrivateRoute({ Component, roles }) {
   const navigate = useNavigate();
   useEffect(() => {
     if (user?.Employee?.role) {
-      console.log("helloooooo");
       if (!roles.includes(user.Employee.role)) {
         navigate("/acess-denied");
       }
@@ -85,8 +86,13 @@ export default function Router() {
                 <Route path="ListeVente" element={<VenteList />} />
                 <Route path="AddLocation" element={<AddLocation />} />
                 <Route path="ListeLocation" element={<LocationList />} />
-                <Route path="AddClient" element={<AddClient />} />
-                <Route path="ListeClient" element={<ClientList />} />
+                <Route
+                  path="clients"
+                 >
+                <Route index element={<ClientList />} />
+
+                <Route path="addClient" element={<AddClient />} />
+                </Route>
                 <Route
                   path="opportunities"
                   element={
@@ -105,10 +111,12 @@ export default function Router() {
                 <Route path="test" element={<TestFetchOpportunites />} />
                 <Route path="Addstage_client" element={<AddStageClient />} />
                 <Route path="acess-denied" element={<AccesDenied />} />
+                <Route path="todolist"  element={<Test/>} />
               </Route>
             ) : (
               <Route path="/" element={<Auth />}>
                 <Route index element={<Login />} />
+                <Route path="/signup" element={<SignUp />}/>
               </Route>
             )}
             <Route path="*" element={<NotFound />} />

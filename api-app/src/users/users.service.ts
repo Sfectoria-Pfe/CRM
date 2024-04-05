@@ -20,14 +20,21 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.prisma.user.findUnique;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return this.prisma.user.update;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
-}
+  async remove(id: number) {
+    try {
+       await this.prisma.user.delete({ where: { id } });
+       return `Le service avec l'ID ${id} a été supprimé avec succès.`;
+     } catch (error) {
+       console.error('Erreur lors de la suppression du service :', error);
+       throw error;
+     
+     }
+
+}}

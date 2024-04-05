@@ -19,13 +19,11 @@ const Services = () => {
           <FeaturedCard />
 
           <br/><br/>
-          <h1 style={{
-backgroundColor:"#25A760"  }}>Notre immobiliers pour location</h1>
+          <h1 className="section-title" style={{ backgroundColor: "#00695c", color: "#ffffff", padding: "10px", borderRadius: "5px" }}>Notre immobilier pour la location</h1>
           <br></br> <br></br>
           <LocationCard />
 <br/><br/>
-<h1 style={{
-backgroundColor:"#25A760"  }}>Notre immobiliers pour Vente</h1>
+<h1 className="section-title" style={{ backgroundColor: "#00695c", color: "#ffffff", padding: "10px", borderRadius: "5px" }}>Notre immobilier pour la vente</h1>
 <Recent />
         </div>
       </section>

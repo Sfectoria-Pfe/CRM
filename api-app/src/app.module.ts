@@ -16,9 +16,10 @@ import { EquipecommercialeModule } from './equipecommerciale/equipecommerciale.m
 import { OpportunitesModule } from './opportunites/opportunites.module';
 import { StagesModule } from './stages/stages.module';
 import { StageClientModule } from './stage_client/stage_client.module';
+import { EmployeesModule } from './employees/employees.module';
 
 @Module({
-  imports: [UsersModule, PrisamaModule, ServicesModule, AuthModule, VentesModule, LocationsModule, ClientsModule, CategorieclientsModule, DevisModule, RendezvousModule,  EquipecommercialeModule, OpportunitesModule, StagesModule, StageClientModule],
+  imports: [UsersModule, PrisamaModule, ServicesModule, AuthModule, VentesModule, LocationsModule, ClientsModule, CategorieclientsModule, DevisModule, RendezvousModule,  EquipecommercialeModule, OpportunitesModule, StagesModule, StageClientModule, EmployeesModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

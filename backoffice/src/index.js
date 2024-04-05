@@ -9,7 +9,7 @@ import Router from './router/Router';
 import { Provider } from "react-redux";
 import { store } from "./store/store";
 import App from './apps/App';
-
+import "./pages/To doList/Todo.css";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

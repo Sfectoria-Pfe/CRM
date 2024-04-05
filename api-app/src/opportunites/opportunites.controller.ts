@@ -23,9 +23,9 @@ export class OpportunitesController {
     return this.opportunitesService.create(createOpportuniteDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get()
-  findAll(@Role(['admin','chef']) role) {
+  findAll() { //@Role(['admin','chef']) role
     return this.opportunitesService.findAll();
   }
 
