@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import AddClient from "./SignUp";
+import auth from "./auth";
 export const store = configureStore({
-  reducer: {  AddClient},
+  reducer: {auth},
 });

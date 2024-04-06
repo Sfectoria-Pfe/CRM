@@ -19,8 +19,16 @@ export class OpportunitesService {
     }
   }
 
-  async findAll() {
-    return await this.prisma.opportunite.findMany();
+  async findAll(numberService: number) {
+    const opportunites = await this.prisma.opportunite.findMany({
+      // include:{ServiceOpportunity:true}
+    });
+    // if(numberService===1)
+    // opportunites.filter(elem=>elem.ServiceOpportunity.lenght=numberService)
+    //else   opportunites.filter(elem=>elem.ServiceOpportunity.lenght>numberService)
+    // })
+
+    return opportunites;
   }
 
   async findOne(id: number) {

@@ -63,10 +63,9 @@ model Client {
   id          Int              @id @default(autoincrement())
   nom         String
   prenom      String
-  email       String
+  email       String           @unique
   adresse     String
   telephone   Int
-  password    String
   image       String?
   categorie   CategorieClient? @relation(fields: [categorieId], references: [id])
   categorieId Int?
@@ -82,7 +81,7 @@ model CategorieClient {
   description String
   clients     Client[]
 }
-
+// add two model services et serviceOpportunity
 model Opportunite {
   id       Int     @id @default(autoincrement())
   title    String

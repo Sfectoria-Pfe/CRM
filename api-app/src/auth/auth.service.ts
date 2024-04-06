@@ -1,15 +1,18 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { LoginDto } from './dto/create-auth.dto';
+import { LoginDto, SignupDto } from './dto/create-auth.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { UpdateAuthDto } from './dto/update-auth.dto';
+import { UsersService } from 'src/users/users.service';
+import passport from 'passport';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
+    private readonly userService: UsersService,
   ) {}
 
   async loginEmployee(dto: LoginDto) {
@@ -57,6 +60,47 @@ export class AuthService {
 
     const token = this.jwtService.sign(rest);
     return token;
+  }
+  async signupClient(dto: SignupDto) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email,
+        isClient: true,
+      },
+    });
+
+    if (user) {
+      throw new HttpException('Invalid email', HttpStatus.UNAUTHORIZED);
+    }
+    const client = await this.prisma.client.findUnique({
+      where: { email: dto.email },
+    });
+    if (client) {
+      const newUser = await this.userService.create({
+        email: dto.email,
+        password: dto.password,
+        isClient: true,
+        clientId: client.id,
+      });
+
+      return {
+        message: 'user client created successfully',
+      };
+    } else {
+      const { password, ...rest } = dto;
+      const newClient = await this.prisma.client.create({
+        data: { ...rest },
+      });
+      const newUser = await this.userService.create({
+        email: dto.email,
+        password: dto.password,
+        isClient: true,
+        clientId: newClient.id,
+      });
+    }
+    return {
+      message: 'user client created successfully',
+    };
   }
 
   async getMyInfo(token: string) {

@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import { sendClient } from "../store/SignUp";
-import 'react-toastify/dist/ReactToastify.css';
+import { signupClient } from "../store/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./SignupForm.css"; // Importer le fichier CSS avec les styles
 import axios from "axios";
 
 export default function AddClient() {
   const [client, setClient] = useState({
-  image: "",
-});
+    image: "",
+  });
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const preset_key = "f20pgg9j";
@@ -42,14 +42,14 @@ export default function AddClient() {
     const newValue = name === "telephone" ? parseInt(value) : value;
 
     setClient({ ...client, [name]: newValue });
-};
- const handleAddClient = () => {
-    dispatch(sendClient(client))
+  };
+  const handleAddClient = () => {
+    dispatch(signupClient(client))
       .then((res) => {
         if (!res.error) {
           toast.success("Votre compte a été ajouté avec succès !");
           setTimeout(() => {
-            navigate(-1);
+            navigate('/profile');
           }, 2000);
         } else {
           toast.error("Erreur lors de l'ajout du compte. Veuillez réessayer.");
@@ -61,25 +61,28 @@ export default function AddClient() {
   };
 
   return (
-    <div className="signup-form"> {/* Appliquer la classe signup-form */}
+    <form className="signup-form" onSubmit={handleAddClient}>
+      {" "}
+      {/* Appliquer la classe signup-form */}
       <h2>Créer un compte</h2>
       <div className="form-input">
-      <div className="form-input">
-        <input
-          type="file"
-          className="form-control"
-          placeholder="URL de l'image"
-          name="image"
-          onChange={handleFile}
-        />
-        <br />
-        <br />
-        {image && <img src={image} alt="Uploaded" />}
-      </div>
+        <div className="form-input">
+          <input
+            type="file"
+            className="form-control"
+            placeholder="URL de l'image"
+            name="image"
+            onChange={handleFile}
+          />
+          <br />
+          <br />
+          {image && <img src={image} alt="Uploaded" />}
+        </div>
         <input
           className="form-control"
           placeholder="Nom"
           name="nom"
+          required
           onChange={handleChange}
         />
       </div>
@@ -88,6 +91,7 @@ export default function AddClient() {
           className="form-control"
           placeholder="Prénom"
           name="prenom"
+          required
           onChange={handleChange}
         />
       </div>
@@ -97,6 +101,7 @@ export default function AddClient() {
           placeholder="Email"
           name="email"
           type="email"
+          required
           onChange={handleChange}
         />
       </div>
@@ -123,14 +128,20 @@ export default function AddClient() {
           placeholder="Mot de passe"
           name="password"
           type="password"
+          required
           onChange={handleChange}
         />
       </div>
-      <Button variant="warning" onClick={handleAddClient} className="button" style={{backgroundColor:"#28a745"}}>
-
+      <Button
+        variant="warning"
+        onSubmit={handleAddClient}
+        className="button"
+        type="submit"
+        style={{ backgroundColor: "#28a745" }}
+      >
         Enregistrer
       </Button>
       <ToastContainer />
-    </div>
+    </form>
   );
 }

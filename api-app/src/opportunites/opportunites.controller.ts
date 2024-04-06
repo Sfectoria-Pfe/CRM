@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { OpportunitesService } from './opportunites.service';
 import { CreateOpportuniteDto } from './dto/create-opportunite.dto';
@@ -25,8 +26,8 @@ export class OpportunitesController {
 
   // @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() { //@Role(['admin','chef']) role
-    return this.opportunitesService.findAll();
+  findAll(@Query() numberService:number) { //@Role(['admin','chef']) role
+    return this.opportunitesService.findAll(numberService);
   }
 
   @Get(':id')

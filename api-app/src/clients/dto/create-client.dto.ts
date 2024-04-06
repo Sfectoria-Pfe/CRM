@@ -2,12 +2,11 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateClientDto {
-    
-    @ApiProperty()
+  @ApiProperty()
   @IsNotEmpty()
-    nom: string;
+  nom: string;
 
-    @ApiProperty()
+  @ApiProperty()
   @IsNotEmpty()
   prenom: string;
 
@@ -24,12 +23,8 @@ export class CreateClientDto {
   telephone: number;
 
   @ApiProperty()
-  @IsNotEmpty()
-  password: string;
-
-  @ApiProperty()
   categorieId?: number;
   @ApiProperty()
   @IsNotEmpty()
-  image     ? : string 
+  image?: string;
 }

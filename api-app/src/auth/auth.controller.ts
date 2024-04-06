@@ -10,7 +10,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateAuthDto, LoginDto } from './dto/create-auth.dto';
+import { CreateAuthDto, LoginDto, SignupDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './jwt-auth.guard';
@@ -28,6 +28,11 @@ export class AuthController {
   loginClient(@Body() dto: LoginDto) {
     return this.authService.loginClient(dto);
   }
+  @Post('signup/client')
+  signupClient(@Body() dto: SignupDto) {
+    return this.authService.signupClient(dto);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Post('update-me')
   updateMe(@Body() dto: UpdateAuthDto, @CurrentUser() user) {
@@ -37,6 +42,15 @@ export class AuthController {
   @UseGuards(JwtAuthGuard) // the get don't work without token
   @Get('me')
   async findMe(@Request() req, @CurrentUser() user) {
+    // get all oject of request
+    return await this.authService.getMyInfo(
+      req.get('Authorization').replace('Bearer ', ''),
+    );
+  }
+  @ApiSecurity('apiKey') // for swagger
+  @UseGuards(JwtAuthGuard) // the get don't work without token
+  @Get('me-client')
+  async findMeClient(@Request() req, @CurrentUser() user) {
     // get all oject of request
     return await this.authService.getMyInfo(
       req.get('Authorization').replace('Bearer ', ''),

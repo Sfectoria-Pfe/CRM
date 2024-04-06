@@ -9,3 +9,14 @@ export class LoginDto {
   @ApiProperty()
   password: string;
 }
+export class SignupDto {
+  nom: string;
+  prenom: string;
+  @IsEmail()
+  @ApiProperty()
+  email: string;
+  adresse: string;
+  telephone: number;
+  password: string;
+  image?: string;
+}

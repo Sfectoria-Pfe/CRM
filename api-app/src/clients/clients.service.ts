@@ -3,18 +3,14 @@ import { PrismaService } from '../prisma/prisma.service'; // Assurez-vous d'impo
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import * as bcrypt from 'bcrypt';
-@Injectable()   
+@Injectable()
 export class ClientsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createClientDto: CreateClientDto) {
+  async create(dto: CreateClientDto) {
     try {
-      const { password, ...rest } = createClientDto;
-      const salt = await bcrypt.genSalt();
-      const hashedPassword = await bcrypt.hash(password, salt);
-      
       const newClient = await this.prisma.client.create({
-        data: { password: hashedPassword, ...rest },
+        data: dto,
       });
       return newClient;
     } catch (error) {
@@ -36,7 +32,10 @@ export class ClientsService {
   }
 
   async update(id: number, updateClientDto: UpdateClientDto) {
-    return await this.prisma.client.update({ where: { id }, data: updateClientDto });
+    return await this.prisma.client.update({
+      where: { id },
+      data: updateClientDto,
+    });
   }
 
   async remove(id: number) {

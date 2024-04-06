@@ -166,7 +166,7 @@ export default function App() {
 
               >
                 <img
-                  src={user.imageUrl}
+                  src={user?.Employee?.image}
                   alt="avatar"
                   className="rounded-circle"
                   style={{ width: 50, height: 50, objectFit: "cover" }}
