@@ -1,0 +1,50 @@
+.card-custom {
+    width: 400px;
+    height: 500px;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    border-radius: 15px;
+    margin: 0 auto; /* Centre la carte horizontalement */
+}
+
+.card-custom:hover .image img {
+    transform: scale(1.2); /* Agrandit l'image au survol */
+}
+
+.image img {
+    border-radius: 50%; /* Rend l'image circulaire */
+    transition: transform 0.5s; /* Ajoute une transition d'animation à l'agrandissement de l'image */
+}
+
+.name-custom {
+    font-size: 24px; /* Augmente la taille du nom */
+    font-weight: bold;
+    color: #333; /* Couleur du texte plus foncée */
+}
+
+.idd-custom {
+    font-size: 16px;
+    font-weight: 600;
+    color: #555; /* Couleur du texte légèrement plus foncée */
+}
+
+.number-custom {
+    font-size: 24px;
+    font-weight: bold;
+    color: #555; /* Couleur du texte légèrement plus foncée */
+}
+
+.btn1-custom {
+    height: 40px;
+    width: 150px;
+    border: none;
+    background-color: #444; /* Couleur de fond plus foncée pour le bouton */
+    color: #fff; /* Couleur du texte plus claire */
+    font-size: 16px; /* Taille du texte du bouton */
+}
+
+.date-custom {
+    background-color: #ddd; /* Couleur de fond légèrement plus foncée */
+}

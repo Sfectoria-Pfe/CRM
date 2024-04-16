@@ -17,9 +17,12 @@ import { OpportunitesModule } from './opportunites/opportunites.module';
 import { StagesModule } from './stages/stages.module';
 import { StageClientModule } from './stage_client/stage_client.module';
 import { EmployeesModule } from './employees/employees.module';
+import { ChatsModule } from './chats/chats.module';
+import { DemandeDevisModule } from './demande-devis/demande-devis.module';
+import { PromotionModule } from './promotion/promotion.module';
 
 @Module({
-  imports: [UsersModule, PrisamaModule, ServicesModule, AuthModule, VentesModule, LocationsModule, ClientsModule, CategorieclientsModule, DevisModule, RendezvousModule,  EquipecommercialeModule, OpportunitesModule, StagesModule, StageClientModule, EmployeesModule],
+  imports: [UsersModule, PrisamaModule, ServicesModule, AuthModule, VentesModule, LocationsModule, ClientsModule, CategorieclientsModule, DevisModule, RendezvousModule,  EquipecommercialeModule, OpportunitesModule, StagesModule, StageClientModule, EmployeesModule, ChatsModule, DemandeDevisModule, PromotionModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

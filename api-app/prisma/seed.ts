@@ -23,7 +23,7 @@ async function seed() {
                   password: hashedPassword,
                   isClient: false,
                 },
-              },
+                },
             },
           }),
       ),

@@ -25,7 +25,7 @@ export default function Navbar({ isOpen, setIsOpen }) {
       </div> 
       <div className="d-flex  align-items-center gap-3">
         <p className="m-0">Welcome {user?.Employee?.nom+' '+user?.Employee?.prenom} </p>
-        <img src={user.imageUrl} alt="leithPhoto" className="rounded-circle" style={{width:50,height:50,objectFit:"cover"}} />
+        <img src={user.Employee?.image} alt="avatar" className="rounded-circle" style={{width:50,height:50,objectFit:"cover"}} />
        
       </div>
     </div>

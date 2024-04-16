@@ -19,6 +19,7 @@ import { store } from "../store/store";
 import Profile from "../profile/Profile.js";
 import Chat from "../chat/Chat.jsx";
 import { getMe } from "../store/auth.js";
+import Historique from "../Historique/Historique.jsx";
 
 const Pages = () => {
   const user = useSelector((store) => store.auth.me);
@@ -54,6 +55,8 @@ const Pages = () => {
         <Route path="/Demandedevis" element={<Demandedevis />} />
         <Route path="/rendez-vous" element={<Demanderendezvous />} />
         <Route path="/location" element={<Location />} />
+        <Route path="/historique" element={<Historique/>} />
+
       </Routes>
       <Footer />
     </Router>

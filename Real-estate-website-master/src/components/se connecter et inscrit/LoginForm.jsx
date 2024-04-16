@@ -20,7 +20,7 @@ const LoginForm = () => {
             navigate("/profile");
           }, 2000);
         } else {
-          toast.error("Erreur lors de l'ajout du compte. Veuillez réessayer.");
+          toast.error("Erreur lors de connxion du compte. Veuillez Verifier votre email et mot de passe.");
         }
       })
       .catch((error) => {

@@ -20,11 +20,10 @@ export class CreateClientDto {
 
   @ApiProperty()
   @IsNotEmpty()
-  telephone: number;
+  telephone: string;
 
   @ApiProperty()
   categorieId?: number;
   @ApiProperty()
-  @IsNotEmpty()
   image?: string;
 }
