@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import App from "../apps/App";
 import Auth from "../apps/Auth";
@@ -49,11 +49,13 @@ import Addpromotion from "../pages/promotion/Addpromotion.jsx";
 import AddPromotion from "../pages/promotion/Addpromotion.jsx";
 import BasicDateCalendar from "../pages/calendrier/calendrier.jsx";
 import Adduser from "../pages/user/adduser.jsx";
+import { Spinner } from "react-bootstrap";
 export const UserContext = createContext();
 
 function PrivateRoute({ Component, roles }) {
   const user = useSelector((store) => store.auth.me);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (user?.Employee?.role) {
       if (!roles.includes(user.Employee.role)) {
@@ -69,15 +71,25 @@ function PrivateRoute({ Component, roles }) {
 export default function Router() {
   const user = useSelector((store) => store.auth.me);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     let token = localStorage.getItem("token");
-    if (token) dispatch(getMe());
+    if (token) {
+      dispatch(getMe()).then((res) => setLoading(false));
+    } else {
+      setLoading(false);
+    }
   }, [dispatch]);
 
   return (
     <Provider store={store}>
       <DndProvider backend={HTML5Backend}>
         <BrowserRouter>
+          {loading && (
+            <div className="position-fixed w-100 h-100 d-flex justify-content-center align-items-center">
+              <Spinner animation="border" variant="primary" />
+            </div>
+          )}
           <Routes>
             {user ? (
               <Route path="/" element={<App />}>
@@ -102,7 +114,7 @@ export default function Router() {
                   <Route path=":clientId" element={<OneClient />} />
 
                   <Route path="addClient" element={<AddClient />} />
-                  </Route>
+                </Route>
                 <Route
                   path="opportunities"
                   element={
@@ -117,20 +129,20 @@ export default function Router() {
                   <Route path=":opportunityId" element={<ViewOpportunity />} />
                 </Route>
                 <Route path="/devis" element={<ListDevis />} />
-                <Route path="/devis/:devisId" element={<OneDevis />} />  
+                <Route path="/devis/:devisId" element={<OneDevis />} />
                 <Route path="./AddStage" element={<AddStage />} />
                 <Route path="AddIcone" element={<AddStageIcon />} />
                 <Route path="test" element={<TestFetchOpportunites />} />
                 <Route path="Addstage_client" element={<AddStageClient />} />
                 <Route path="acess-denied" element={<AccesDenied />} />
                 <Route path="todolist" element={<Test />} />
-                <Route path="chats" element={<Chat/>} />
-                <Route path="addemployee" element={<Addemployee/>}  />
-                <Route path="listeemployee" element={<ListEmployee/>} />
+                <Route path="chats" element={<Chat />} />
+                <Route path="addemployee" element={<Addemployee />} />
+                <Route path="listeemployee" element={<ListEmployee />} />
                 <Route path="/Addpromotion" element={<AddPromotion />} />
                 <Route path="listepromotion" element={<ListPromotion />} />
                 <Route path="calendrier" element={<BasicDateCalendar />} />
-                <Route path="adduser" element={<Adduser/>} />
+                <Route path="adduser" element={<Adduser />} />
               </Route>
             ) : (
               <Route path="/" element={<Auth />}>

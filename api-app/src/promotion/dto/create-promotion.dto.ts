@@ -1,24 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 export class CreatePromotionDto {
-    @ApiProperty()
-    @IsNotEmpty()
-    description: String
-    @ApiProperty()
-  @IsNotEmpty()
-  pourcentage :number
   @ApiProperty()
   @IsNotEmpty()
-  date_debut :Date
+  description: string;
   @ApiProperty()
   @IsNotEmpty()
-  date_fin: Date
+  pourcentage: number;
   @ApiProperty()
   @IsNotEmpty()
-  opportuniteId :number
+  date_debut: string;
   @ApiProperty()
   @IsNotEmpty()
-  categorieClientId :number
-
-
+  date_fin: string;
+  @ApiProperty()
+  @IsNotEmpty()
+  opportuniteId : number;
+  @ApiProperty()
+  @IsNotEmpty()
+  categorieClientId: number;
 }

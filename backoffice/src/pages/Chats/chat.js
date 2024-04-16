@@ -6,7 +6,7 @@ import { SocketContext } from "../../apps/App";
 import { useParams } from "react-router-dom";
 import send from "../img/send.png"
 export default function Chat() {
-  const { socket } = useContext(SocketContext);
+  const  socket  = useContext(SocketContext);
   const [content, setContent] = useState("");
   const { sessionId } = useParams();
 

@@ -11,7 +11,7 @@ async function seed() {
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash('1234', salt);
-    await Promise.all(
+    const employees = await Promise.all(
       dataEmployee.map(
         async (elem) =>
           await prisma.employee.create({
@@ -23,11 +23,40 @@ async function seed() {
                   password: hashedPassword,
                   isClient: false,
                 },
-                },
+              },
             },
           }),
       ),
     );
+    const category = await prisma.categorieClient.create({
+      data: {
+        nom: 'String',
+        description: 'String',
+      },
+    });
+    const equipe = await prisma.equipe.create({
+      data: {
+        nom_equipe: 'String',
+        nombre: 1,
+        chefId: employees[0].id,
+      },
+    });
+    const opportunity = await prisma.opportunite.create({
+      data: {
+        title: 'String',
+        equipeId: equipe.id,
+      },
+    });
+    await prisma.promotion.create({
+      data: {
+        date_debut: new Date('10-10-2023').toISOString(),
+        date_fin: new Date('10-1-2024').toISOString(),
+        description: 'test',
+        pourcentage: 10,
+        opportuniteId: opportunity.id,
+        categorieClientId: category.id,
+      },
+    });
 
     console.log('data seeeeded');
   } catch (error) {

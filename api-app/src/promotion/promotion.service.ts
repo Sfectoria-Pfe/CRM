@@ -6,16 +6,27 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class PromotionService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createpromotionDto: CreatePromotionDto) {
-    try {
+  async create(dto: CreatePromotionDto) {
+
+      let aux: any;
+      aux={}
+      Object.entries(dto).forEach(([key, value]) => {
+        if (['date_debut', 'date_fin'].includes(key)) {
+          console.log(aux,'here');
+
+          aux[key] = new Date(value).toISOString();
+          
+        } else {
+          aux[key] = value;
+        }
+      });
+      console.log(aux);
+
       const newpromotion = await this.prisma.promotion.create({
-        data: createpromotionDto,
+        data: aux,
       });
       return newpromotion;
-    } catch (error) {
-      console.error('Erreur lors de la création de la promotion :', error);
-      throw error;
-    }
+    
   }
   async findAll() {
     return await this.prisma.promotion.findMany(); // Utilisez Prisma pour récupérer tous les devis
@@ -26,15 +37,20 @@ export class PromotionService {
   }
 
   async update(id: number, updatepromotionDto: UpdatePromotionDto) {
-    try {
-      return await this.prisma.promotion.update({
-        where: { id },
-        data: updatepromotionDto,
-      });
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour du promotion :', error);
-      throw error;
-    }
+    let aux = {};
+    Object.entries(updatepromotionDto).forEach(([key, value]) => {
+      if (['date_debut', 'date_fin'].includes(key)) {
+        aux[key] = new Date(value).toISOString();
+      } else {
+        aux[key] = value;
+      }
+    });
+    console.log(aux);
+
+    return await this.prisma.promotion.update({
+      where: { id },
+      data: aux,
+    });
   }
 
   async remove(id: number) {
@@ -45,7 +61,7 @@ export class PromotionService {
 
       return deletepromotion;
     } catch (error) {
-      console.error("Erreur lors de la suppression du promotion :", error);
+      console.error('Erreur lors de la suppression du promotion :', error);
       throw error;
     }
   }

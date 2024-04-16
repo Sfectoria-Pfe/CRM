@@ -29,9 +29,10 @@ export class AuthService {
     }
 
     const { password, ...rest } = user;
+    
 
     const isPasswordValid = await bcrypt.compare(dto.password, password);
-    if (typeof dto.password !== 'string' || dto.password.trim() === '') {
+    if (!isPasswordValid) {
       throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
     }
 
@@ -54,7 +55,7 @@ export class AuthService {
     const { password, ...rest } = user;
 
     const isPasswordValid = await bcrypt.compare(dto.password, password);
-    if (typeof dto.password !== 'string' || dto.password.trim() === '') {
+    if (!isPasswordValid) {
       throw new HttpException('Invalid password', HttpStatus.UNAUTHORIZED);
     }
 

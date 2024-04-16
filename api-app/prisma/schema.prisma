@@ -95,11 +95,10 @@ model Promotion {
   pourcentage Float
   date_debut  DateTime
   date_fin    DateTime
-
-  CategorieClient   CategorieClient? @relation(fields: [categorieClientId], references: [id])
-  categorieClientId Int?
-  Opportunite       Opportunite?     @relation(fields: [opportuniteId], references: [id])
-  opportuniteId     Int?
+  CategorieClient   CategorieClient @relation(fields: [categorieClientId], references: [id])
+  categorieClientId Int
+  Opportunite       Opportunite     @relation(fields: [opportuniteId], references: [id])
+  opportuniteId     Int
 }
 
 model Service {

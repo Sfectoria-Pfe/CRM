@@ -23,8 +23,8 @@ export class PromotionController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePromotionDto: UpdatePromotionDto) {
-    return this.promotionService.update(+id, updatePromotionDto);
+  update(@Param('id') id: string, @Body() dto: UpdatePromotionDto) {
+    return this.promotionService.update(+id, dto);
   }
 
   @Delete(':id')

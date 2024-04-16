@@ -21,6 +21,7 @@ export class OpportunitesService {
 
   async findAll(numberService: number) {
     const opportunites = await this.prisma.opportunite.findMany({
+      include: { promotion: { include: { CategorieClient: true } } },
       // include:{ServiceOpportunity:true}
     });
     // if(numberService===1)
