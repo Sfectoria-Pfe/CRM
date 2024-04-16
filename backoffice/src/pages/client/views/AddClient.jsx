@@ -78,15 +78,7 @@ export default function AddClient() {
           onChange={handleChange}
         />
       </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Mot de passe"
-          name="password"
-          type="password"
-          onChange={handleChange}
-        />
-      </div>
+
       <Button variant="warning" onClick={handleAddClient} className="form-button">
         Ajouter le client
       </Button>

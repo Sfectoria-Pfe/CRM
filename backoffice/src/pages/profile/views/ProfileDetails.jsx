@@ -19,11 +19,18 @@ export default function ProfileDetails() {
       {user && (
         <div>
           <h2>Informations de l'utilisateur</h2>
-          <p>Nom: {user.nom}</p>
-          <p>Prénom: {user.prenom}</p>
-          <p>Prénom: {user.email}</p>
-
-        </div>
+          <img
+                  src={user && user.Employee.image}
+                  alt="avatar"
+                  className="rounded-circle"
+                  style={{ width: '150px',height:'100px' }}
+                  fluid/>
+          <p>Nom: {user?.Employee?.nom}</p>
+          <p>Prénom: {user?.Employee?.prenom}</p>
+          <p>Prénom: {user?.Employee?.email}</p>
+          <p>Cin: {user?.Employee?.cin}</p>  
+          <p>Adresse: {user?.Employee?.adresse}</p> 
+          <p>Telephone: {user?.Employee?.telephone}</p>        </div>
       )}
     </div>
   );

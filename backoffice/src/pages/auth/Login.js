@@ -2,18 +2,43 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/auth";
 import { MDBBtn, MDBContainer, MDBCard, MDBCardBody, MDBCardImage, MDBRow, MDBCol, MDBIcon, MDBInput } from 'mdb-react-ui-kit';
-import logo from '../../pages/img/logo.png'
+import logo from '../../pages/img/logo.png';
+
 export default function Login() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    dispatch(login({ email, password }))
-      .finally(() => setSubmitting(false));
+
+    // Vérification de l'e-mail et du mot de passe
+    if (email.trim() !== "" && password.trim() !== "") {
+      try {
+        // Effectuer la connexion
+        const response = await dispatch(login({ email, password }));
+        
+        // Vérifier si la connexion a échoué (par exemple, mot de passe incorrect)
+        if (response && response.error) {
+          setError("Adresse e-mail ou mot de passe incorrect");
+        } else {
+          // Si la connexion réussit, réinitialiser l'erreur
+          setError("");
+        }
+      } catch (error) {
+        // Afficher un message d'erreur en cas d'erreur inattendue
+        setError("Une erreur s'est produite lors de la connexion. Veuillez réessayer.");
+      } finally {
+        setSubmitting(false);
+      }
+    } else {
+      // Sinon, afficher un message d'erreur
+      setError("Veuillez entrer une adresse e-mail et un mot de passe");
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -33,10 +58,11 @@ export default function Login() {
               <form onSubmit={handleSubmit}>
                 <MDBInput wrapperClass='h3 mb-4' label='Email ' id='formControlLg' type='email' size="lg" required value={email} onChange={(e) => setEmail(e.target.value)} />
                 <MDBInput wrapperClass='h3 mb-4' label='Mot de passe' id='formControlLg' type='password' size="lg" required value={password} onChange={(e) => setPassword(e.target.value)} />
-                <MDBBtn className="mb-4 px-5"style={{ backgroundcolor:'#00154F' }} size='lg' disabled={submitting}>Se Connecter</MDBBtn>
+                <MDBBtn className="mb-4 px-5" style={{ backgroundColor:'#00154F' }} size='lg' disabled={submitting}>Se Connecter</MDBBtn>
+                {error && <p style={{ color: 'red' }}>{error}</p>}
               </form>
               <a className="small text-muted" href="#!">Forgot password?</a>
-              <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>Vous n'avez pas un compte <a href="SignUp" style={{color: '#393f81'}}>inscrire icie</a></p>
+              <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>Vous n'avez pas un compte <a href="SignUp" style={{color: '#393f81'}}>inscrire ici</a></p>
               <div className='d-flex flex-row justify-content-start'>
                 <a href="#!" className="small text-muted me-1">Terms of use.</a>
                 <a href="#!" className="small text-muted">Privacy policy</a>

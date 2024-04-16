@@ -29,10 +29,10 @@ export const getMe = createAsyncThunk("getMe",async (args)=>{
 
 
 
-// export const updateUserClient = createAsyncThunk("client/updateClient", async ({ id, body }) => {
-//   const response = await axios.patch(`http://localhost:7000/clients/${id}`, body);
-//   return response.data;
-// });
+export const updateUserClient = createAsyncThunk("client/updateClient", async ({ id, body }) => {
+  const response = await axios.patch(`http://localhost:7000/clients/${id}`, body);
+  return response.data;
+});
 
 
 
@@ -47,6 +47,10 @@ export const authSlice = createSlice({
       builder.addCase(getMe.fulfilled, (state,action)=>{
           state.me = action.payload
       })
+
+      builder.addCase(updateUserClient.fulfilled, (state, action) => {
+        state.me = action.payload
+      });
   }
 })
 export default authSlice.reducer;

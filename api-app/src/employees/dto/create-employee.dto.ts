@@ -15,6 +15,9 @@ export class CreateEmployeeDto {
     adresse: string;
     @ApiProperty()
 
+     image? :string;
+    @ApiProperty()
+
     email: string;
     @ApiProperty()
 

@@ -9,8 +9,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   const config = new DocumentBuilder()
-    .setTitle('SFECTORIA example')
-    .setDescription('The SFECTORIA API description')
+    .setTitle('Pfe CRM example')
+    .setDescription('Pfe CRM')
     .setVersion('1.0')
     .addApiKey({type:'apiKey',name:'Authorization',in:'header'},'apiKey')
     .addTag('SFECTORIA')

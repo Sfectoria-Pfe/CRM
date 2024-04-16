@@ -17,7 +17,7 @@ export class ClientsService {
       console.error('Erreur lors de la création du client :', error);
       throw error; // Vous pouvez remplacer cela par un type d'exception plus approprié si nécessaire
     }
-  }
+    }
 
   async findAll() {
     return await this.prisma.client.findMany();
@@ -25,9 +25,6 @@ export class ClientsService {
 
   async findOne(id: number) {
     const client = await this.prisma.client.findUnique({ where: { id } });
-    if (!client) {
-      throw new NotFoundException(`Client with ID ${id} not found`);
-    }
     return client;
   }
 

@@ -5,13 +5,13 @@ import { Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
 import { useDemoData } from "@mui/x-data-grid-generator";
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import OneClient from "./oneClient";
 function ListClients() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const clients = useSelector(
-    (state) => state.client.clients.items
-  );
+  const clients = useSelector((state) => state.client.clients.items);
+
   const columns = [
     {
       field: "id",
@@ -25,30 +25,55 @@ function ListClients() {
     },
     {
       field: "prenom",
-      headerName: "Equipe Id",
+      headerName: "Prenom",
       width: 150,
     },
     {
-        field: "email",
-        headerName: "Equipe Id",
-        width: 150,
-      },
+      field: "email",
+      headerName: "Email",
+      width: 150,
+    },
+    {
+      field: "adresse",
+      headerName: "Adress",
+      width: 150,
+    },
+    {
+      field: "telephone",
+      headerName: "Telephone",
+      width: 150,
+    },
+    {
+      field: "image",
+      headerName: "Image",
+      width: 150,
+      renderCell: (params) => (
+        <img
+          src={params.value}
+          alt="Client"
+          style={{ width: 50, height: 50 }}
+        />
+      ),
+    },
     {
       field: "actions",
       type: "actions",
       width: 80,
       getActions: (row) => {
         return [
-          <GridActionsCellItem
-            disableFocusRipple={false}
-            icon={<VisibilityIcon />}
-            label="Look"
-            size="small"
-            edge="start"
-            onClick={() => {
-              navigate(`${row.id}`);
-            }}
-          />,
+<Link to={`${row.id}`} key={row.id}>
+            {" "}
+            <GridActionsCellItem
+              disableFocusRipple={false}
+              icon={<VisibilityIcon />}
+              label="Look"
+              size="small"
+              edge="start"
+              onClick={() => {
+                navigate(`/clients/${row.id}`);
+              }}
+            />
+          </Link>,
         ];
       },
     },
@@ -61,15 +86,11 @@ function ListClients() {
     "dateCreated",
     "isAdmin",
   ];
-  const { data } = useDemoData({
-    dataSet: "Employee",
-    visibleFields: VISIBLE_FIELDS,
-    rowLength: 100,
-  });
 
   useEffect(() => {
     dispatch(fetchClients());
   }, [dispatch]);
+
   return (
     <div>
       <div className="d-flex justify-content-end m-3">

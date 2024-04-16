@@ -16,7 +16,7 @@ export class SignupDto {
   @ApiProperty()
   email: string;
   adresse: string;
-  telephone: number;
+  telephone: string;
   password: string;
   image?: string;
 }

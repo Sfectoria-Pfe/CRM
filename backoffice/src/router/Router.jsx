@@ -38,6 +38,17 @@ import Opportunity from "../pages/opportunite/opportunity.jsx";
 import AccesDenied from "../pages/AccesDenied.jsx";
 import SignUp from "../pages/auth/SignUp.js";
 import Test from "../pages/To doList/Test.js";
+import OneClient from "../pages/client/views/oneClient.js";
+import ListDevis from "../pages/Devis/ListeDevis.jsx";
+import OneDevis from "../pages/Devis/OneDevis.js";
+import Chat from "../pages/Chats/chat.js";
+import Addemployee from "../pages/employee/addemlpyee.jsx";
+import ListEmployee from "../pages/employee/listeemployee.jsx";
+import ListPromotion from "../pages/promotion/Listepromotion.jsx";
+import Addpromotion from "../pages/promotion/Addpromotion.jsx";
+import AddPromotion from "../pages/promotion/Addpromotion.jsx";
+import BasicDateCalendar from "../pages/calendrier/calendrier.jsx";
+import Adduser from "../pages/user/adduser.jsx";
 export const UserContext = createContext();
 
 function PrivateRoute({ Component, roles }) {
@@ -86,13 +97,12 @@ export default function Router() {
                 <Route path="ListeVente" element={<VenteList />} />
                 <Route path="AddLocation" element={<AddLocation />} />
                 <Route path="ListeLocation" element={<LocationList />} />
-                <Route
-                  path="clients"
-                 >
-                <Route index element={<ClientList />} />
+                <Route path="clients">
+                  <Route index element={<ClientList />} />
+                  <Route path=":clientId" element={<OneClient />} />
 
-                <Route path="addClient" element={<AddClient />} />
-                </Route>
+                  <Route path="addClient" element={<AddClient />} />
+                  </Route>
                 <Route
                   path="opportunities"
                   element={
@@ -106,17 +116,26 @@ export default function Router() {
                   <Route path="add" element={<AddOpportunite />} />
                   <Route path=":opportunityId" element={<ViewOpportunity />} />
                 </Route>
-                <Route path="AddStage" element={<AddStage />} />
+                <Route path="/devis" element={<ListDevis />} />
+                <Route path="/devis/:devisId" element={<OneDevis />} />  
+                <Route path="./AddStage" element={<AddStage />} />
                 <Route path="AddIcone" element={<AddStageIcon />} />
                 <Route path="test" element={<TestFetchOpportunites />} />
                 <Route path="Addstage_client" element={<AddStageClient />} />
                 <Route path="acess-denied" element={<AccesDenied />} />
-                <Route path="todolist"  element={<Test/>} />
+                <Route path="todolist" element={<Test />} />
+                <Route path="chats" element={<Chat/>} />
+                <Route path="addemployee" element={<Addemployee/>}  />
+                <Route path="listeemployee" element={<ListEmployee/>} />
+                <Route path="/Addpromotion" element={<AddPromotion />} />
+                <Route path="listepromotion" element={<ListPromotion />} />
+                <Route path="calendrier" element={<BasicDateCalendar />} />
+                <Route path="adduser" element={<Adduser/>} />
               </Route>
             ) : (
               <Route path="/" element={<Auth />}>
                 <Route index element={<Login />} />
-                <Route path="/signup" element={<SignUp />}/>
+                <Route path="/signup" element={<SignUp />} />
               </Route>
             )}
             <Route path="*" element={<NotFound />} />

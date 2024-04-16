@@ -39,9 +39,8 @@ export default function AddClient() {
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === "telephone" ? parseInt(value) : value;
 
-    setClient({ ...client, [name]: newValue });
+    setClient({ ...client, [name]: value });
   };
   const handleAddClient = () => {
     dispatch(signupClient(client))

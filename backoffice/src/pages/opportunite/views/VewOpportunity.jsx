@@ -105,7 +105,7 @@ const ViewOpportunity = () => {
         <div className="stage new-stage">
           <FiPlus onClick={handleToggleAddStageForm} />
        
-        {showAddStageForm && <AddStage />}
+          {showAddStageForm && <AddStage opportuniteId={opportunityId} />}
         
       </div>
       </div></div>

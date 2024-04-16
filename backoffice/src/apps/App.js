@@ -51,9 +51,13 @@ import MailIcon from "@mui/icons-material/Mail";
 import { sidebarData } from "../constants/sidebarData";
 import { useSelector } from "react-redux";
 import { Dropdown } from "react-bootstrap";
-
+import { io } from "socket.io-client";
+import { createContext } from "react";
+import Badge from '@mui/material/Badge';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 const drawerWidth = 240;
-
+// const socket = io("http://localhost:7000"); //path of the server
+export const SocketContext = createContext();
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -125,6 +129,7 @@ export default function App() {
   const user = useSelector((store) => store.auth.me);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [openCatalogueSubMenu, setOpenCatalogueSubMenu] = React.useState(false); // Déplacez la définition ici
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -138,56 +143,67 @@ export default function App() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar style={{ backgroundColor:"#e1f5fe",color:'black'
-}}className=" d-flex justify-content-between ">
-          <IconButton
-            color="#ffffff"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
+      <Toolbar style={{ backgroundColor: "#f5f5f5", color: 'black' }} className="d-flex justify-content-between ">
+  <IconButton
+    color="inherit"
+    aria-label="open drawer"
+    onClick={handleDrawerOpen}
+    edge="start"
+    sx={{
+      marginRight: 2,
+      ...(open && { display: "none" }),
+    }}
+  >
+    <MenuIcon />
+  </IconButton>
 
-          <div className="d-flex align-items-center justify-content-end w-100 gap-3 ">
-            <p className="m-0">
-              Welcome {user?.Employee?.nom + " " + user?.Employee?.prenom}{" "}
-            </p>
-            <Dropdown className="d-flex ">
-              <Dropdown.Toggle
+  <div className="d-flex align-items-center justify-content-end w-100 gap-3 ">
+    <IconButton color="inherit" sx={{ mr: 2 }}>
+      <Badge badgeContent={4} color="error">
+        <NotificationsIcon />
+      </Badge>
+    </IconButton>
+    <IconButton color="inherit">
+      <Badge badgeContent={2} color="error">
+        <MailIcon />
+      </Badge>
+    </IconButton>
+    <p className="m-0">
+      Welcome {user?.Employee?.nom + " " + user?.Employee?.prenom}{" "}
+    </p>
+    <Dropdown className="d-flex ">
+      <Dropdown.Toggle
+        variant=""
+        id="dropdownMenu2"
+        className="d-flex gap-3 align-items-center"
+      >
+        <img
+          src={user?.Employee?.image}
+          alt="avatar"
+          className="rounded-circle"
+          style={{ width: 50, height: 50, objectFit: "cover" }}
+        />
+      </Dropdown.Toggle>
 
-                variant=""
-                id="dropdownMenu2"
-                className="d-flex gap-3 align-items-center"
+      <Dropdown.Menu>
+      <Dropdown.Item onClick={() => {
+                      
+                      window.location.pathname = "/profile";
+                    }}>Profile</Dropdown.Item>   
+                         <Dropdown.Item>Setting</Dropdown.Item>
+        <Dropdown.Item
+          onClick={() => {
+            localStorage.removeItem('token');
+            window.location.pathname = "/";
+          }}
+        >
+          Logout
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  </div>
+</Toolbar>
 
-              >
-                <img
-                  src={user?.Employee?.image}
-                  alt="avatar"
-                  className="rounded-circle"
-                  style={{ width: 50, height: 50, objectFit: "cover" }}
-                />
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item>Profile</Dropdown.Item>
-                <Dropdown.Item>Setting</Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => {
-                    localStorage.removeItem('token');
-                    window.location.pathname = "/";
-                  }}
-                >
-                  Logout
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-        </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
@@ -200,43 +216,84 @@ export default function App() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List sx={{backgroundColor:"#00154f", flex:1}} >
-          {sidebarData.map((elem, index) => (
-            <>
-              {elem.access.includes(user?.Employee.role) ? (
-                <ListItem key={index} disablePadding sx={{ display: "block" }}>
+        <List sx={{ backgroundColor: "#00154f", flex: 1 }}>
+  {sidebarData.map((elem, index) => (
+    <React.Fragment key={index}>
+      {elem.access.includes(user?.Employee.role) ? (
+        <>
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={() => {
+                navigate(elem.path);
+                if (elem.title === "Catalogue") {
+                  setOpenCatalogueSubMenu(!openCatalogueSubMenu);
+                }
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                  color: "#ffffff",
+                }}
+              >
+                {elem.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={elem.title}
+                sx={{ opacity: open ? 1 : 0, color: "#ffffff" }}
+              />
+            </ListItemButton>
+          </ListItem>
+          {elem.title === "Catalogue" && openCatalogueSubMenu && elem.children && (
+            <List>
+              {elem.children.map((child, childIndex) => (
+                <ListItem
+                  key={childIndex}
+                  disablePadding
+                  sx={{ display: "block" }}
+                >
                   <ListItemButton
                     sx={{
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
-                      px: 2.5,
+                      px: 4, // Ajustez le décalage selon vos besoins
                     }}
-                    onClick={() => navigate(elem.path)}
+                    onClick={() => navigate(child.path)}
                   >
                     <ListItemIcon
                       sx={{
                         minWidth: 0,
                         mr: open ? 3 : "auto",
                         justifyContent: "center",
-                        color:"#ffffff"
+                        color: "#ffffff",
                       }}
                     >
-                      {elem.icon}
+                      {child.icon}
                     </ListItemIcon>
                     <ListItemText
-                      primary={elem.title}
-                      sx={{ opacity: open ? 1 : 0,  
-                      color:"#ffffff"
-                    }}
+                      primary={child.title}
+                      sx={{ opacity: open ? 1 : 0, color: "#ffffff" }}
                     />
                   </ListItemButton>
                 </ListItem>
-              ) : (
-                ""
-              )}
-            </>
-          ))}
-        </List>
+              ))}
+            </List>
+          )}
+        </>
+      ) : (
+        ""
+      )}
+    </React.Fragment>
+  ))}
+</List>
+
         <Divider />
         
   

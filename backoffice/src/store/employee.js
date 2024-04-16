@@ -37,11 +37,11 @@ const employeeSlice = createSlice({
   initialState: {
     employee: null,
     employees: {
-      items: [],
+      items: [], // Assurez-vous que items est initialisé comme un tableau vide
       count: 0,
     },
   },
-  reducers: {},
+   reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchEmployees.fulfilled, (state, action) => {
       state.employees.items = action.payload;
