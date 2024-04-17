@@ -130,6 +130,7 @@ export default function App() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
   const [openCatalogueSubMenu, setOpenCatalogueSubMenu] = React.useState(false); // Déplacez la définition ici
+  const [openSubMenu, setOpenSubMenu] = React.useState(""); // Définir l'état local pour le sous-menu ouvert
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -138,7 +139,12 @@ export default function App() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  const handleMenuItemClick = (elem) => {
+    navigate(elem.path);
+    if (elem.children) {
+      setOpenSubMenu(openSubMenu === elem.title ? '' : elem.title);
+    }
+  };
   return (
     <SocketContext.Provider value={socket}>
       <Box sx={{ display: "flex" }}>
@@ -223,87 +229,79 @@ export default function App() {
           </DrawerHeader>
           <Divider />
           <List sx={{ backgroundColor: "#00154f", flex: 1 }}>
-            {sidebarData.map((elem, index) => (
-              <React.Fragment key={index}>
-                {elem.access.includes(user?.Employee.role) ? (
-                  <>
-                    <ListItem disablePadding>
-                      <ListItemButton
-                        sx={{
-                          minHeight: 48,
-                          justifyContent: open ? "initial" : "center",
-                          px: 2.5,
-                        }}
-                        onClick={() => {
-                          navigate(elem.path);
-                          if (elem.title === "Catalogue") {
-                            setOpenCatalogueSubMenu(!openCatalogueSubMenu);
-                          }
-                        }}
-                      >
-                        <ListItemIcon
-                          sx={{
-                            minWidth: 0,
-                            mr: open ? 3 : "auto",
-                            justifyContent: "center",
-                            color: "#ffffff",
-                          }}
-                        >
-                          {elem.icon}
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={elem.title}
-                          sx={{ opacity: open ? 1 : 0, color: "#ffffff" }}
-                        />
-                      </ListItemButton>
-                    </ListItem>
-                    {elem.title === "Catalogue" &&
-                      openCatalogueSubMenu &&
-                      elem.children && (
-                        <List>
-                          {elem.children.map((child, childIndex) => (
-                            <ListItem
-                              key={childIndex}
-                              disablePadding
-                              sx={{ display: "block" }}
-                            >
-                              <ListItemButton
-                                sx={{
-                                  minHeight: 48,
-                                  justifyContent: open ? "initial" : "center",
-                                  px: 4, // Ajustez le décalage selon vos besoins
-                                }}
-                                onClick={() => navigate(child.path)}
-                              >
-                                <ListItemIcon
-                                  sx={{
-                                    minWidth: 0,
-                                    mr: open ? 3 : "auto",
-                                    justifyContent: "center",
-                                    color: "#ffffff",
-                                  }}
-                                >
-                                  {child.icon}
-                                </ListItemIcon>
-                                <ListItemText
-                                  primary={child.title}
-                                  sx={{
-                                    opacity: open ? 1 : 0,
-                                    color: "#ffffff",
-                                  }}
-                                />
-                              </ListItemButton>
-                            </ListItem>
-                          ))}
-                        </List>
-                      )}
-                  </>
-                ) : (
-                  ""
-                )}
-              </React.Fragment>
-            ))}
-          </List>
+  {sidebarData.map((elem, index) => (
+    <React.Fragment key={index}>
+      {elem.access.includes(user?.Employee.role) ? (
+        <>
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={() => handleMenuItemClick(elem)}
+
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                  color: "#ffffff",
+                }}
+              >
+                {elem.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={elem.title}
+                sx={{ opacity: open ? 1 : 0, color: "#ffffff" }}
+              />
+            </ListItemButton>
+          </ListItem>
+          {openSubMenu === elem.title && elem.children && (
+            <List>
+              {elem.children.map((child, childIndex) => (
+                <ListItem
+                  key={childIndex}
+                  disablePadding
+                  sx={{ display: "block" }}
+                >
+                  <ListItemButton
+                    sx={{
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 4,
+                    }}
+                    onClick={() => navigate(child.path)}
+                  >
+                    <ListItemIcon
+                      sx={{
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                        color: "#ffffff",
+                      }}
+                    >
+                      {child.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={child.title}
+                      sx={{ opacity: open ? 1 : 0, color: "#ffffff" }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          )}
+        </>
+      ) : (
+        ""
+      )}
+    </React.Fragment>
+  ))}
+</List>
+
 
           <Divider />
         </Drawer>

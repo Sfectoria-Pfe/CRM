@@ -11,6 +11,7 @@ import client from "./client";
 import devis from "./devis";
 import promotion from "./promotion";
 import user from "./user";
+import employee from "./employee";
 export const store = configureStore({
-  reducer: { products, order, service, auth, vente, client, opportunite, stage,stage_client,devis,promotion,user},
+  reducer: { products, order, service, auth, vente, client, opportunite, stage,stage_client,devis,promotion,user,employee},
 });

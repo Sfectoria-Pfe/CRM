@@ -4,6 +4,8 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "font-awesome/css/font-awesome.min.css"; // Import du fichier CSS de Font Awesome
 import './App.css'
+import './pages/calendrier/calend.css';
+
 import reportWebVitals from './reportWebVitals';
 import Router from './router/Router';
 import { Provider } from "react-redux";
