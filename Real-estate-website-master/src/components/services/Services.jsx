@@ -11,24 +11,58 @@ import Recent from "../home/recent/Recent";
 // import AboutUs from "../common/AboutUs";
 
 const Services = () => {
+  // const dispatch=useDispatch()
+const [services,setServices]=useState([])
+  useEffect(() => {
+    (async ()=>{
+
+     const response= await  axios.get("http://localhost:7000/opportunites", {
+         params:{
+          numberService:1
+         }
+       });
+       setServices(response.data)
+    })()
+  }, []);
   return (
     <>
-      <section className='services mb'>
-        <Back name='Services' title='Notre Service ' cover={img} />
-        <div className='featured container'>
+      <section className="services mb">
+        <Back name="Services" title="Notre Service " cover={img} />
+        <div className="featured container">
           <FeaturedCard />
-
-          <br/><br/>
-          <h1 className="section-title" style={{ backgroundColor: "#00695c", color: "#ffffff", padding: "10px", borderRadius: "5px" }}>Notre immobilier pour la location</h1>
+          <br />
+          <br />
+          <h1
+            className="section-title"
+            style={{
+              backgroundColor: "#00695c",
+              color: "#ffffff",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+          >
+            Notre immobilier pour la location
+          </h1>
           <br></br> <br></br>
           <LocationCard />
-<br/><br/>
-<h1 className="section-title" style={{ backgroundColor: "#00695c", color: "#ffffff", padding: "10px", borderRadius: "5px" }}>Notre immobilier pour la vente</h1>
-<Recent />
+          <br />
+          <br />
+          <h1
+            className="section-title"
+            style={{
+              backgroundColor: "#00695c",
+              color: "#ffffff",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+          >
+            Notre immobilier pour la vente
+          </h1>
+          <Recent />
         </div>
       </section>
     </>
   );
-}
+};
 
 export default Services;

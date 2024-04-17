@@ -21,15 +21,22 @@ export class OpportunitesService {
 
   async findAll(numberService: number) {
     const opportunites = await this.prisma.opportunite.findMany({
-      include: { promotion: { include: { CategorieClient: true } } },
-      // include:{ServiceOpportunity:true}
+      include: {
+        service_Opportunites: {include:{Service:true}},
+        promotion: { include: { CategorieClient: true } },
+      },
     });
-    // if(numberService===1)
-    // opportunites.filter(elem=>elem.ServiceOpportunity.lenght=numberService)
-    //else   opportunites.filter(elem=>elem.ServiceOpportunity.lenght>numberService)
-    // })
+    console.log(numberService, typeof numberService);
 
-    return opportunites;
+    if (numberService === 1) {
+      return opportunites.filter(
+        (elem) => (elem.service_Opportunites.length = numberService),
+      );
+    } else {
+      return opportunites.filter(
+        (elem) => elem.service_Opportunites.length > numberService,
+      );
+    }
   }
 
   async findOne(id: number) {

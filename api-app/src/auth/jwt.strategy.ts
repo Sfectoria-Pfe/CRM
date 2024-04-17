@@ -8,7 +8,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly prisma: PrismaService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: true,
+      ignoreExpiration: true,  
       secretOrKey: 'sfectoria',
     });
   }
@@ -19,7 +19,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         email: payload.email,
       },
     });
+    
     if (!user) {
+      console.log(user);
       throw new HttpException('invalid token', HttpStatus.UNAUTHORIZED);
     } else {
       return user;

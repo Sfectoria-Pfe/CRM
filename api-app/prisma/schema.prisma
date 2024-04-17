@@ -90,11 +90,11 @@ model CategorieClient {
 
 // add two model services et serviceOpportunity
 model Promotion {
-  id          Int      @id @default(autoincrement())
-  description String
-  pourcentage Float
-  date_debut  DateTime
-  date_fin    DateTime
+  id                Int             @id @default(autoincrement())
+  description       String
+  pourcentage       Float
+  date_debut        DateTime
+  date_fin          DateTime
   CategorieClient   CategorieClient @relation(fields: [categorieClientId], references: [id])
   categorieClientId Int
   Opportunite       Opportunite     @relation(fields: [opportuniteId], references: [id])
@@ -104,6 +104,22 @@ model Promotion {
 model Service {
   id                   Int                   @id @default(autoincrement())
   service_Opportunites Service_Opportunite[]
+  name                 String
+  description          String
+  type                 TypeService
+  price                Float
+  imageURL             String
+  details              ServiceDetail[]
+}
+
+model ServiceDetail {
+  id          Int     @id @default(autoincrement())
+  imageURL    String
+  description String
+  address     String 
+  price       Float
+  Service     Service @relation(fields: [serviceId], references: [id])
+  serviceId   Int
 }
 
 model Opportunite {
@@ -204,6 +220,12 @@ enum Role {
   admin
   chef
   commercial
+}
+
+enum TypeService {
+  location
+  vente
+  autre
 }
 
 model MsgsClient {

@@ -9,9 +9,9 @@ const prisma = new PrismaClient();
 
 async function seed() {
   try {
-
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash('1234', salt);
+
     const employees = await Promise.all(
       dataEmployee.map(
         async (elem) =>
@@ -46,6 +46,23 @@ async function seed() {
       data: {
         title: 'String',
         equipeId: equipe.id,
+        service_Opportunites: {
+          create: {
+            prix: 500,
+            isPromotion: true,
+            discountAmout: 20,
+            Service: {
+              create: {
+                name: 'String',
+                description: 'String',
+                type: 'location',
+                price: 400,
+                imageURL:
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU4b_B8qlxrK6yMV7ZQD_zRsR-X_avOEZBFO4LSWBO8g&s',
+              },
+            },
+          },
+        },
       },
     });
     await prisma.promotion.create({
@@ -58,16 +75,30 @@ async function seed() {
         categorieClientId: category.id,
       },
     });
-    const clients = await prisma.client.createMany({
-      data: dataClient,
-    }); 
+    const clients = await Promise.all(
+      dataClient.map(
+        async (elem) =>
+          await prisma.client.create({
+            data: {
+              ...elem,
+              user: {
+                create: {
+                  email: elem.email,
+                  password: hashedPassword,
+                  isClient: true,
+                },
+              },
+            },
+          }),
+      ),
+    );
     const locations = await prisma.location.createMany({
       data: dataLocation,
     });
     const ventes = await prisma.vente.createMany({
       data: dataVente,
-    }); 
-      console.log('data seeeeded');
+    });
+    console.log('data seeeeded');
   } catch (error) {
     console.error('Error seeding database:', error);
   } finally {

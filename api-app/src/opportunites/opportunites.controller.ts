@@ -26,8 +26,8 @@ export class OpportunitesController {
 
   // @UseGuards(JwtAuthGuard)
   @Get()
-  findAll(@Query() numberService:number) { //@Role(['admin','chef']) role
-    return this.opportunitesService.findAll(numberService);
+  findAll(@Query() query:any) { //@Role(['admin','chef']) role
+    return this.opportunitesService.findAll(+query.numberService);
   }
 
   @Get(':id')
