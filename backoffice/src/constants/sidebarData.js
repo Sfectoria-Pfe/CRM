@@ -12,8 +12,13 @@ import AddLocationIcon from '@mui/icons-material/AddLocation';
 import AddVenteIcon from '@mui/icons-material/Add';
 import ListeVenteIcon from '@mui/icons-material/ListAlt';
 import ListeLocationIcon from '@mui/icons-material/List';
-
-
+import DescriptionIcon from '@mui/icons-material/Description';
+import RequestIcon from '@mui/icons-material/RequestQuote';
+import DevisIcon from '@mui/icons-material/Description';
+import ListDevisIcon from '@mui/icons-material/ListAlt';
+import DiscountIcon from '@mui/icons-material/Discount';
+import ListIcon from '@mui/icons-material/List';
+import AddIcon from '@mui/icons-material/Add';
 
 export const sidebarData = [
   {
@@ -24,7 +29,7 @@ export const sidebarData = [
   },
   {
     title: "Catalogue",
-    path: "/",
+    path: "/addLocation",
     icon: <GridViewIcon />,
     access: ["chef", "admin", "commercial"],
     children: [
@@ -48,6 +53,12 @@ export const sidebarData = [
         path: "/ListeLocation",
         icon: <ListeLocationIcon />,
       },
+      {
+        title: "promotion",
+        path: "/Addpromotion",
+        icon: <DiscountIcon />,
+        access:['chef','admin','commercial']
+      }, 
     ],
   },
   {
@@ -64,22 +75,54 @@ export const sidebarData = [
   },
   {
     title: "Devis",
+    icon: <DescriptionIcon />,
     path: "/devis",
-    icon: <StickyNote2Icon />,
-    access:['chef','admin','commercial']
-  }, 
+    access: ["admin", "manager"],
+    children: [
+      {
+        title: "Liste Demande Devis",
+        icon: <RequestIcon />,
+        path: "/",
+      },
+      {
+        title: " Ajouter Devis",
+        icon: <DevisIcon />,
+        path: "/",
+      },
+      {
+        title: "List Devis",
+        icon: <ListDevisIcon />,
+        path: "/devis",
+      },
+    ],
+  },
+
+
 
   {
     title: "Rendez Vous",
-    path: "/",
+    path: "/calendrier",
     icon: <CalendarMonthIcon />,
     access:['chef','admin','commercial']
  
   }, 
   {
     title: "Employés",
-    path: "/emplyee",
+    path: "/listeemployee",
     icon: < PeopleAltIcon  />,
+    children: [
+      {
+        title: "Add Employee",
+        icon: <AddIcon />,
+        path: "/addemployee",
+      },
+      {
+        title: "List Employees",
+        icon: <ListIcon />,
+        path: "/listeemployee",
+      },
+      
+    ],
     access:['chef','admin','commercial']
   },
   {
@@ -94,11 +137,6 @@ export const sidebarData = [
     icon: < ChatIcon  />,
     access:['chef','admin','commercial']
   },
-  {
-    title: "promotion",
-    path: "/Addpromotion",
-    icon: <StickyNote2Icon />,
-    access:['chef','admin','commercial']
-  }, 
+  
 
 ];

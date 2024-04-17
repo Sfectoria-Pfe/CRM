@@ -19,7 +19,7 @@ import EditProfile from "../pages/profile/views/EditProfile";
 import { getMe } from "../store/auth";
 import AddVente from "../pages/ventes/views/AddVente";
 import VenteList from "../pages/ventes/views/ListeVente";
-
+import Calendrier from "../pages/calendrier/calendrier.jsx"
 import Addservice from "../pages/service/views/addService";
 import ServiceListe from "../pages/service/views/serviceListe.jsx";
 import Login from "../pages/auth/Login";
@@ -45,9 +45,7 @@ import Chat from "../pages/Chats/chat.js";
 import Addemployee from "../pages/employee/addemlpyee.jsx";
 import ListEmployee from "../pages/employee/listeemployee.jsx";
 import ListPromotion from "../pages/promotion/Listepromotion.jsx";
-import Addpromotion from "../pages/promotion/Addpromotion.jsx";
 import AddPromotion from "../pages/promotion/Addpromotion.jsx";
-import BasicDateCalendar from "../pages/calendrier/calendrier.jsx";
 import Adduser from "../pages/user/adduser.jsx";
 import { Spinner } from "react-bootstrap";
 export const UserContext = createContext();
@@ -141,8 +139,9 @@ export default function Router() {
                 <Route path="listeemployee" element={<ListEmployee />} />
                 <Route path="/Addpromotion" element={<AddPromotion />} />
                 <Route path="listepromotion" element={<ListPromotion />} />
-                <Route path="calendrier" element={<BasicDateCalendar />} />
+                <Route path="calendrier" element={<Calendrier />} />
                 <Route path="adduser" element={<Adduser />} />
+                  
               </Route>
             ) : (
               <Route path="/" element={<Auth />}>

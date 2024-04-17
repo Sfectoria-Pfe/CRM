@@ -2,12 +2,13 @@ import { PrismaClient } from '@prisma/client';
 import { dataEmployee } from './dataAdmins';
 import { dataServices } from './dataServices';
 import * as bcrypt from 'bcrypt';
+import { dataClient } from './dataClient';
+import { dataLocation, dataVente } from './dataLocation';
 
 const prisma = new PrismaClient();
 
 async function seed() {
   try {
-    // Insertion des données des administrateurs
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash('1234', salt);
@@ -57,8 +58,16 @@ async function seed() {
         categorieClientId: category.id,
       },
     });
-
-    console.log('data seeeeded');
+    const clients = await prisma.client.createMany({
+      data: dataClient,
+    }); 
+    const locations = await prisma.location.createMany({
+      data: dataLocation,
+    });
+    const ventes = await prisma.vente.createMany({
+      data: dataVente,
+    }); 
+      console.log('data seeeeded');
   } catch (error) {
     console.error('Error seeding database:', error);
   } finally {
