@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 
 async function seed() {
   try {
-    const salt= await bcrypt.genSalt();
+    const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash('1234', salt);
 
     const employees = await Promise.all(
@@ -46,26 +46,48 @@ async function seed() {
       data: {
         title: 'String',
         equipeId: equipe.id,
-        service_Opportunites: {
-          create: {
-            prix: 500,
-            isPromotion: true,
-            discountAmout: 20,
-            Service: {
-              create: {
-                name: 'String',
-                description: 'String',
-                type: 'location',
-                price: 400,
-                imageURL:
-                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU4b_B8qlxrK6yMV7ZQD_zRsR-X_avOEZBFO4LSWBO8g&s',
-              },
-            },
-          },
-        },
-      }, 
+      },
     });
-
+    const service1 = await prisma.service.create({
+      data: {
+        name: 'String',
+        description: 'String',
+        type: 'location',
+        price: 400,
+        imageURL:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU4b_B8qlxrK6yMV7ZQD_zRsR-X_avOEZBFO4LSWBO8g&s',
+      },
+    });
+    const service2 = await prisma.service.create({
+      data: {
+        name: 'String2',
+        description: 'String2',
+        type: 'location',
+        price: 400,
+        imageURL:
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU4b_B8qlxrK6yMV7ZQD_zRsR-X_avOEZBFO4LSWBO8g&s',
+      },
+    });
+    console.log(opportunity,service1,service2);
+    
+    const servicesOpportunities1 = await prisma.service_Opportunite.create({
+      data: {
+        prix: 500,
+        isPromotion: true,
+        discountAmout: 20,
+        opportuniteId: opportunity.id,
+        serviceId: service1.id,
+      },
+    });
+    const servicesOpportunities2 = await prisma.service_Opportunite.create({
+      data: {
+        prix: 500,
+        isPromotion: true,
+        discountAmout: 20,
+        opportuniteId: opportunity.id,
+        serviceId: service2.id,
+      },
+    });
 
     const opportunity1 = await prisma.opportunite.create({
       data: {
@@ -82,7 +104,8 @@ async function seed() {
                 description: 'Description de la vente',
                 type: 'vente',
                 price: 400,
-                imageURL:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBNeE0c29TP4t1CBvhqMvzkb29y8kDPMG7rA&s'
+                imageURL:
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBNeE0c29TP4t1CBvhqMvzkb29y8kDPMG7rA&s',
               },
             },
           },
@@ -104,7 +127,8 @@ async function seed() {
                 description: 'Description de Notre service',
                 type: 'vente',
                 price: 400,
-                imageURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBNeE0c29TP4t1CBvhqMvzkb29y8kDPMG7rA&s',
+                imageURL:
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBNeE0c29TP4t1CBvhqMvzkb29y8kDPMG7rA&s',
               },
             },
           },
@@ -126,7 +150,8 @@ async function seed() {
                 description: 'Description de la vente',
                 type: 'autre',
                 price: 400,
-                imageURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjQEtei7v_F9hz-_cPySQGnswzdjQlwCFADQ&s',
+                imageURL:
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjQEtei7v_F9hz-_cPySQGnswzdjQlwCFADQ&s',
               },
             },
           },
@@ -134,9 +159,7 @@ async function seed() {
       },
     });
 
- 
-
- await prisma.promotion.create({
+    await prisma.promotion.create({
       data: {
         date_debut: new Date('10-10-2023').toISOString(),
         date_fin: new Date('10-1-2024').toISOString(),

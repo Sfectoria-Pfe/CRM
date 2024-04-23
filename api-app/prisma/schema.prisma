@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["relationJoins", "filteredRelationCount", "orderByRelation"]
 }
 
 datasource db {
@@ -106,17 +107,17 @@ model Service {
   service_Opportunites Service_Opportunite[]
   name                 String
   description          String
-  type                 TypeService  @default(vente)
+  type                 TypeService           @default(vente)
   price                Float?
-  imageURL             String?        @db.VarChar(255)
+  imageURL             String?               @db.VarChar(255)
   details              ServiceDetail[]
 }
 
 model ServiceDetail {
   id          Int     @id @default(autoincrement())
-  imageURL    String    @db.VarChar(255)
+  imageURL    String  @db.VarChar(255)
   description String
-  address     String 
+  address     String
   price       Float
   Service     Service @relation(fields: [serviceId], references: [id])
   serviceId   Int
@@ -134,14 +135,15 @@ model Opportunite {
 }
 
 model Service_Opportunite {
-  Opportunite   Opportunite? @relation(fields: [opportuniteId], references: [id])
-  opportuniteId Int          @unique
-  Service       Service?     @relation(fields: [serviceId], references: [id])
-  serviceId     Int?         
+  Opportunite   Opportunite @relation(fields: [opportuniteId], references: [id])
+  opportuniteId Int
+  Service       Service     @relation(fields: [serviceId], references: [id])
+  serviceId     Int
   prix          Float
   isPromotion   Boolean
-
   discountAmout Float
+
+  @@unique([opportuniteId, serviceId])
 }
 
 model Stage {
@@ -181,15 +183,15 @@ model devis {
 }
 
 model rendezvous {
-  id          Int      @id @default(autoincrement())
-  heure DateTime
-  date DateTime
-  typebien String
+  id           Int      @id @default(autoincrement())
+  heure        DateTime
+  date         DateTime
+  typebien     String
   localisation String
-  description String
+  description  String
 
-  client      Client   @relation(fields: [clientId], references: [id])
-  clientId    Int // Clé étrangère vers l'id de l'entité Admin
+  client   Client @relation(fields: [clientId], references: [id])
+  clientId Int // Clé étrangère vers l'id de l'entité Admin
 }
 
 model Vente {

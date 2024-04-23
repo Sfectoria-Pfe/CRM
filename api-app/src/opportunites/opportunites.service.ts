@@ -22,11 +22,12 @@ export class OpportunitesService {
   async findAll(numberService: number) {
     const opportunites = await this.prisma.opportunite.findMany({
       include: {
-        service_Opportunites: {include:{Service:true}},
+        service_Opportunites: { include: { Service: true } },
         promotion: { include: { CategorieClient: true } },
       },
     });
-    //console.log(numberService, typeof numberService);
+    console.log(numberService, typeof numberService);
+    console.log(opportunites);
 
     if (numberService === 1) {
       return opportunites.filter(
