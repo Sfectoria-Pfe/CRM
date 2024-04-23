@@ -55,8 +55,9 @@ import { Socket, io } from "socket.io-client";
 import { createContext } from "react";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { useEffect } from "react";
 const drawerWidth = 240;
-// const socket = io("http://localhost:7000"); //path of the server
+const socket = io("http://localhost:7000"); //path of the server
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -132,6 +133,17 @@ export default function App() {
   const [openCatalogueSubMenu, setOpenCatalogueSubMenu] = React.useState(false); // Déplacez la définition ici
   const [openSubMenu, setOpenSubMenu] = React.useState(""); // Définir l'état local pour le sous-menu ouvert
 
+  useEffect(() => {
+    socket.emit("connection", user.id); //incide+data
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on("disconnection", (data) => {
+      socket.emit("connection",user.id);
+    }); //incide+callbackFn
+  }, [socket]);
+
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -142,12 +154,12 @@ export default function App() {
   const handleMenuItemClick = (elem) => {
     navigate(elem.path);
     if (elem.children) {
-      setOpenSubMenu(openSubMenu === elem.title ? '' : elem.title);
+      setOpenSubMenu(openSubMenu === elem.title ? "" : elem.title);
     }
   };
   return (
-    <SocketContext.Provider >
-      {/* value={socket} */}
+    <SocketContext.Provider    value={socket}>
+   
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="fixed" open={open}>
@@ -230,79 +242,77 @@ export default function App() {
           </DrawerHeader>
           <Divider />
           <List sx={{ backgroundColor: "#00154f", flex: 1 }}>
-  {sidebarData.map((elem, index) => (
-    <React.Fragment key={index}>
-      {elem.access.includes(user?.Employee.role) ? (
-        <>
-          <ListItem disablePadding>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-              onClick={() => handleMenuItemClick(elem)}
-
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                  color: "#ffffff",
-                }}
-              >
-                {elem.icon}
-              </ListItemIcon>
-              <ListItemText
-                primary={elem.title}
-                sx={{ opacity: open ? 1 : 0, color: "#ffffff" }}
-              />
-            </ListItemButton>
-          </ListItem>
-          {openSubMenu === elem.title && elem.children && (
-            <List>
-              {elem.children.map((child, childIndex) => (
-                <ListItem
-                  key={childIndex}
-                  disablePadding
-                  sx={{ display: "block" }}
-                >
-                  <ListItemButton
-                    sx={{
-                      minHeight: 48,
-                      justifyContent: open ? "initial" : "center",
-                      px: 4,
-                    }}
-                    onClick={() => navigate(child.path)}
-                  >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : "auto",
-                        justifyContent: "center",
-                        color: "#ffffff",
-                      }}
-                    >
-                      {child.icon}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={child.title}
-                      sx={{ opacity: open ? 1 : 0, color: "#ffffff" }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List>
-          )}
-        </>
-      ) : (
-        ""
-      )}
-    </React.Fragment>
-  ))}
-</List>
-
+            {sidebarData.map((elem, index) => (
+              <React.Fragment key={index}>
+                {elem.access.includes(user?.Employee.role) ? (
+                  <>
+                    <ListItem disablePadding>
+                      <ListItemButton
+                        sx={{
+                          minHeight: 48,
+                          justifyContent: open ? "initial" : "center",
+                          px: 2.5,
+                        }}
+                        onClick={() => handleMenuItemClick(elem)}
+                      >
+                        <ListItemIcon
+                          sx={{
+                            minWidth: 0,
+                            mr: open ? 3 : "auto",
+                            justifyContent: "center",
+                            color: "#ffffff",
+                          }}
+                        >
+                          {elem.icon}
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={elem.title}
+                          sx={{ opacity: open ? 1 : 0, color: "#ffffff" }}
+                        />
+                      </ListItemButton>
+                    </ListItem>
+                    {openSubMenu === elem.title && elem.children && (
+                      <List>
+                        {elem.children.map((child, childIndex) => (
+                          <ListItem
+                            key={childIndex}
+                            disablePadding
+                            sx={{ display: "block" }}
+                          >
+                            <ListItemButton
+                              sx={{
+                                minHeight: 48,
+                                justifyContent: open ? "initial" : "center",
+                                px: 4,
+                              }}
+                              onClick={() => navigate(child.path)}
+                            >
+                              <ListItemIcon
+                                sx={{
+                                  minWidth: 0,
+                                  mr: open ? 3 : "auto",
+                                  justifyContent: "center",
+                                  color: "#ffffff",
+                                }}
+                              >
+                                {child.icon}
+                              </ListItemIcon>
+                              <ListItemText
+                                primary={child.title}
+                                sx={{ opacity: open ? 1 : 0, color: "#ffffff" }}
+                              />
+                            </ListItemButton>
+                          </ListItem>
+                        ))}
+                      </List>
+                    )}
+                  </>
+                ) : (
+                  ""
+                )}
+              </React.Fragment>
+            ))}
+          </List>
 
           <Divider />
         </Drawer>

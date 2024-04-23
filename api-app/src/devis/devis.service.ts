@@ -22,6 +22,13 @@ export class DevisService {
   async findAll() {
     return await this.prisma.devis.findMany(); // Utilisez Prisma pour récupérer tous les devis
   }
+  async findMyDevis(id:number) {
+    return await this.prisma.devis.findMany({
+      where:{
+        clientId:id
+      }
+    }); // Utilisez Prisma pour récupérer tous les devis
+  }
 
   async findOne(id: number) {
     return await this.prisma.devis.findUnique({ where: { id } }); // Utilisez Prisma pour récupérer un devis par son ID

@@ -27,22 +27,31 @@ export class OpportunitesService {
       },
     });
     console.log(numberService, typeof numberService);
-    console.log(opportunites);
 
-    if (numberService === 1) {
-      return opportunites.filter(
-        (elem) => (elem.service_Opportunites.length = numberService),
-      );
+    if (numberService) {
+      if (numberService === 1) {
+        return opportunites.filter(
+          (elem) => elem.service_Opportunites.length === numberService,
+        );
+      } else {
+        return opportunites.filter(
+          (elem) => elem.service_Opportunites.length != 1,
+        );
+      }
     } else {
-      return opportunites.filter(
-        (elem) => elem.service_Opportunites.length > numberService,
-      );
+      return opportunites;
     }
   }
 
-  async findOne(id: number) {
-    return await this.prisma.opportunite.findUnique({
-      where: { id },
+  async findOne(
+    id: number,
+    // equipeId:number
+  ) {
+    const opportunity = await this.prisma.opportunite.findUnique({
+      where: {
+        id,
+        // stage: { some: { StageClient: { some: { archived: false } } } },
+      },
       include: {
         stage: {
           include: {
@@ -51,6 +60,12 @@ export class OpportunitesService {
         },
       },
     });
+    //if equipeId===opportunity.equipeId{
+    // return opportunity else {
+    //    throw error
+    //}
+    // }
+    return opportunity;
   }
 
   async update(id: number, UpdateOpportuniteDto: UpdateOpportuniteDto) {

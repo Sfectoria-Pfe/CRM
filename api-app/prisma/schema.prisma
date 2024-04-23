@@ -111,6 +111,7 @@ model Service {
   price                Float?
   imageURL             String?               @db.VarChar(255)
   details              ServiceDetail[]
+  DevisLine            DevisLine[]
 }
 
 model ServiceDetail {
@@ -162,6 +163,7 @@ model StageClient {
   Stage       Stage?    @relation(fields: [stageId], references: [id])
   stageId     Int?
   Comment     Comment[]
+  archived    Boolean   @default(false)
 }
 
 model Comment {
@@ -171,15 +173,24 @@ model Comment {
 }
 
 model devis {
-  id              Int      @id @default(autoincrement())
+  id              Int         @id @default(autoincrement())
   numero_devis    Int
   date_estimation DateTime
   montant_total   Float
-  prix_unitaire   Float
-  service         String
   TVA             Float
-  client          Client   @relation(fields: [clientId], references: [id])
+  client          Client      @relation(fields: [clientId], references: [id])
   clientId        Int // Clé étrangère vers l'id de l'entité Client
+  devisLine       DevisLine[]
+}
+
+model DevisLine {
+  id            Int     @id @default(autoincrement())
+  serviceId     Int
+  service       Service @relation(fields: [serviceId], references: [id])
+  prix_unitaire Float
+  qunatity      Int
+  devis         devis   @relation(fields: [devisId], references: [id])
+  devisId       Int
 }
 
 model rendezvous {

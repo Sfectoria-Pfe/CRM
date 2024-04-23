@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsEnum } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { TypeService } from '@prisma/client';
 export class CreateServiceDto {
   @ApiProperty()
   @IsNotEmpty()
@@ -9,10 +10,12 @@ export class CreateServiceDto {
   @IsNotEmpty()
   description: string;
 
+  @ApiProperty()
+  typeService: TypeService;
 
-  @ApiProperty( )
+  @ApiProperty()
   price?: number;
 
-  @ApiProperty( )
+  @ApiProperty()
   imageURL?: string;
 }

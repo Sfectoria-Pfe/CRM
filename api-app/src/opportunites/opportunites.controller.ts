@@ -14,6 +14,7 @@ import { CreateOpportuniteDto } from './dto/create-opportunite.dto';
 import { UpdateOpportuniteDto } from './dto/update-opportunite.dto';
 import { Role } from 'src/auth/decorator/role';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { CurrentUser } from 'src/auth/decorator/current-user';
 
 @Controller('opportunites')
 export class OpportunitesController {
@@ -31,8 +32,13 @@ export class OpportunitesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.opportunitesService.findOne(+id);
+  findOne(@Param('id') id: string,
+// @CurrentUser() user
+) {
+    
+    return this.opportunitesService.findOne(+id,
+      // user.employee.equipe.id
+    );
   }
 
   @Patch(':id')

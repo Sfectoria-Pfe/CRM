@@ -64,7 +64,7 @@ function ListEmployee() {
       width: 80,
       getActions: (row) => {
         return [
-          <Link to={`${row.id}`} key={row.id}>
+          <Link to={`/employees/${row.id}`} key={row.id}>
             {" "}
             <GridActionsCellItem
               disableFocusRipple={false}
@@ -72,9 +72,9 @@ function ListEmployee() {
               label="Voir"
               size="small"
               edge="start"
-              onClick={() => {
-                navigate(`/employees/${row.id}`); // Renommé clients en employees et client en employee
-              }}
+              // onClick={() => {
+              //   navigate(`/employees/${row.id}`); // Renommé clients en employees et client en employee
+              // }}
             />
           </Link>,
         ];

@@ -26,7 +26,7 @@ const Header = ({ user }) => {
               <Nav.Link as={Link} to="/services" className="nav-link">
                 <span>Services</span>
               </Nav.Link>
-              <Nav.Link as={Link} to="/blog" className="nav-link">
+              <Nav.Link as={Link} to="/packs" className="nav-link">
                 <span>Pack</span>
               </Nav.Link>
               <Nav.Link as={Link} to={user?"/Demandedevis":'LoginForm'} className="nav-link">
