@@ -31,7 +31,7 @@ export default function OneClient() {
   return (
     <div     
     >
-      <h2 style={ {color:"blue"}}
+      <h2 style={ {color:"#1976D2"}}
 >Client Details</h2>
       <div style={styles.clientDetails}>
         <div style={styles.detailItem}>

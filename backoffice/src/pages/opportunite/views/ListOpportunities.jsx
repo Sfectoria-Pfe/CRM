@@ -10,7 +10,7 @@ function ListOpportunities() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const opportunities = useSelector(
-    (state) => state.opportunite.opportunites.items
+    (state) => state?.opportunite.opportunites.items
   );
   const columns = [
     {
@@ -67,12 +67,15 @@ function ListOpportunities() {
   }, [dispatch]);
   return (
     <div>
-      <div className="d-flex justify-content-end m-3">
-        <Link className="btn btn-light" to="add">
+      <div className="d-flex justify-content-center mb-3" style={{backgroundColor:"#1976D2",color:"#fafafa"}}>
+        <h2>Liste des Opportunités</h2>
+      </div>     
+      <div className="d-flex justify-content-end m-3" >
+        <Link className="btn btn-light" style={{backgroundColor:"#81d4fa"}} to="add">
           Add Opportunity
         </Link>
       </div>
-
+      
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}

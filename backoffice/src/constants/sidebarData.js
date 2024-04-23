@@ -23,7 +23,7 @@ import AddIcon from '@mui/icons-material/Add';
 export const sidebarData = [
   {
     title: "Dashboard",
-    path: "/",
+    path: "/Dashboard",
     icon: <HomeIcon />,
     access:['chef','admin','commercial']
   },
@@ -82,7 +82,7 @@ export const sidebarData = [
       {
         title: "Liste Demande Devis",
         icon: <RequestIcon />,
-        path: "/",
+        path: "/ListeDemandedevis",
       },
       {
         title: " Ajouter Devis",
@@ -103,10 +103,20 @@ export const sidebarData = [
     title: "Rendez Vous",
     path: "/calendrier",
     icon: <CalendarMonthIcon />,
-    access:['chef','admin','commercial']
- 
-  }, 
-  {
+    access: ['chef', 'admin', 'commercial'],
+    children: [
+      {
+        title: "Liste Demande",
+        icon: <AddIcon />,
+        path: "/ListeRendezvous",
+      },
+      {
+        title: "Calendrier",
+        icon: <AddIcon />,
+        path: "/calendrier",
+      },
+    ]
+  },{
     title: "Employés",
     path: "/listeemployee",
     icon: < PeopleAltIcon  />,

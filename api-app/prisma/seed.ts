@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 
 async function seed() {
   try {
-    const salt = await bcrypt.genSalt();
+    const salt= await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash('1234', salt);
 
     const employees = await Promise.all(
@@ -63,9 +63,80 @@ async function seed() {
             },
           },
         },
+      }, 
+    });
+
+
+    const opportunity1 = await prisma.opportunite.create({
+      data: {
+        title: 'Opportunity 1',
+        equipeId: equipe.id,
+        service_Opportunites: {
+          create: {
+            prix: 500,
+            isPromotion: true,
+            discountAmout: 20,
+            Service: {
+              create: {
+                name: 'Vente',
+                description: 'Description de la vente',
+                type: 'vente',
+                price: 400,
+                imageURL:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBNeE0c29TP4t1CBvhqMvzkb29y8kDPMG7rA&s'
+              },
+            },
+          },
+        },
       },
     });
-    await prisma.promotion.create({
+    const opportunity2 = await prisma.opportunite.create({
+      data: {
+        title: 'Opportunity 2',
+        equipeId: equipe.id,
+        service_Opportunites: {
+          create: {
+            prix: 500,
+            isPromotion: true,
+            discountAmout: 20,
+            Service: {
+              create: {
+                name: 'Location',
+                description: 'Description de Notre service',
+                type: 'vente',
+                price: 400,
+                imageURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBNeE0c29TP4t1CBvhqMvzkb29y8kDPMG7rA&s',
+              },
+            },
+          },
+        },
+      },
+    });
+    const opportunity3 = await prisma.opportunite.create({
+      data: {
+        title: 'Opportunity 3',
+        equipeId: equipe.id,
+        service_Opportunites: {
+          create: {
+            prix: 500,
+            isPromotion: true,
+            discountAmout: 20,
+            Service: {
+              create: {
+                name: 'Decoration',
+                description: 'Description de la vente',
+                type: 'autre',
+                price: 400,
+                imageURL: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjQEtei7v_F9hz-_cPySQGnswzdjQlwCFADQ&s',
+              },
+            },
+          },
+        },
+      },
+    });
+
+ 
+
+ await prisma.promotion.create({
       data: {
         date_debut: new Date('10-10-2023').toISOString(),
         date_fin: new Date('10-1-2024').toISOString(),

@@ -3,21 +3,21 @@ import { IsNotEmpty } from "class-validator"
 export class CreateRendezvousDto {
 
  @ApiProperty()
-@IsNotEmpty ()
-telephone :number
-@ApiProperty()
-@IsNotEmpty()
-  email : string
+  heure :Date
   @ApiProperty()
-@IsNotEmpty()
-  temps  : Date
+
+  date  :Date
   @ApiProperty()
-@IsNotEmpty()
- date   :Date
- @ApiProperty()
-@IsNotEmpty()
- description :string
- @ApiProperty()
-@IsNotEmpty()
-  clientId  :number
+
+  typebien :string
+  @ApiProperty()
+
+  localisation :string
+  @ApiProperty()
+
+  description :string
+  @ApiProperty()
+
+
+  clientId   : number
 }

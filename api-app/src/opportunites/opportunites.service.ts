@@ -26,7 +26,7 @@ export class OpportunitesService {
         promotion: { include: { CategorieClient: true } },
       },
     });
-    console.log(numberService, typeof numberService);
+    //console.log(numberService, typeof numberService);
 
     if (numberService === 1) {
       return opportunites.filter(

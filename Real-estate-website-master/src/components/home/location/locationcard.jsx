@@ -12,7 +12,6 @@ function VenteCard(props) {
         <div className="custom-card-background"></div> {/* Ajoutez cet élément pour l'arrière-plan */}
         <Card.Img style={{width:"400px",height:"200px"}}
           src={props.image} 
-         // Ajoutez la classe CSS pour l'image
         />
         <Card.Body>
           <Card.Title className="custom-name">{props.nom}</Card.Title>

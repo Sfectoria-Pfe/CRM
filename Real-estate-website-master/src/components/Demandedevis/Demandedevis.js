@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { sendDemandeDevis } from "../store/demande";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './Demandedevis.css';
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+} from 'mdb-react-ui-kit';
+import { Button } from "react-bootstrap";
 
 const getCurrentDate = () => {
   const currentDate = new Date();
@@ -16,6 +25,9 @@ const getCurrentDate = () => {
 export default function AddDemandeDevis() {
   const [demandeDevis, setDemandeDevis] = useState({
     dateDemande: getCurrentDate(),
+    description: "",
+    sujet: "",
+    clientId: "",
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,50 +56,59 @@ export default function AddDemandeDevis() {
   };
 
   return (
-    <div className="form-container"> {/* Appliquer la classe CSS demande-container */}
-      <div className="form-control"> {/* Appliquer la classe CSS form-container */}
-        <h2>Ajouter une demande de devis</h2>
-        <div className="form-input mb-3"> {/* Appliquer les classes CSS form-input et mb-3 */}
-          <input
-            className="form-control"
-            placeholder="Date de demande"
-            name="dateDemande"
-            type="date"
-            value={demandeDevis.dateDemande}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-input mb-3"> {/* Appliquer les classes CSS form-input et mb-3 */}
-          <input
-            className="form-control"
-            placeholder="Description"
-            name="description"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-input mb-3"> {/* Appliquer les classes CSS form-input et mb-3 */}
-          <input
-            className="form-control"
-            placeholder="Sujet"
-            name="sujet"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-input mb-3"> {/* Appliquer les classes CSS form-input et mb-3 */}
-          <input
-            className="form-control"
-            placeholder="ID du client"
-            name="clientId"
-            type="number"
-            onChange={handleChange}
-          />
-        </div>
-
-        <Button className="custom-button" onClick={handleAddDemandeDevis} >
-          Ajouter 
-        </Button>
-        <ToastContainer />
-      </div>
-    </div>
+    <MDBContainer className='py-3' style={{ backgroundColor: "#c8e6c9" }}>
+      <ToastContainer /> 
+      <MDBRow className='justify-content-center'>
+        <MDBCol md='10'>
+          <MDBCard className='my-2'>
+            <MDBRow className='g-0'>
+              <MDBCol md='6' className="d-none d-md-block">
+                <MDBCardImage src='https://www.qualit-enr.org/wp-content/uploads/2020/12/Devis2.png' alt="Sample photo" className="rounded-start" style={{ height: '100%' }} />
+              </MDBCol>
+              <MDBCol md='6'>
+                <MDBCardBody className='text-black d-flex flex-column justify-content-center'>
+                  <h3 className="mb-4 text-uppercase fw-bold">Demande de devis</h3>
+                  <MDBInput
+                    className="form-control mb-3"
+                    placeholder="Date de demande"
+                    name="dateDemande"
+                    type="date"
+                    value={demandeDevis.dateDemande}
+                    onChange={handleChange}
+                  />
+                  <MDBInput
+                    className="form-control mb-3"
+                    placeholder="Description"
+                    name="description"
+                    value={demandeDevis.description}
+                    onChange={handleChange}
+                  />
+                  <MDBInput
+                    className="form-control mb-3"
+                    placeholder="Sujet"
+                    name="sujet"
+                    value={demandeDevis.sujet}
+                    onChange={handleChange}
+                  />
+                  <MDBInput
+                    className="form-control mb-3"
+                    placeholder="ID du client"
+                    name="clientId"
+                    type="number"
+                    value={demandeDevis.clientId}
+                    onChange={handleChange}
+                  />
+                  <div className="d-flex justify-content-end pt-2">
+                    <Button className="custom-button" onClick={handleAddDemandeDevis} >
+                      Ajouter 
+                    </Button>                  
+                  </div>
+                </MDBCardBody>
+              </MDBCol>
+            </MDBRow>
+          </MDBCard>
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
   );
 }
