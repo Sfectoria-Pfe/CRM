@@ -5,20 +5,27 @@ import { UpdateRendezvousDto } from './dto/update-rendezvous.dto';
 
 @Injectable()
 export class RendezvousService {
-  constructor(private readonly prisma: PrismaService) {} // Injectez le service Prisma dans le constructeur
+  constructor(private readonly prisma: PrismaService) {} 
 
   async create(createRendezvousDto: CreateRendezvousDto) {
     try {
+      const currentDate = new Date();
+      const formattedDate = currentDate.toISOString();
+  
       const newRendezvous = await this.prisma.rendezvous.create({
-        data: createRendezvousDto, // Utiliser createRendezvousDto ici
+        data: {
+          ...createRendezvousDto,
+          heure:formattedDate,
+          date: formattedDate,
+        },
       });
+  
       return newRendezvous;
     } catch (error) {
       console.error('Erreur lors de la création du rendez-vous :', error);
       throw error;
     }
   }
-
   async findAll() {
     const rendezvous = await this.prisma.rendezvous.findMany();
     return rendezvous;

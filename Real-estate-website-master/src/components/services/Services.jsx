@@ -7,29 +7,74 @@ import Back from "../common/Back";
 import FeaturedCard from "../home/featured/FeaturedCard";
 import LocationCard from "../home/location/locationcard";
 import Recent from "../home/recent/Recent";
-// import HeaderHome from "../common/HeaderHome";
-// import AboutUs from "../common/AboutUs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
 
-const Services = () => {
-  // const dispatch=useDispatch()
-const [services,setServices]=useState([])
+export const Services = () => {
+  const [services, setServices] = useState([]);
+
   useEffect(() => {
-    (async ()=>{
+    const fetchServices = async () => {
+      try {
+        const response = await axios.get("http://localhost:7000/opportunites", {
+          params: {
+            numberService: 1
+          }
+        });
+        setServices(response.data);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
 
-     const response= await  axios.get("http://localhost:7000/opportunites", {
-         params:{
-          numberService:1
-         }
-       });
-       setServices(response.data)
-    })()
+    fetchServices();
   }, []);
+
+  const ServiceCards = () => {
+    return (
+      <>
+        {services.map((opportunite) => (
+          <Row key={opportunite.id}>
+            {opportunite.service_Opportunites.map((serviceOpportunite) => (
+              <Col key={serviceOpportunite?.serviceId} Col xs={12} sm={6} md={4} className="mb-4">
+                <Card className="custom-card-background">
+                  <Card.Img variant="top" src={serviceOpportunite?.Service?.imageURL} />
+                  <Card.Body>
+                    <Card.Title className="custom-name">{serviceOpportunite?.Service?.name}</Card.Title>
+                    <Card.Text>{serviceOpportunite?.Service?.description}</Card.Text>
+                    <Card.Text>{serviceOpportunite?.Service?.type}</Card.Text>
+                    <Card.Text>Prix: {serviceOpportunite?.prix}</Card.Text>
+                    <Button variant="primary" as={Link} to="/chat">
+      <FontAwesomeIcon icon={faFacebookMessenger} />
+    </Button>       
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        ))}
+      </>
+    );
+  };
+
   return (
     <>
       <section className="services mb">
         <Back name="Services" title="Notre Service " cover={img} />
-        <div className="featured container">
-          <FeaturedCard />
+        <Container>
+          <br /><br /><br /><br /><br />
+          <h1
+            className="section-title"
+            style={{
+              backgroundColor: "#00695c",
+              color: "#ffffff",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+          >
+            Notre Service
+          </h1>
+          {ServiceCards()}
           <br />
           <br />
           <h1
@@ -59,7 +104,7 @@ const [services,setServices]=useState([])
             Notre immobilier pour la vente
           </h1>
           <Recent />
-        </div>
+        </Container>
       </section>
     </>
   );

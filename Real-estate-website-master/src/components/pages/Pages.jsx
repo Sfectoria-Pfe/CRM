@@ -5,7 +5,7 @@ import Home from "../home/Home";
 import Footer from "../common/footer/Footer";
 import About from "../about/About";
 import Pricing from "../pricing/Pricing";
-import Blog from "../blog/Blog";
+import Blog from "../Pack/Pack.jsx";
 import Services from "../services/Services";
 import Contact from "../contact/Contact";
 import LoginForm from "../se connecter et inscrit/LoginForm.jsx";
@@ -56,6 +56,7 @@ const Pages = () => {
         <Route path="/rendez-vous" element={<Demanderendezvous />} />
         <Route path="/location" element={<Location />} />
         <Route path="/historique" element={<Historique/>} />
+        <Route path="/Chat"    element={<Chat />} />
 
       </Routes>
       <Footer />

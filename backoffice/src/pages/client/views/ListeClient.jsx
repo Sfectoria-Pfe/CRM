@@ -93,11 +93,9 @@ function ListClients() {
 
   return (
     <div>
-      <div className="d-flex justify-content-end m-3">
-        <Link className="btn btn-light" to="addClient">
-          Add Client
-        </Link>
-      </div>
+<div className="d-flex justify-content-center mb-3" style={{backgroundColor:"#1976D2",color:"#fafafa"}}>
+        <h2>Liste des clients</h2>
+      </div>     <br/><br/><br/>
 
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid

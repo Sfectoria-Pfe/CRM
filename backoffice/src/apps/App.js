@@ -51,12 +51,12 @@ import MailIcon from "@mui/icons-material/Mail";
 import { sidebarData } from "../constants/sidebarData";
 import { useSelector } from "react-redux";
 import { Dropdown } from "react-bootstrap";
-import { io } from "socket.io-client";
+import { Socket, io } from "socket.io-client";
 import { createContext } from "react";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 const drawerWidth = 240;
-const socket = io("http://localhost:7000"); //path of the server
+// const socket = io("http://localhost:7000"); //path of the server
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -146,7 +146,8 @@ export default function App() {
     }
   };
   return (
-    <SocketContext.Provider value={socket}>
+    <SocketContext.Provider >
+      {/* value={socket} */}
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="fixed" open={open}>

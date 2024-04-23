@@ -61,8 +61,6 @@ export default function Login() {
                 <MDBBtn className="mb-4 px-5" style={{ backgroundColor:'#00154F' }} size='lg' disabled={submitting}>Se Connecter</MDBBtn>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
               </form>
-              <a className="small text-muted" href="#!">Forgot password?</a>
-              <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>Vous n'avez pas un compte <a href="SignUp" style={{color: '#393f81'}}>inscrire ici</a></p>
               <div className='d-flex flex-row justify-content-start'>
                 <a href="#!" className="small text-muted me-1">Terms of use.</a>
                 <a href="#!" className="small text-muted">Privacy policy</a>

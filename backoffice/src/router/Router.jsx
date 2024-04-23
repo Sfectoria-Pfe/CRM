@@ -48,6 +48,9 @@ import ListPromotion from "../pages/promotion/Listepromotion.jsx";
 import AddPromotion from "../pages/promotion/Addpromotion.jsx";
 import Adduser from "../pages/user/adduser.jsx";
 import { Spinner } from "react-bootstrap";
+import ListRendezvous from "../pages/Rendez/Liste Rendez.js";
+import ListDemandeDevis from "../pages/Devis/ListeDemandedevis.js";
+import Charts from "../pages/charts/chartss.jsx"
 export const UserContext = createContext();
 
 function PrivateRoute({ Component, roles }) {
@@ -141,7 +144,10 @@ export default function Router() {
                 <Route path="listepromotion" element={<ListPromotion />} />
                 <Route path="calendrier" element={<Calendrier />} />
                 <Route path="adduser" element={<Adduser />} />
-                  
+                <Route path="ListeRendezvous" element={<ListRendezvous />} />
+                <Route path="ListeDemandedevis" element={<ListDemandeDevis/>} />
+                <Route path="Dashboard" element={<Charts />} />
+
               </Route>
             ) : (
               <Route path="/" element={<Auth />}>
