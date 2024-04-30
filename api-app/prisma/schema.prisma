@@ -15,16 +15,16 @@ datasource db {
 }
 
 model User {
-  id           Int            @id @default(autoincrement())
-  email        String         @unique
+  id           Int          @id @default(autoincrement())
+  email        String       @unique
   password     String
-  isClient     Boolean        @default(true)
-  Employee     Employee?      @relation(fields: [employeeId], references: [id])
+  isClient     Boolean      @default(true)
+  Employee     Employee?    @relation(fields: [employeeId], references: [id])
   employeeId   Int?
-  Client       Client?        @relation(fields: [clientId], references: [id])
+  Client       Client?      @relation(fields: [clientId], references: [id])
   clientId     Int?
-  msgsClient   MsgsClient[]
-  participants Participants[]
+  receivedMsgs MsgsClient[] @relation("receiver")
+  senderMsgs   MsgsClient[] @relation("sender")
 }
 
 model Employee {
@@ -116,7 +116,7 @@ model Service {
 
 model ServiceDetail {
   id          Int     @id @default(autoincrement())
-  title      String
+  title       String
   imageURL    String  @db.VarChar(255)
   description String
   address     String
@@ -132,8 +132,8 @@ model Opportunite {
   equipeId             Int
   stage                Stage[]
   service_Opportunites Service_Opportunite[]
-  participants         Participants[]
   promotion            Promotion[]
+  MsgsClient           MsgsClient[]
 }
 
 model Service_Opportunite {
@@ -174,33 +174,34 @@ model Comment {
 }
 
 model devis {
-  id              Int         @id @default(autoincrement())
-  currency             String?     // Devise utilisée ('$' dans votre exemple)
-  currentDate          DateTime?   // Date actuelle
-  invoiceNumber        Int?        // Numéro de facture
-  dateOfIssue          DateTime?   // Date d'émission
-  nom                  String?     // Nom du client
-  email                String?     // Email du client
-  adresse              String?     // Adresse du client
-  nom_entreprise       String?     // Nom de l'entreprise du client
-  email_entreprise     String?     // Email de l'entreprise du client
-  adresse_entreprise   String?     // Adresse de l'entreprise du client
-  telephone_entreprise String?     // Téléphone de l'entreprise du client
-  notes                String?     // Notes
-  total                Float?      // Total
-  subTotal             Float?      // Sous-total
-  taxRate              Float?      // Taux de taxe
-  taxAmount            Float?      // Montant de taxe
-  discountRate         Float?      // Taux de réduction
-  discountAmount       Float?      // Montant de réduction
-  name  String
-      price Float
-      description  String
-      quantity Int
-  client          Client      @relation(fields: [clientId], references: [id])
-  clientId        Int // Clé étrangère vers l'id de l'entité Client
-  devisLine       DevisLine[]
+  id                   Int         @id @default(autoincrement())
+  currency             String? // Devise utilisée ('$' dans votre exemple)
+  currentDate          DateTime? // Date actuelle
+  invoiceNumber        Int? // Numéro de facture
+  dateOfIssue          DateTime? // Date d'émission
+  nom                  String? // Nom du client
+  email                String? // Email du client
+  adresse              String? // Adresse du client
+  nom_entreprise       String? // Nom de l'entreprise du client
+  email_entreprise     String? // Email de l'entreprise du client
+  adresse_entreprise   String? // Adresse de l'entreprise du client
+  telephone_entreprise String? // Téléphone de l'entreprise du client
+  notes                String? // Notes
+  total                Float? // Total
+  subTotal             Float? // Sous-total
+  taxRate              Float? // Taux de taxe
+  taxAmount            Float? // Montant de taxe
+  discountRate         Float? // Taux de réduction
+  discountAmount       Float? // Montant de réduction
+  name                 String
+  price                Float
+  description          String
+  quantity             Int
+  client               Client      @relation(fields: [clientId], references: [id])
+  clientId             Int // Clé étrangère vers l'id de l'entité Client
+  devisLine            DevisLine[]
 }
+
 model DevisLine {
   id            Int     @id @default(autoincrement())
   serviceId     Int
@@ -261,30 +262,16 @@ enum TypeService {
 }
 
 model MsgsClient {
-  id       Int @id @default(autoincrement())
-  senderId Int
-
-  Room   Room? @relation(fields: [roomId], references: [id])
-  roomId Int?
-
-  User   User? @relation(fields: [userId], references: [id])
-  userId Int?
-}
-
-model Participants {
-  User          User?        @relation(fields: [userId], references: [id])
-  userId        Int?
-  Opportunite   Opportunite? @relation(fields: [opportuniteId], references: [id])
-  opportuniteId Int?
-  Room          Room?        @relation(fields: [roomId], references: [id])
-  roomId        Int          @unique
-}
-
-model Room {
-  id Int @id @default(autoincrement())
-
-  msgsClient   MsgsClient[]
-  participants Participants[]
+  id            Int         @id @default(autoincrement())
+  opportunityId Int
+  opportunity   Opportunite @relation(fields: [opportunityId], references: [id])
+  senderId      Int
+  Sender        User        @relation(fields: [senderId], references: [id], name: "sender")
+  content       String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  receiverId    Int?
+  Receiver      User?       @relation(fields: [receiverId], references: [id], name: "receiver")
 }
 
 model DemandeDevis {

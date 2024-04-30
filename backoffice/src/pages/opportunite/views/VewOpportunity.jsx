@@ -5,10 +5,13 @@ import "../Style1.css";
 import {
   fetchOpportunite,
   fetchOpportunites,
-} from "../../../store/opportunite"; 
-import OpportunityCard from "../components/card"; 
-import { fetchStage_client, updateStage_client } from "../../../store/stage_client";
-import { FiPlus } from "react-icons/fi"; 
+} from "../../../store/opportunite";
+import OpportunityCard from "../components/card";
+import {
+  fetchStage_client,
+  updateStage_client,
+} from "../../../store/stage_client";
+import { FiPlus } from "react-icons/fi";
 import AddStageClient from "../../stage-client/AddStage-client";
 import AddStage from "../../stage/AddStage";
 import Chat from "../../Chats/chat";
@@ -23,11 +26,12 @@ const ViewOpportunity = () => {
   const dispatch = useDispatch();
   const opportunity = useSelector((state) => state.opportunite.opportunite);
   const [showChat, setShowChat] = useState(false);
+  const [selectedClient, setSelectedClient] = useState(null);
 
   useEffect(() => {
     dispatch(fetchOpportunite(opportunityId));
   }, [dispatch]);
-  
+
   useEffect(() => {
     if (opportunity?.stage) setStages(opportunity.stage);
   }, [opportunity]);
@@ -53,12 +57,12 @@ const ViewOpportunity = () => {
 
   const handleDrop = async (event, targetStageId, index) => {
     event.preventDefault();
-    
+
     const { stage, stageClient } = JSON.parse(
       event.dataTransfer.getData("stage")
     );
     const { id } = stageClient;
-    
+
     dispatch(updateStage_client({ id, stageId: targetStageId })).then((res) => {
       if (!res.error) {
         let aux = [...stages];
@@ -125,11 +129,14 @@ const ViewOpportunity = () => {
           </div>
         </div>
       </div>
-      
+
       {showChat && (
-        <div className="chat-and-client-list">
-          <Chat />
-          <AlignItemsList />
+        <div className="d-flex">
+          <AlignItemsList
+            opportunityId={opportunityId}
+            setSelectedClient={setSelectedClient}
+          />
+          <Chat selectedClient={selectedClient} opportunityId={opportunityId}/>
         </div>
       )}
     </div>

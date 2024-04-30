@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
 import send from "../../assets/img/send.png";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 export default function Chat({ opportunity, drawer, setCloseChat }) {
   const socket = useContext(SocketContext);
@@ -39,32 +39,43 @@ export default function Chat({ opportunity, drawer, setCloseChat }) {
     setContent("");
   };
   return (
-    <div className="col-md-4 col-12" style={{ backgroundColor: "#fff", borderRadius: "10px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)" }}>
-
+    <div
+      className="col-md-4 col-12"
+      style={{
+        backgroundColor: "#fff",
+        borderRadius: "10px",
+        boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
+      }}
+    >
       {opportunity === 0 ? (
         <div className="w-100">
-        <p>select one</p>
+          <p>select one</p>
         </div>
       ) : (
         <>
-          <div className="d-flex justify-content-between align-items-center p-3" style={{ borderBottom: "1px solid #ddd" }}>
-          <div className="d-flex align-items-center">
-          <AccountCircleIcon style={{ width: "70px", height: "70px" }} />
-  <h2>{opportunity?.title}</h2>
-</div>
+          <div
+            className="d-flex justify-content-between align-items-center p-3"
+            style={{ borderBottom: "1px solid #ddd" }}
+          >
+            <div className="d-flex align-items-center">
+              <AccountCircleIcon style={{ width: "70px", height: "70px" }} />
+              <h2>{opportunity?.title}</h2>
+            </div>
 
             {drawer && (
               <div>
-              <button className="btn-light btn" onClick={setCloseChat}>X</button>
-            </div>
+                <button className="btn-light btn" onClick={setCloseChat}>
+                  X
+                </button>
+              </div>
             )}
           </div>
           <section
             style={{
               backgroundColor: "#f0f2f5",
-                          borderRadius: "10px",
-                          padding: "20px",
-                          width:"100%",
+              borderRadius: "10px",
+              padding: "20px",
+              width: "100%",
               height: "550px", // Set your desired height here
               overflowY: "auto",
               display: "flex", // Add display: flex to the parent container
@@ -106,8 +117,8 @@ export default function Chat({ opportunity, drawer, setCloseChat }) {
                           <p class="mb-0">{elem?.content}</p>
                         </div>
                         {userId === elem.senderId && (
-                      <div className="d-flex align-items-center">
-                      <IconButton color="error" aria-label="delete">
+                          <div className="d-flex align-items-center">
+                            <IconButton color="error" aria-label="delete">
                               <DeleteIcon
                                 onClick={() => {
                                   // handelDelete(elem.id)

@@ -1,25 +1,51 @@
-import { WebSocketGateway, SubscribeMessage, MessageBody } from '@nestjs/websockets';
+import {
+  WebSocketGateway,
+  SubscribeMessage,
+  MessageBody,
+  WebSocketServer,
+} from '@nestjs/websockets';
 import { ChatsService } from './chats.service';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
-
-@WebSocketGateway({cors:{origin:'*'}})
+import { Server, Socket } from 'socket.io';
+@WebSocketGateway({ cors: { origin: '*' } })
 export class ChatsGateway {
   constructor(private readonly chatsService: ChatsService) {}
+  @WebSocketServer() server: Server;
 
-  @SubscribeMessage('createChat')
-  create(@MessageBody() createChatDto: CreateChatDto) {
-    return this.chatsService.create(createChatDto);
+  @SubscribeMessage('send-message')
+  async create(client: Socket, dto: CreateChatDto) {
+    const msg = await this.chatsService.create(dto);
+    this.server.emit('new-msg/'+dto.opportunityId+"/"+dto.senderId,msg)
+    this.server.emit('new-msg/'+dto.opportunityId+"/"+dto.receiverId,msg)
   }
 
-  @SubscribeMessage('findAllChats')
-  findAll() {
-    return this.chatsService.findAll();
+  @SubscribeMessage('demand-list-client-opportunity')
+  async findAllClientByOpportunity(client: Socket, body: any) {
+    const response = await this.chatsService.findAllByOpportunity(
+      +body.opportunityId,
+    );
+
+    this.server.emit('list-list-client/' + body.opportunityId, response);
   }
 
-  @SubscribeMessage('findOneChat')
-  findOne(@MessageBody() id: number) {
-    return this.chatsService.findOne(id);
+  @SubscribeMessage('find-all-msgs-opportunity-client')
+  async findOneClientByOpportunity(client: Socket, body: any) {
+    const response = await this.chatsService.findMsgsOpportunityClient(
+      +body.opportunityId,
+      body.clientId,
+    );
+    console.log(
+      'response of ' + body.opportunityId + 'and' + body.clientId,
+      response,
+    );
+    this.server.emit(
+      'get-all-msgs-opportunity-client/' +
+        body.opportunityId +
+        '/' +
+        body.clientId,
+      response,
+    );
   }
 
   @SubscribeMessage('updateChat')

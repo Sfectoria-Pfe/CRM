@@ -33,7 +33,7 @@ export class OpportunitesService {
         return opportunites.filter(
           (elem) => elem.service_Opportunites.length === numberService,
         );
-      } else {
+      } else if (numberService > 1) {
         return opportunites.filter(
           (elem) => elem.service_Opportunites.length != 1,
         );
@@ -60,8 +60,8 @@ export class OpportunitesService {
         },
         service_Opportunites: {
           include: {
-            Service: true
-          }
+            Service: true,
+          },
         },
       },
     });

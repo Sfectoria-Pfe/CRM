@@ -1,1 +1,6 @@
-export class CreateChatDto {}
+export class CreateChatDto {
+  senderId: number;
+  opportunityId: number;
+  content: string;
+  receiverId?: number;
+}

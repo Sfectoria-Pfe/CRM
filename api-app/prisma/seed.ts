@@ -26,6 +26,9 @@ async function seed() {
                 },
               },
             },
+            include: {
+              user: true,
+            },
           }),
       ),
     );
@@ -68,8 +71,8 @@ async function seed() {
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU4b_B8qlxrK6yMV7ZQD_zRsR-X_avOEZBFO4LSWBO8g&s',
       },
     });
-    console.log(opportunity,service1,service2);
     
+
     const servicesOpportunities1 = await prisma.service_Opportunite.create({
       data: {
         prix: 500,
@@ -183,14 +186,57 @@ async function seed() {
                 },
               },
             },
+            include: { user: true },
           }),
       ),
     );
+    console.log(clients[0].user[0]);
+    
     const locations = await prisma.location.createMany({
       data: dataLocation,
     });
     const ventes = await prisma.vente.createMany({
       data: dataVente,
+    });
+
+    const msgs = await prisma.msgsClient.createMany({
+      data: [
+        {
+          senderId: clients[0].user[0].id,
+         
+          opportunityId: 1,
+          content: 'hello',
+        },
+        {
+          senderId: employees[0].user[0].id,
+          receiverId: clients[0].user[0].id,
+          opportunityId: 1,
+          content: 'hi',
+        },
+        {
+          senderId: clients[0].user[0].id,
+          opportunityId: 1,
+          content: 'cv',
+        },
+        {
+          senderId: employees[0].user[0].id,
+          receiverId: clients[0].user[0].id,
+          opportunityId: 1,
+          content: 'labes',
+        },
+        {
+          senderId: clients[1].user[0].id,
+          opportunityId: 1,
+          content: 'hello',
+        },
+        {
+          senderId: employees[0].user[0].id,
+          receiverId: clients[1].user[0].id,
+          opportunityId: 1,
+          content: 'hi',
+        },
+       
+      ],
     });
     console.log('data seeeeded');
   } catch (error) {
