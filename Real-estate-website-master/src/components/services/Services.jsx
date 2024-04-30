@@ -32,30 +32,31 @@ export const Services = () => {
 
   const ServiceCards = () => {
     return (
-      <>
+      <Row xs={1} sm={2} md={3}>
         {services.map((opportunite) => (
-          <Row key={opportunite.id}>
-            {opportunite.service_Opportunites.map((serviceOpportunite) => (
-              <Col key={serviceOpportunite?.serviceId} Col xs={12} sm={6} md={4} className="mb-4">
-                <Card className="custom-card-background">
-                  <Card.Img variant="top" src={serviceOpportunite?.Service?.imageURL} />
-                  <Card.Body>
-                    <Card.Title className="custom-name">{serviceOpportunite?.Service?.name}</Card.Title>
-                    <Card.Text>{serviceOpportunite?.Service?.description}</Card.Text>
-                    <Card.Text>{serviceOpportunite?.Service?.type}</Card.Text>
-                    <Card.Text>Prix: {serviceOpportunite?.prix}</Card.Text>
-                    <Button variant="primary" as={Link} to="/chat">
-      <FontAwesomeIcon icon={faFacebookMessenger} />
-    </Button>       
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
+          opportunite.service_Opportunites.map((serviceOpportunite) => (
+            <Col key={serviceOpportunite?.serviceId} xs={12} sm={6} md={4} className="mb-4">
+              <Card className="custom-card-background">
+                <Card.Img style={{height: "200px", /* Remplacez la valeur par la hauteur souhaitée */
+  objectFit: "cover"}}variant="top" src={serviceOpportunite?.Service?.imageURL} />
+                <Card.Body>
+                  <Card.Title className="custom-name">{serviceOpportunite?.Service?.name}</Card.Title>
+                  <Card.Text>{serviceOpportunite?.Service?.description}</Card.Text>
+                  <Card.Text>{serviceOpportunite?.Service?.type}</Card.Text>
+                  <Card.Text>Prix: {serviceOpportunite?.prix}</Card.Text>
+                  <Link to={`/pack/${serviceOpportunite?.id}`}>
+              <Button variant="primary">
+                    Voire plus              </Button>
+            </Link>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))
         ))}
-      </>
+      </Row>
     );
   };
+  
 
   return (
     <>

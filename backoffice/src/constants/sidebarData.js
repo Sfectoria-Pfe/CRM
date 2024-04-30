@@ -87,7 +87,7 @@ export const sidebarData = [
       {
         title: " Ajouter Devis",
         icon: <DevisIcon />,
-        path: "/",
+        path: "/InvoiceForm",
       },
       {
         title: "List Devis",
@@ -145,6 +145,14 @@ export const sidebarData = [
     title: "Chats",
     path: "/chats",
     icon: < ChatIcon  />,
+    access:['chef','admin','commercial']
+  },
+
+
+  {
+    title: "Service",
+    path: "/services",
+    icon: < DescriptionIcon />,
     access:['chef','admin','commercial']
   },
   

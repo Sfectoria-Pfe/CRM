@@ -19,11 +19,11 @@ import { store } from "../store/store";
 import Profile from "../profile/Profile.js";
 import Chat from "../chat/ChatBox.jsx";
 import { getMe } from "../store/auth.js";
-import Historique from "../Historique/Historique.jsx";
 import { Socket, io } from "socket.io-client";
 import ViewPack from "../Pack/ViewPack.js";
 import ViewService from "../services/ViewService.js";
 import ChatPage from "../chat/ChatPage.jsx";
+import Historique from "../Historique/Historique.jsx";
 
 export const SocketContext = createContext();
 const socket = io("http://localhost:7000"); //path of the server

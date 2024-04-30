@@ -15,6 +15,7 @@ export default function Addemployee() {
     adresse: "",
     email: "",
     telephone: "",
+    role:"",
   });
   const [emailError, setEmailError] = useState("");
   const [cinError, setCinError] = useState("");
@@ -175,6 +176,21 @@ export default function Addemployee() {
         <br />
         {image && <img src={image} alt="Uploaded" />}
       </div>
+
+
+
+      <div className="form-input">
+  <select
+    className="form-control"
+    placeholder="Role"
+    name="role"
+
+    onChange={handleChange}
+  >
+    <option value="">Sélectionner un rôle</option>
+    <option value="commercial">Commercial</option>
+    <option value="chef">Chef</option>
+  </select></div>
       <Button
         variant="warning"
         onClick={(e) => {

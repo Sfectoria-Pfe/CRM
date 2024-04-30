@@ -20,9 +20,10 @@ import { EmployeesModule } from './employees/employees.module';
 import { ChatsModule } from './chats/chats.module';
 import { DemandeDevisModule } from './demande-devis/demande-devis.module';
 import { PromotionModule } from './promotion/promotion.module';
+import { ServiceDetailsModule } from './service-details/service-details.module';
 
 @Module({
-  imports: [UsersModule, PrisamaModule, ServicesModule, AuthModule, VentesModule, LocationsModule, ClientsModule, CategorieclientsModule, DevisModule, RendezvousModule,  EquipecommercialeModule, OpportunitesModule, StagesModule, StageClientModule, EmployeesModule, ChatsModule, DemandeDevisModule, PromotionModule],
+  imports: [UsersModule, PrisamaModule, ServicesModule, AuthModule, VentesModule, LocationsModule, ClientsModule, CategorieclientsModule, DevisModule, RendezvousModule,  EquipecommercialeModule, OpportunitesModule, StagesModule, StageClientModule, EmployeesModule, ChatsModule, DemandeDevisModule, PromotionModule, ServiceDetailsModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

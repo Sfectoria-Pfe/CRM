@@ -58,6 +58,11 @@ export class OpportunitesService {
             StageClient: { include: { Client: true, Comment: true } },
           },
         },
+        service_Opportunites: {
+          include: {
+            Service: true
+          }
+        },
       },
     });
     //if equipeId===opportunity.equipeId{
