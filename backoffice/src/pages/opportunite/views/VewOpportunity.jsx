@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,18 +5,25 @@ import "../Style1.css";
 import {
   fetchOpportunite,
   fetchOpportunites,
-} from "../../../store/opportunite"; // Importez la fonction d'updateOpportunite
-import OpportunityCard from "../components/card"; // Importez la composante OpportunityCard
+} from "../../../store/opportunite"; 
+import OpportunityCard from "../components/card"; 
 import { fetchStage_client, updateStage_client } from "../../../store/stage_client";
-import { FiPlus } from "react-icons/fi"; // Importez l'icône Plus de react-icons
+import { FiPlus } from "react-icons/fi"; 
+import AddStageClient from "../../stage-client/AddStage-client";
 import AddStage from "../../stage/AddStage";
+import Chat from "../../Chats/chat";
+import AlignItemsList from "../../Chats/ChatClient"; // Importez le composant AlignItemsList
+
 const ViewOpportunity = () => {
   const { opportunityId } = useParams();
   const [newStageName, setNewStageName] = useState("");
   const [stages, setStages] = useState([]);
-  const [showAddStageForm, setShowAddStageForm] = useState(false); // Etat pour afficher ou masquer le formulaire d'ajout de stage
+  const [showAddStageForm, setShowAddStageForm] = useState(false);
+  const [selectedStageId, setSelectedStageId] = useState(null);
   const dispatch = useDispatch();
   const opportunity = useSelector((state) => state.opportunite.opportunite);
+  const [showChat, setShowChat] = useState(false);
+
   useEffect(() => {
     dispatch(fetchOpportunite(opportunityId));
   }, [dispatch]);
@@ -25,7 +31,7 @@ const ViewOpportunity = () => {
   useEffect(() => {
     if (opportunity?.stage) setStages(opportunity.stage);
   }, [opportunity]);
-  // Ajout de refresh comme dépendance
+
   const handleStageNameChange = (event) => {
     setNewStageName(event.target.value);
   };
@@ -35,7 +41,6 @@ const ViewOpportunity = () => {
   };
 
   const handleDragStart = (event, stageClient, stage, index) => {
-    console.log(stageClient, stage, index, "drag");
     event.dataTransfer.setData(
       "stage",
       JSON.stringify({ stageClient, stage, index })
@@ -57,7 +62,6 @@ const ViewOpportunity = () => {
     dispatch(updateStage_client({ id, stageId: targetStageId })).then((res) => {
       if (!res.error) {
         let aux = [...stages];
-        console.log(aux, "before");
         for (let i = 0; i < stages.length; i++) {
           if (stages[i].id === stage.id) {
             aux[i] = {
@@ -72,43 +76,63 @@ const ViewOpportunity = () => {
             };
           }
         }
-        console.log(aux, "after");
         setStages(aux);
       }
     });
-    
+  };
+
+  const handleToggleChat = () => {
+    setShowChat(!showChat);
   };
 
   return (
-    <div className="crm-board">
-      <div className="stages-container">
-        {/* Render existing stages */}
-        {stages?.map((stage, index) => (
-          <div
-            key={stage.id}
-            className="stage"
-            onDragOver={(event) => handleDragOver(event)}
-            onDrop={(event) => handleDrop(event, stage.id, index)}
-          >
-            <h3>{stage.nom}</h3>
-            {stage?.StageClient?.map((elem) => (
-              <OpportunityCard
-                key={elem.id}
-                opportunity={elem?.Client}
-                onDragStart={(event) =>
-                  handleDragStart(event, elem, stage, index)
-                }
-              />
-            ))}
+    <div>
+      <button onClick={handleToggleChat}>Chat</button>
+
+      <div className="crm-board">
+        <div className="stages-container">
+          {stages?.map((stage, index) => (
+            <div
+              key={stage.id}
+              className="stage"
+              onDragOver={(event) => handleDragOver(event)}
+              onDrop={(event) => handleDrop(event, stage.id, index)}
+            >
+              <h3>
+                {stage.nom}
+                <FiPlus onClick={() => setSelectedStageId(stage.id)} />
+              </h3>
+              {selectedStageId === stage.id && (
+                <AddStageClient
+                  stageId={stage.id}
+                  preFilledStageId={stage.id}
+                />
+              )}
+              {stage?.StageClient?.map((elem) => (
+                <OpportunityCard
+                  key={elem.id}
+                  opportunity={elem?.Client}
+                  onDragStart={(event) =>
+                    handleDragStart(event, elem, stage, index)
+                  }
+                />
+              ))}
+            </div>
+          ))}
+          <div className="stage new-stage">
+            <FiPlus onClick={handleToggleAddStageForm} />
+            {showAddStageForm && <AddStage opportuniteId={opportunityId} />}
           </div>
-        ))}
-        <div className="stage new-stage">
-          <FiPlus onClick={handleToggleAddStageForm} />
-       
-          {showAddStageForm && <AddStage opportuniteId={opportunityId} />}
-        
+        </div>
       </div>
-      </div></div>
+      
+      {showChat && (
+        <div className="chat-and-client-list">
+          <Chat />
+          <AlignItemsList />
+        </div>
+      )}
+    </div>
   );
 };
 

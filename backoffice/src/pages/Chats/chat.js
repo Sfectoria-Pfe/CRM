@@ -1,10 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
 import { useSelector } from "react-redux";
 import { SocketContext } from "../../apps/App";
 import { useParams } from "react-router-dom";
 import send from "../img/send.png"
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardHeader,
+  MDBCardBody,
+  MDBIcon,
+  MDBInputGroup,
+  MDBCardFooter,
+  MDBBtn,
+} from "mdb-react-ui-kit";
+
 export default function Chat() {
   const  socket  = useContext(SocketContext);
   const [content, setContent] = useState("");
@@ -37,103 +49,106 @@ export default function Chat() {
     });
     setContent("");
   };
-  return (
-    <div>
-      SessionDetails
-      <div className="  mt-5 d-flex  ">
-        <section
-          style={{
-            backgroundColor: "#daeaf0",
-            borderRadius: "10px",
-            width: "180%",
-            height: "550px", // Set your desired height here
-            overflowY: "auto",
-            display: "flex", // Add display: flex to the parent container
-            flexDirection: "column-reverse",
-          }}
-        >
-          <div class=" d-flex justify-content-center align-items-center ">
-            <div class="col-8">
-              <ul class="list-unstyled ">
-                {messages?.map((elem, i) => (
-                  <div
-                    class={`d-flex  mb-4 w-100 ${
-                      elem.senderId === userId ? "justify-content-end" : ""
-                    }`}
-                    key={i}
-                  >
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                      alt="avatar"
-                      class="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
-                      width="60"
-                    />
-                    <div class="card d-flex justify-content-between">
-                      <div class="card-header d-flex justify-content-between p-3">
-                        <p class="fw-bold mb-0">
-                          {elem?.sender.firstName + " " + elem?.sender.lastName}
-                        </p>
-                        <p class=" d-flex gap-2 text-muted small mb-0">
-                          <i class="far fa-clock py-1"></i>{" "}
-                          {/* <ConversionDate
-                            dateString={elem.createdAt}
-                            includeHour={true}
-                          /> */}
-                        </p>
-                      </div>
-                      <div class="card-body">
-                        <p class="mb-0">{elem?.content}</p>
-                      </div>
-                      {userId === elem.senderId && (
-                        <div className="d-flex justify-content-end">
-                          <IconButton color="error" aria-label="delete">
-                            <DeleteIcon
-                              onClick={() => {
-                                // handelDelete(elem.id)
-                              }}
-                            />
-                          </IconButton>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-                <form
-                  onSubmit={sendMessage}
-                  className="d-flex justify-content-center align-items-center gap-3"
-                >
-                  {" "}
-                  <input
-                    required
-                    value={content}
-                    class="form-control "
-                    id="textAreaExample3"
-                    rows="1"
-                    onChange={(e) => {
-                      console.log(e.target.value);
-                      setContent(e.target.value);
-                    }}
-                    style={{
-                      borderRadius: "200px",
-                      // textAlign: "center",
-                      padding: "10px",
-                    }}
-                  ></input>
-                  <button
-                    style={{ all: "unset", cursor: "pointer" }}
-                    type="submit"
-                    onSubmit={sendMessage}
-                  >
-                    <img alt="" src={send} style={{ width: 50, heigh: 50 }} />
-                  </button>
-                </form>
-              </ul>
 
-              <div></div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
+  return (
+    <MDBContainer fluid className="py-5" style={{ backgroundColor: "#eee" }}>
+      <MDBRow className="d-flex justify-content-center">
+        <MDBCol md="6" lg="6" xl="6">
+          <MDBCard>
+            <MDBCardHeader
+              className="d-flex justify-content-between align-items-center p-3"
+              style={{ borderTop: "4px solid #ffa900" }}
+            >
+              <h5 className="mb-0">Chat messages</h5>
+              <div className="d-flex flex-row align-items-center">
+                <span className="badge bg-warning me-2">20</span>
+                <MDBIcon
+                  fas
+                  icon="minus"
+                  size="sm"
+                  className="me-2 text-muted"
+                />
+                <MDBIcon
+                  fas
+                  icon="comments"
+                  size="sm"
+                  className="me-2 text-muted"
+                />
+                <MDBIcon
+                  fas
+                  icon="times"
+                  size="sm"
+                  className="me-2 text-muted"
+                />
+              </div>
+            </MDBCardHeader>
+            <MDBCardBody>
+              <div className="d-flex justify-content-between mb-2">
+                <p className="small mb-0">Timona Siera</p>
+                <p className="small mb-0 text-muted">23 Jan 2:00 pm</p>
+              </div>
+              <div className="d-flex flex-row justify-content-start mb-3">
+                <img
+                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp"
+                  alt="avatar 1"
+                  style={{ width: "35px", height: "35px" }}
+                  className="me-2 rounded-circle"
+                />
+                <div>
+                  <p
+                    className="small p-2 rounded-3"
+                    style={{ backgroundColor: "#f5f6f7" }}
+                  >
+                    For what reason would it be advisable for me to think
+                    about business content?
+                  </p>
+                </div>
+              </div>
+
+              <div className="d-flex justify-content-between mb-2">
+                <p className="small mb-0 text-muted">23 Jan 2:05 pm</p>
+                <p className="small mb-0">Johny Bullock</p>
+              </div>
+              <div className="d-flex flex-row justify-content-end mb-3">
+                <div>
+                  <p
+                    className="small p-2 rounded-3"
+                    style={{
+                      backgroundColor: "#f5f6f7",
+                      color: "#fff",
+                      backgroundColor: "#ffc107",
+                    }}
+                  >
+                    Thank you for your believe in our supports
+                  </p>
+                </div>
+                <img
+                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                  alt="avatar 1"
+                  style={{ width: "35px", height: "35px" }}
+                  className="ms-2 rounded-circle"
+                />
+              </div>
+              
+              {/* Plus de messages ici */}
+              
+            </MDBCardBody>
+
+            <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3">
+              <MDBInputGroup className="mb-0">
+                <input
+                  className="form-control"
+                  placeholder="Type message"
+                  type="text"
+                />
+                <MDBBtn color="primary" style={{ paddingTop: ".45rem" }}>
+                send
+                </MDBBtn>
+              </MDBInputGroup>
+            </MDBCardFooter>
+          </MDBCard>
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
   );
 }

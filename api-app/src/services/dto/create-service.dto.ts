@@ -11,7 +11,7 @@ export class CreateServiceDto {
   description: string;
 
   @ApiProperty()
-  typeService: TypeService;
+  type: TypeService;
 
   @ApiProperty()
   price?: number;

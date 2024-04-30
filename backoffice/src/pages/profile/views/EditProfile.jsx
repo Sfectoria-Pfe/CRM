@@ -4,20 +4,20 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import { UserContext } from "../../../router/Router";
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaBuilding, FaEnvelope, FaPhone, FaIdCard } from 'react-icons/fa'; // Importation des icônes
+import { FaUser, FaBuilding, FaEnvelope, FaPhone, FaIdCard } from 'react-icons/fa';
 
 export default function EditProfile() {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext) || { user: {}, setUser: () => {} }; // Provide a default value if context is undefined
   const navigate = useNavigate();
 
   // État local pour stocker les informations mises à jour
   const [updatedUser, setUpdatedUser] = useState({
-    cin: user.Employee.cin || "",
-    nom: user.Employee.nom || "",
-    prenom: user.Employee.prenom || "",
-    adresse: user.Employee.adresse || "",
-    email: user.Employee.email || "",
-    telphone: user.Employee.telphone || ""
+    cin: user.Employee ? user.Employee.cin || "" : "",
+    nom: user.Employee ? user.Employee.nom || "" : "",
+    prenom: user.Employee ? user.Employee.prenom || "" : "",
+    adresse: user.Employee ? user.Employee.adresse || "" : "",
+    email: user.Employee ? user.Employee.email || "" : "",
+    telephone: user.Employee ? user.Employee.telephone || "" : ""
   });
 
   // Gestion de la modification des champs de formulaire
@@ -59,9 +59,9 @@ export default function EditProfile() {
               <Form.Label><FaEnvelope className="me-2" />Email</Form.Label>
               <Form.Control type="email" name="email" value={updatedUser.email} onChange={handleInputChange} />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="telphone">
+            <Form.Group className="mb-3" controlId="telephone">
               <Form.Label><FaPhone className="me-2" />Téléphone</Form.Label>
-              <Form.Control type="text" name="telphone" value={updatedUser.telphone} onChange={handleInputChange} />
+              <Form.Control type="text" name="telephone" value={updatedUser.telephone} onChange={handleInputChange} />
             </Form.Group>
             <Button variant="success" onClick={handleSaveClick}>Modifier le profil</Button>
           </Form>
@@ -70,3 +70,4 @@ export default function EditProfile() {
     </section>
   );
 }
+

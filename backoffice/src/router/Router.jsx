@@ -30,7 +30,6 @@ import ClientList from "../pages/client/views/ListeClient.jsx";
 import AddOpportunite from "../pages/opportunite/views/AddOpportunite.jsx";
 import AddStageIcon from "../pages/opportunite/components/AddIcone.jsx";
 import AddStage from "../pages/stage/AddStage.jsx";
-import TestFetchOpportunites from "../pages/opportunite/test.js";
 import AddStageClient from "../pages/stage-client/AddStage-client.js";
 import ListOpportunities from "../pages/opportunite/views/ListOpportunities.jsx";
 import ViewOpportunity from "../pages/opportunite/views/VewOpportunity.jsx";
@@ -51,6 +50,14 @@ import { Spinner } from "react-bootstrap";
 import ListRendezvous from "../pages/Rendez/Liste Rendez.js";
 import ListDemandeDevis from "../pages/Devis/ListeDemandedevis.js";
 import Charts from "../pages/charts/chartss.jsx"
+import AddService from "../pages/service/views/addService";
+import Services from "../pages/service/services.js";
+import OneService from "../pages/service/views/oneService.jsx";
+import Servicede from "../pages/Servicedetails/Servicede.js";
+import ListServiceDetails from "../pages/Servicedetails/views/Listeservicede.jsx";
+import AddServiceDetail from "../pages/Servicedetails/views/AddServicede.jsx";
+import InvoiceForm from "../pages/Devis 2/InvoiceForm.js"
+import AlignItemsList from "../pages/Chats/ChatClient.jsx";
 export const UserContext = createContext();
 
 function PrivateRoute({ Component, roles }) {
@@ -104,8 +111,12 @@ export default function Router() {
                   <Route index element={<ProfileDetails />} />
                   <Route path="edit" element={<EditProfile />} />
                 </Route>
-                <Route path="listeService" element={<ServiceListe />} />
-                <Route path="addservice" element={<Addservice />} />
+                <Route path="services" element={<Services />}>
+
+                <Route index element={<ServiceListe />} />
+                <Route path="addservice" element={<AddService />} />
+                <Route path=":serviceId"  element={<OneService/>} />
+                </Route>
                 <Route path="AddVente" element={<AddVente />} />
                 <Route path="ListeVente" element={<VenteList />} />
                 <Route path="AddLocation" element={<AddLocation />} />
@@ -133,7 +144,6 @@ export default function Router() {
                 <Route path="/devis/:devisId" element={<OneDevis />} />
                 <Route path="./AddStage" element={<AddStage />} />
                 <Route path="AddIcone" element={<AddStageIcon />} />
-                <Route path="test" element={<TestFetchOpportunites />} />
                 <Route path="Addstage_client" element={<AddStageClient />} />
                 <Route path="acess-denied" element={<AccesDenied />} />
                 <Route path="todolist" element={<Test />} />
@@ -147,6 +157,15 @@ export default function Router() {
                 <Route path="ListeRendezvous" element={<ListRendezvous />} />
                 <Route path="ListeDemandedevis" element={<ListDemandeDevis/>} />
                 <Route path="Dashboard" element={<Charts />} />
+
+                <Route path="InvoiceForm" element={<InvoiceForm />} />
+                <Route path="ChatClient" element={<AlignItemsList />} />
+
+                <Route path="servicesdetails" element={<Servicede />}>
+                <Route index element={<ListServiceDetails />} />
+                <Route path="addservicedetails" element={<AddServiceDetail />} />
+                <Route path=":serviceId"  element={<OneService/>} />
+                </Route>
 
               </Route>
             ) : (

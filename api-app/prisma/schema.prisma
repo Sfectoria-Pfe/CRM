@@ -116,6 +116,7 @@ model Service {
 
 model ServiceDetail {
   id          Int     @id @default(autoincrement())
+  title      String
   imageURL    String  @db.VarChar(255)
   description String
   address     String
@@ -174,15 +175,32 @@ model Comment {
 
 model devis {
   id              Int         @id @default(autoincrement())
-  numero_devis    Int
-  date_estimation DateTime
-  montant_total   Float
-  TVA             Float
+  currency             String?     // Devise utilisée ('$' dans votre exemple)
+  currentDate          DateTime?   // Date actuelle
+  invoiceNumber        Int?        // Numéro de facture
+  dateOfIssue          DateTime?   // Date d'émission
+  nom                  String?     // Nom du client
+  email                String?     // Email du client
+  adresse              String?     // Adresse du client
+  nom_entreprise       String?     // Nom de l'entreprise du client
+  email_entreprise     String?     // Email de l'entreprise du client
+  adresse_entreprise   String?     // Adresse de l'entreprise du client
+  telephone_entreprise String?     // Téléphone de l'entreprise du client
+  notes                String?     // Notes
+  total                Float?      // Total
+  subTotal             Float?      // Sous-total
+  taxRate              Float?      // Taux de taxe
+  taxAmount            Float?      // Montant de taxe
+  discountRate         Float?      // Taux de réduction
+  discountAmount       Float?      // Montant de réduction
+  name  String
+      price Float
+      description  String
+      quantity Int
   client          Client      @relation(fields: [clientId], references: [id])
   clientId        Int // Clé étrangère vers l'id de l'entité Client
   devisLine       DevisLine[]
 }
-
 model DevisLine {
   id            Int     @id @default(autoincrement())
   serviceId     Int

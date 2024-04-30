@@ -12,7 +12,7 @@ import { UsersService } from 'src/users/users.service';
     PassportModule,
     JwtModule.register({
       secret: 'sfectoria',
-      signOptions: { expiresIn: '60m' },
+      signOptions: { expiresIn: '120h' },
     }),
   ],
   controllers: [AuthController],

@@ -9,9 +9,11 @@ import axios from "axios";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { faFacebookMessenger } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
+import { faDollarSign, faCheck } from "@fortawesome/free-solid-svg-icons"; // Importez les icônes nécessaires
 
 const Pack = () => {
-  const [parcks, setPacks] = useState([]);
+  const [packs, setPacks] = useState([]);
 
   useEffect(() => {
     const fetchPacks = async () => {
@@ -31,33 +33,68 @@ const Pack = () => {
   }, []);
 
   const packCards = () => {
-    return parcks.map((opportunite) => (
-      <Col key={opportunite.id} xs={12} sm={6} md={4} lg={3}>
-        <Card style={{ marginBottom: "20px" }}>
+    return packs.map((opportunite) => (
+      <Col key={opportunite.id} xs={12} sm={6} md={4} className="mb-4">
+        <Card
+          style={{
+            backgroundColor: "white",
+            minWidth: "350px",
+            maxWidth: "600px",
+            height: "auto",
+            borderRadius: "14px",
+            boxShadow: "0px 10px 30px hsl(185, 75%, 35%)",
+          }}
+        >
+          <Card.Header
+            style={{
+              backgroundColor: "#b2dfdb",
+              backgroundPosition: "0px 0px",
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "contain",
+              textAlign: "center",
+              borderTopLeftRadius: "14px",
+              borderTopRightRadius: "14px",
+            }}
+          >
+            {" "}
+            <Card.Title>
+             <h5 style={{color:'#1a237e'}} >Profitez Notre pack:</h5> 
+              <h2 >{opportunite.title}</h2>
+            </Card.Title>
+            <Card.Title>
+              <FontAwesomeIcon icon={faDollarSign} style={{color:'#1a237e'}} />{" "}
+              Prix:{" "}
+              
+                {opportunite.service_Opportunites.reduce(
+                  (acc, elem) => elem.prix + acc,
+                  0
+                )}{" "}
+                DT
+              
+            </Card.Title>
+            <br />
+          </Card.Header>
           {/* <Card.Img
                 variant="top"
                 src={serviceOpportunite.Service.imageURL}
                 /> */}
           <Card.Body>
-            <Card.Title>{opportunite.title}</Card.Title>
-            <Card.Text>
-              Prix:{" "}
-              {opportunite.service_Opportunites.reduce(
-                (acc, elem) => elem.prix + acc,
-                0
-              )}
-            </Card.Text>
+           <h3 style={{color:'#1a237e'}}> Les services :</h3>
             {opportunite.service_Opportunites.map((serviceOpportunite) => (
               <>
-                <Card.Text>{serviceOpportunite.Service.name}</Card.Text>
-                <Card.Text>{serviceOpportunite.Service.type}</Card.Text>
+                <Card.Title style={{color:"black"}}>
+        <FontAwesomeIcon icon={faCheck} style={{ color: "green" ,fontSize:"20px" }} /> {/* Ajouter l'icône de coche */}
+        {serviceOpportunite.Service.name}
+      </Card.Title>
+   
               </>
             ))}
           </Card.Body>
           <Card.Footer>
-            <Button variant="primary">
-              <FontAwesomeIcon icon={faFacebookMessenger} />
-            </Button>
+            <Link to={`/pack/${opportunite.id}`}>
+              <Button variant="primary">
+                    Voire plus              </Button>
+            </Link>
           </Card.Footer>
         </Card>
       </Col>
@@ -69,8 +106,7 @@ const Pack = () => {
       <section className="blog-out mb">
         <Back name="Pack" title="Notre pack" cover={img} />
         <div className="container recent">
-          <Row>{packCards()}</Row>
-          {/* <RecentCard /> */}
+          <Row style={{display: "flex"}}>{packCards()}</Row>
         </div>
       </section>
     </>
