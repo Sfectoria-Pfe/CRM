@@ -89,8 +89,8 @@ function ListEmployee() {
   return (
     <div>
       <div className="d-flex justify-content-end m-3">
-        <Link className="btn btn-light" to="addEmployee"> {/* Renommé addClient en addEmployee */}
-          Ajouter Employé {/* Renommé Add Client en Ajouter Employé */}
+        <Link className="btn btn-light" to="/addemployee"> {/* Renommé addClient en addEmployee */}
+          Ajouter Employé 
         </Link>
       </div>
 
@@ -105,4 +105,4 @@ function ListEmployee() {
   );
 }
 
-export default ListEmployee; // Renommé ListClients en ListEmployees
+export default ListEmployee; 

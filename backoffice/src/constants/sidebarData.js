@@ -122,9 +122,9 @@ export const sidebarData = [
     icon: < PeopleAltIcon  />,
     children: [
       {
-        title: "Add Employee",
-        icon: <AddIcon />,
-        path: "/addemployee",
+        title: "Liste Equipe",
+        icon: <ListIcon/>,
+        path: "/listeCommerciale",
       },
       {
         title: "List Employees",

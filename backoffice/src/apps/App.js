@@ -55,6 +55,7 @@ import { Socket, io } from "socket.io-client";
 import { createContext } from "react";
 import Badge from "@mui/material/Badge";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { AccountCircle, Settings, ExitToApp } from '@mui/icons-material';
 import { useEffect } from "react";
 const drawerWidth = 240;
 const socket = io("http://localhost:7000"); //path of the server
@@ -192,44 +193,47 @@ export default function App() {
                 </Badge>
               </IconButton>
               <p className="m-0">
-                Welcome {user?.Employee?.nom + " " + user?.Employee?.prenom}{" "}
-              </p>
-              <Dropdown className="d-flex ">
-                <Dropdown.Toggle
-                  variant=""
-                  id="dropdownMenu2"
-                  className="d-flex gap-3 align-items-center"
-                >
-                  <img
-                    src={user?.Employee?.image}
-                    alt="avatar"
-                    className="rounded-circle"
-                    style={{ width: 50, height: 50, objectFit: "cover" }}
-                  />
-                </Dropdown.Toggle>
+        Welcome {user?.Employee?.nom + " " + user?.Employee?.prenom}{" "}
+      </p>
+      <Dropdown className="d-flex">
+        <Dropdown.Toggle
+          variant=""
+          id="dropdownMenu2"
+          className="d-flex gap-3 align-items-center"
+        >
+          <img
+            src={user?.Employee?.image}
+            alt="avatar"
+            className="rounded-circle"
+            style={{ width: 50, height: 50, objectFit: "cover" }}
+          />
+        </Dropdown.Toggle>
 
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    onClick={() => {
-                      window.location.pathname = "/profile";
-                    }}
-                  >
-                    Profile
-                  </Dropdown.Item>
-                  <Dropdown.Item>Setting</Dropdown.Item>
-                  <Dropdown.Item
-                    onClick={() => {
-                      localStorage.removeItem("token");
-                      window.location.pathname = "/";
-                    }}
-                  >
-                    Logout
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </Toolbar>
-        </AppBar>
+        <Dropdown.Menu           style={{ backgroundColor: '#0072EC',color:"#FFFFFF" }} // Fond de couleur bleu foncé
+>
+          <Dropdown.Item
+            onClick={() => {
+              window.location.pathname = "/profile";
+            }}
+          >
+            <AccountCircle /> Profile
+          </Dropdown.Item>
+          <Dropdown.Item>
+            <Settings /> Settings
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => {
+              localStorage.removeItem("token");
+              window.location.pathname = "/";
+            }}
+          >
+            <ExitToApp /> Logout
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </div>
+  </Toolbar>
+</AppBar>
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
