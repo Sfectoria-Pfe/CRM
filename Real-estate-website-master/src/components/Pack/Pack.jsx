@@ -58,19 +58,20 @@ const Pack = () => {
           >
             {" "}
             <Card.Title>
-             <h5 style={{color:'#1a237e'}} >Profitez Notre pack:</h5> 
-              <h2 >{opportunite.title}</h2>
+              <h5 style={{ color: "#1a237e" }}>Profitez Notre pack:</h5>
+              <h2>{opportunite.title}</h2>
             </Card.Title>
             <Card.Title>
-              <FontAwesomeIcon icon={faDollarSign} style={{color:'#1a237e'}} />{" "}
+              <FontAwesomeIcon
+                icon={faDollarSign}
+                style={{ color: "#1a237e" }}
+              />{" "}
               Prix:{" "}
-              
-                {opportunite.service_Opportunites.reduce(
-                  (acc, elem) => elem.prix + acc,
-                  0
-                )}{" "}
-                DT
-              
+              {opportunite.service_Opportunites.reduce(
+                (acc, elem) => elem.prix + acc,
+                0
+              )}{" "}
+              DT
             </Card.Title>
             <br />
           </Card.Header>
@@ -79,21 +80,23 @@ const Pack = () => {
                 src={serviceOpportunite.Service.imageURL}
                 /> */}
           <Card.Body>
-           <h3 style={{color:'#1a237e'}}> Les services :</h3>
+            <h3 style={{ color: "#1a237e" }}> Les services :</h3>
             {opportunite.service_Opportunites.map((serviceOpportunite) => (
               <>
-                <Card.Title style={{color:"black"}}>
-        <FontAwesomeIcon icon={faCheck} style={{ color: "green" ,fontSize:"20px" }} /> {/* Ajouter l'icône de coche */}
-        {serviceOpportunite.Service.name}
-      </Card.Title>
-   
+                <Card.Title style={{ color: "black" }}>
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    style={{ color: "green", fontSize: "20px" }}
+                  />{" "}
+                  {/* Ajouter l'icône de coche */}
+                  {serviceOpportunite.Service.name}
+                </Card.Title>
               </>
             ))}
           </Card.Body>
           <Card.Footer>
             <Link to={`/pack/${opportunite.id}`}>
-              <Button variant="primary">
-                    Voire plus              </Button>
+              <Button variant="primary">Voire plus </Button>
             </Link>
           </Card.Footer>
         </Card>
@@ -106,7 +109,7 @@ const Pack = () => {
       <section className="blog-out mb">
         <Back name="Pack" title="Notre pack" cover={img} />
         <div className="container recent">
-          <Row style={{display: "flex"}}>{packCards()}</Row>
+          <Row style={{ display: "flex" }}>{packCards()}</Row>
         </div>
       </section>
     </>

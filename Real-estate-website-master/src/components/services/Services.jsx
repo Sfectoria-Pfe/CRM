@@ -8,7 +8,7 @@ import FeaturedCard from "../home/featured/FeaturedCard";
 import LocationCard from "../home/location/locationcard";
 import Recent from "../home/recent/Recent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookMessenger } from "@fortawesome/free-brands-svg-icons";
 
 export const Services = () => {
   const [services, setServices] = useState([]);
@@ -18,8 +18,8 @@ export const Services = () => {
       try {
         const response = await axios.get("http://localhost:7000/opportunites", {
           params: {
-            numberService: 1
-          }
+            numberService: 1,
+          },
         });
         setServices(response.data);
       } catch (error) {
@@ -33,37 +33,67 @@ export const Services = () => {
   const ServiceCards = () => {
     return (
       <Row xs={1} sm={2} md={3}>
-        {services.map((opportunite) => (
+        {services.map((opportunite) =>
           opportunite.service_Opportunites.map((serviceOpportunite) => (
-            <Col key={serviceOpportunite?.serviceId} xs={12} sm={6} md={4} className="mb-4">
+            <Col
+              key={serviceOpportunite?.serviceId}
+              xs={12}
+              sm={6}
+              md={4}
+              className="mb-4"
+            >
               <Card className="custom-card-background">
-                <Card.Img style={{height: "200px", /* Remplacez la valeur par la hauteur souhaitée */
-  objectFit: "cover"}}variant="top" src={serviceOpportunite?.Service?.imageURL} />
+                <Card.Img
+                  style={{
+                    height:
+                      "200px" /* Remplacez la valeur par la hauteur souhaitée */,
+                    objectFit: "cover",
+                  }}
+                  variant="top"
+                  src={serviceOpportunite?.Service?.imageURL}
+                />
                 <Card.Body>
-                  <Card.Title className="custom-name">{serviceOpportunite?.Service?.name}</Card.Title>
-                  <Card.Text>{serviceOpportunite?.Service?.description}</Card.Text>
+                  <Card.Title className="custom-name">
+                    {serviceOpportunite?.Service?.name}
+                  </Card.Title>
+                  <Card.Text>
+                    {serviceOpportunite?.Service?.description}
+                  </Card.Text>
                   <Card.Text>{serviceOpportunite?.Service?.type}</Card.Text>
                   <Card.Text>Prix: {serviceOpportunite?.prix}</Card.Text>
-                  <Link to={`/pack/${serviceOpportunite?.id}`}>
-              <Button variant="primary">
-                    Voire plus              </Button>
-            </Link>
+                  {/* <Link to={`/pack/${serviceOpportunite?.Service.id}`}>
+                    <Button variant="primary">Voire plus </Button>
+                  </Link> */}
                 </Card.Body>
+                <Card.Footer>
+                </Card.Footer>
               </Card>
+                 <Link to={`/service/${opportunite.id}`}>
+                    <Button variant="primary">Voire plus </Button>
+                  </Link>
             </Col>
           ))
-        ))}
+        )}
       </Row>
     );
   };
-  
 
   return (
     <>
+    <section className="blog-out mb">
+        <Back name="Pack" title="Notre pack" cover={img} />
+        <div className="container recent">
+          <Row style={{ display: "flex" }}>{ServiceCards()}</Row>
+        </div>
+      </section>
       <section className="services mb">
         <Back name="Services" title="Notre Service " cover={img} />
         <Container>
-          <br /><br /><br /><br /><br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           <h1
             className="section-title"
             style={{
@@ -90,7 +120,7 @@ export const Services = () => {
             Notre immobilier pour la location
           </h1>
           <br></br> <br></br>
-          <LocationCard />
+          {/* <LocationCard /> */}
           <br />
           <br />
           <h1
@@ -104,7 +134,7 @@ export const Services = () => {
           >
             Notre immobilier pour la vente
           </h1>
-          <Recent />
+          {/* <Recent /> */}
         </Container>
       </section>
     </>

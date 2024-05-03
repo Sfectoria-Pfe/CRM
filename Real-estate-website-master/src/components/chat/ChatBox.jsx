@@ -6,167 +6,176 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
 import send from "../../assets/img/send.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardHeader,
+  MDBCardBody,
+  MDBIcon,
+  MDBInputGroup,
+  MDBCardFooter,
+  MDBBtn,
+} from "mdb-react-ui-kit";
+import { Button } from "react-bootstrap";
 
 export default function Chat({ opportunity, drawer, setCloseChat }) {
   const socket = useContext(SocketContext);
   const [content, setContent] = useState("");
-  const { sessionId } = useParams();
+  const user = useSelector((state) => state.auth.me);
 
   const [messages, setMessages] = useState([]);
   useEffect(() => {
-    socket.emit("find-all-msgs", +sessionId);
+    socket.emit("find-all-msgs-opportunity-client", {
+      opportunityId: opportunity.id,
+      clientId: user.id,
+    });
   }, []); // request give me old msgs
   useEffect(() => {
-    socket.on("get-all-msgs/" + sessionId, (data) => {
-      setMessages(data);
-    });
-  }, []); // get old msgs
+    socket.on(
+      "get-all-msgs-opportunity-client/" + opportunity.id + "/" + user.clientId,
+      (data) => {
+        setMessages(data);
+      }
+    );
+  }, [socket]); // get old msgs
 
   useEffect(() => {
-    socket.on("msg-session/" + sessionId, (data) => {
+    socket.on('new-msg/'+opportunity.id+"/"+user.id, (data) => {
       setMessages((prev) => [...prev, data]);
     });
-  }, []); // new msg when someone send a msg
+  }, []);
+   // new msg when someone send a msg
 
   const userId = useSelector((state) => state.auth.me?.id);
   const sendMessage = (e) => {
     e.preventDefault();
     socket.emit("send-message", {
-      senderId: userId,
-      sessionId: +sessionId,
+      senderId: user.id,
+      opportunityId: +opportunity.id,
       content,
     });
     setContent("");
   };
-  return (
-    <div
-      className="col-md-4 col-12"
-      style={{
-        backgroundColor: "#fff",
-        borderRadius: "10px",
-        boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      {opportunity === 0 ? (
-        <div className="w-100">
-          <p>select one</p>
-        </div>
-      ) : (
-        <>
-          <div
+  if (drawer)
+    return (
+      <div className="position-fixed col-md-6 col-12" >
+        <MDBCard style={{height:550}}>
+          <MDBCardHeader
             className="d-flex justify-content-between align-items-center p-3"
-            style={{ borderBottom: "1px solid #ddd" }}
+            style={{ borderTop: "4px solid #ffa900" }}
           >
-            <div className="d-flex align-items-center">
-              <AccountCircleIcon style={{ width: "70px", height: "70px" }} />
-              <h2>{opportunity?.title}</h2>
+            <h5 className="mb-0">Chat messages</h5>
+            <div className="d-flex flex-row align-items-center">
+              {/*  */}
+              <Button variant="light" onClick={setCloseChat}>
+                <MDBIcon
+                  fas
+                  icon="times"
+                  size="sm"
+                  className="me-2 text-muted"
+                />
+              </Button>
             </div>
-
-            {drawer && (
-              <div>
-                <button className="btn-light btn" onClick={setCloseChat}>
-                  X
-                </button>
-              </div>
-            )}
-          </div>
-          <section
-            style={{
-              backgroundColor: "#f0f2f5",
-              borderRadius: "10px",
-              padding: "20px",
-              width: "100%",
-              height: "550px", // Set your desired height here
-              overflowY: "auto",
-              display: "flex", // Add display: flex to the parent container
-              flexDirection: "column-reverse",
-            }}
-          >
-            <div class=" d-flex justify-content-center align-items-center ">
-              <div class="col-8">
-                <ul class="list-unstyled ">
-                  {messages?.map((elem, i) => (
-                    <div
-                      class={`d-flex  mb-4 w-100 ${
-                        elem.senderId === userId ? "justify-content-end" : ""
-                      }`}
-                      key={i}
-                    >
-                      <img
-                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp"
-                        alt="avatar"
-                        class="rounded-circle d-flex align-self-start me-3 shadow-1-strong"
-                        width="60"
-                      />
-                      <div class="card d-flex justify-content-between">
-                        <div class="card-header d-flex justify-content-between p-3">
-                          <p class="fw-bold mb-0">
-                            {elem?.sender.firstName +
-                              " " +
-                              elem?.sender.lastName}
-                          </p>
-                          <p class=" d-flex gap-2 text-muted small mb-0">
-                            <i class="far fa-clock py-1"></i>{" "}
-                            {/* <ConversionDate
-                            dateString={elem.createdAt}
-                            includeHour={true}
-                          /> */}
-                          </p>
-                        </div>
-                        <div class="card-body">
-                          <p class="mb-0">{elem?.content}</p>
-                        </div>
-                        {userId === elem.senderId && (
-                          <div className="d-flex align-items-center">
-                            <IconButton color="error" aria-label="delete">
-                              <DeleteIcon
-                                onClick={() => {
-                                  // handelDelete(elem.id)
-                                }}
-                              />
-                            </IconButton>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                  <form
-                    onSubmit={sendMessage}
-                    className="d-flex justify-content-center align-items-center gap-3"
-                  >
-                    {" "}
-                    <input
-                      required
-                      value={content}
-                      class="form-control "
-                      id="textAreaExample3"
-                      rows="1"
-                      onChange={(e) => {
-                        console.log(e.target.value);
-                        setContent(e.target.value);
-                      }}
+          </MDBCardHeader>
+          <MDBCardBody style={{ height: 500, overflowY: "scroll" }}>
+            {messages.map((msg, i) => (
+              <>
+                <div
+                  className={`d-flex justify-content-between ${
+                    msg?.Sender?.isClient ? "" : "flex-row-reverse"
+                  } mb-2`}
+                >
+                  <p className="small mb-0">
+                    {msg?.Sender?.isClient
+                      ? msg.Sender.Client.nom
+                      : msg.Sender.Employee.nom}
+                  </p>
+                  <p className="small mb-0 text-muted">
+                    {msg.createdAt} 23 Jan 2:00 pm
+                  </p>
+                </div>
+                <div
+                  className={`d-flex gap-2 flex-row ${
+                    msg?.Sender?.isClient
+                      ? "justify-content-start"
+                      : " flex-row-reverse"
+                  } mb-3`}
+                >
+                  <img
+                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp"
+                    alt="avatar 1"
+                    style={{ width: "35px", height: "35px" }}
+                    className=" rounded-circle"
+                  />
+                  <div>
+                    <p
+                      className="small p-2 rounded-3"
                       style={{
-                        borderRadius: "200px",
-                        // textAlign: "center",
-                        padding: "10px",
+                        backgroundColor: msg?.Sender?.isClient
+                          ? "#f5f6f7"
+                          : "#ffc107",
+                        color: msg?.Sender?.isClient ? "" : "#fff",
                       }}
-                    ></input>
-                    <button
-                      style={{ all: "unset", cursor: "pointer" }}
-                      type="submit"
-                      onSubmit={sendMessage}
                     >
-                      <img alt="" src={send} style={{ width: 50, heigh: 50 }} />
-                    </button>
-                  </form>
-                </ul>
+                      {msg?.content}
+                    </p>
+                  </div>
+                </div>
+              </>
+            ))}
 
-                <div></div>
+            {/* <div className="d-flex justify-content-between mb-2">
+                <p className="small mb-0 text-muted">23 Jan 2:05 pm</p>
+                <p className="small mb-0">Johny Bullock</p>
               </div>
-            </div>
-          </section>
-        </>
-      )}
-    </div>
-  );
+              <div className="d-flex flex-row justify-content-end mb-3">
+                <div>
+                  <p
+                    className="small p-2 rounded-3"
+                    style={{
+                      backgroundColor: "#f5f6f7",
+                      color: "#fff",
+                      backgroundColor: "#ffc107",
+                    }}
+                  >
+                    Thank you for your believe in our supports
+                  </p>
+                </div>
+                <img
+                  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp"
+                  alt="avatar 1"
+                  style={{ width: "35px", height: "35px" }}
+                  className="ms-2 rounded-circle"
+                />
+              </div> */}
+
+            {/* Plus de messages ici */}
+          </MDBCardBody>
+
+          <MDBCardFooter className="text-muted d-flex justify-content-start align-items-center p-3">
+            <form onSubmit={sendMessage} className="d-flex">
+              {/* <MDBInputGroup className="mb-0 col d-flex"> */}
+                <input
+                  className="form-control  "
+                  placeholder="Type message"
+                  type="text"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                />
+                <Button
+                  color="primary"
+                  // style={{ paddingTop: "0.45rem" }}
+                  type="submit"
+                  onSubmit={sendMessage}
+                >
+                  send
+                </Button>
+              {/* </MDBInputGroup> */}
+            </form>
+          </MDBCardFooter>
+        </MDBCard>
+      </div>
+    );
 }
