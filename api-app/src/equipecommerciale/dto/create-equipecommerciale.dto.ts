@@ -9,9 +9,7 @@ export class CreateEquipecommercialeDto {
     @ApiProperty()
     @IsNotEmpty()
     nombre: number;
-    @ApiProperty()
-    @IsNotEmpty()
-    commercialeId: number; 
+    
     @ApiProperty()
     @IsNotEmpty()// Clé étrangère vers l'id de l'entité Admin
     chefId: number; // Clé étrangère vers l'id de l'entité Chef

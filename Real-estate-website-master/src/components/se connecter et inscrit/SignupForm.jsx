@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signupClient } from "../store/auth";
@@ -7,6 +6,18 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./SignupForm.css"; // Importer le fichier CSS avec les styles
 import axios from "axios";
+
+import {
+  MDBBtn,
+  MDBContainer,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBRow,
+  MDBCol,
+  MDBIcon,
+  MDBInput
+} from 'mdb-react-ui-kit';
 
 export default function AddClient() {
   const [client, setClient] = useState({
@@ -20,7 +31,6 @@ export default function AddClient() {
 
   const handleFile = (event) => {
     const file = event.target.files[0];
-    console.log("Fichier sélectionné :", file);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", preset_key);
@@ -39,16 +49,16 @@ export default function AddClient() {
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setClient({ ...client, [name]: value });
   };
-  const handleAddClient = () => {
+  const handleAddClient = (e) => {
+    e.preventDefault(); // Empêcher le comportement par défaut du formulaire
     dispatch(signupClient(client))
       .then((res) => {
         if (!res.error) {
           toast.success("Votre compte a été ajouté avec succès !");
           setTimeout(() => {
-            navigate('/profile');
+            navigate("/profile");
           }, 2000);
         } else {
           toast.error("Erreur lors de l'ajout du compte. Veuillez réessayer.");
@@ -60,13 +70,23 @@ export default function AddClient() {
   };
 
   return (
-    <form className="signup-form" onSubmit={handleAddClient}>
-      {" "}
-      {/* Appliquer la classe signup-form */}
+    <MDBContainer className="my-5">
+      <MDBCard>
+        <MDBRow className='g-0'>
+          <MDBCol md='6'>
+            <MDBCardImage src='https://www.smoothtalker.com/wp-content/uploads/2021/10/php-login-and-authentication-the-definitive-guide.png'/>
+          </MDBCol>
+          <MDBCol md='6'>
+            <MDBCardBody className='d-flex flex-column'>
+              <div className='d-flex flex-row mt-2'>
+                <MDBIcon fas icon="cubes fa-3x me-3" style={{ color: '#1BBFA8' }}/>
+                <span className="h1 fw-bold mb-0">Maison+</span>
+              </div>
+    <form onSubmit={handleAddClient}>
       <h2>Créer un compte</h2>
       <div className="form-input">
         <div className="form-input">
-          <input
+          <MDBInput 
             type="file"
             className="form-control"
             placeholder="URL de l'image"
@@ -77,7 +97,7 @@ export default function AddClient() {
           <br />
           {image && <img src={image} alt="Uploaded" />}
         </div>
-        <input
+        <MDBInput
           className="form-control"
           placeholder="Nom"
           name="nom"
@@ -86,7 +106,7 @@ export default function AddClient() {
         />
       </div>
       <div className="form-input">
-        <input
+        <MDBInput
           className="form-control"
           placeholder="Prénom"
           name="prenom"
@@ -95,7 +115,7 @@ export default function AddClient() {
         />
       </div>
       <div className="form-input">
-        <input
+        <MDBInput
           className="form-control"
           placeholder="Email"
           name="email"
@@ -105,7 +125,7 @@ export default function AddClient() {
         />
       </div>
       <div className="form-input">
-        <input
+        <MDBInput
           className="form-control"
           placeholder="Adresse"
           name="adresse"
@@ -113,7 +133,7 @@ export default function AddClient() {
         />
       </div>
       <div className="form-input">
-        <input
+        <MDBInput
           className="form-control"
           placeholder="Téléphone"
           name="telephone"
@@ -122,7 +142,7 @@ export default function AddClient() {
         />
       </div>
       <div className="form-input">
-        <input
+        <MDBInput
           className="form-control"
           placeholder="Mot de passe"
           name="password"
@@ -131,16 +151,20 @@ export default function AddClient() {
           onChange={handleChange}
         />
       </div>
-      <Button
-        variant="warning"
-        onSubmit={handleAddClient}
-        className="button"
+      <MDBBtn
+        color="dark"
         type="submit"
         style={{ backgroundColor: "#28a745" }}
       >
         Enregistrer
-      </Button>
-      <ToastContainer />
+      </MDBBtn>
     </form>
+    <ToastContainer />
+
+    </MDBCardBody>
+          </MDBCol>
+        </MDBRow>
+      </MDBCard>
+    </MDBContainer>
   );
 }

@@ -36,8 +36,7 @@ import Close from '@mui/icons-material/Close';
 import CalendarToday from '@mui/icons-material/CalendarToday';
 import Create from '@mui/icons-material/Create';
 
-import { appointments} from '../calendrier/appoitmentdata.js'
-
+import { appointments } from '../../pages/calendrier/appoitmentdata.js'
 const PREFIX = 'Demo';
 const classes = {
   content: `${PREFIX}-content`,

@@ -15,6 +15,7 @@ import employee from "./employee";
 import rendezvous from "./rendezvous";
 import demandedevis from "./demandedevis";
 import serviceDetails from "./serviceDetails";
+import Equipe from "./Equipe";
 export const store = configureStore({
   reducer: {
     products,
@@ -32,6 +33,7 @@ export const store = configureStore({
     employee,
     rendezvous,
     demandedevis,
-    serviceDetails
+    serviceDetails,
+    Equipe,
   },
 });
