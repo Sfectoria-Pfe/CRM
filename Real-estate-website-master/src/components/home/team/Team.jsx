@@ -8,7 +8,7 @@ const Team = () => {
     <>
       <section className='team background '>
         <div className='container'>
-          <Heading title='Notre equipe commerciale' subtitle=' Notre équipe Mubawab est à votre service '/>
+          <Heading title='Notre equipe commerciale'/>
           <div className='content mtop grid3 '>
             {team.map((val, index) => (
               <div className='team-card' key={index}>  {/* Ajout de la classe 'team-card' */}

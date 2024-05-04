@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { fetchOpportunites } from "../../store/opportunite";
+import { fetchCategories } from "../../store/categorieClient";
 
 export default function Addpromotion() {
   const [Promotion, setPromotion] = useState("");
@@ -15,8 +16,14 @@ export default function Addpromotion() {
   const opportunites = useSelector(
     (state) => state.opportunite.opportunites.items
   );
+  const category = useSelector(
+    (state) => state.categorieClient.categories.items 
+    
+  );
+  
   useEffect(() => {
     dispatch(fetchOpportunites());
+    dispatch(fetchCategories())
   }, [dispatch]);
 
   const handleChange = (e) => {
@@ -83,6 +90,8 @@ export default function Addpromotion() {
           className="form-control"
           placeholder="date_debut"
           name="date_debut"
+          type="date"
+
           required
           onChange={handleChange}
         />
@@ -92,17 +101,27 @@ export default function Addpromotion() {
           className="form-control"
           placeholder="date_fin"
           name="date_fin"
+          type="date"
           required
           onChange={handleChange}
         />
       </div>
       <div className="form-input">
+        <FormSelect name="categorieClientId" required onChange={handleChange}  >
+          <option value={null}>Choisie categorie du client</option>
+          {category.map((elem, i) => (
+            <option value={elem.id}>{elem.nom}</option> // Utilisez 'categories' au lieu de 'CategorieClient'
+          ))}
+        </FormSelect>
+
+      </div> <div className="form-input">
         <FormSelect name="opportuniteId" required onChange={handleChange}  >
-          <option value={null}>Open this select menu</option>
+          <option value={null}>Choisie nom du votre opportunite</option>
           {opportunites.map((elem, i) => (
             <option value={elem.id}>{elem.title}</option>
           ))}
         </FormSelect>
+        
       </div>
       {/* <div className="form-input">
         <input
@@ -113,7 +132,7 @@ export default function Addpromotion() {
           onChange={handleChange}
         />
       </div> */}
-      <div className="form-input">
+      {/* <div className="form-input">
         <input
           className="form-control"
           placeholder="categorieClientId"
@@ -121,7 +140,7 @@ export default function Addpromotion() {
           required
           onChange={handleChange}
         />
-      </div>
+      </div> */}
 
       <Button
         variant="warning"

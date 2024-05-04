@@ -12,36 +12,27 @@ const More = () => {
             <div className='left row'>
               <Heading title='Notre agence Mubaweb' />
   
-              <p>Quelle est la chose que les chefs d’entreprise et leurs employés, partenaires et même clients ont en commun ? Eh bien, au niveau le plus élémentaire possible, ils sont tous humains. Alors pourquoi est-il parfois si difficile pour les entreprises de mettre cela en valeur dans leurs efforts de marketing ? 
-  
-  De nos jours, le fait d’humaniser votre marque, représente une étape importante pour s’imposer sur le marché, ça permet d’approfondir sa relation avec les clients, de mieux communiquer avec eux et d’identifier leurs besoins. En outre, l’humanisation de votre marque fait de votre entreprise un lieu agréable à travailler.
-  
-  Au-delà du bureau…
-  
-  Ayez un onglet ‘À propos de nous’, c’est généralement le premier endroit où un client potentiel apprendra à vous connaître et à en savoir plus sur votre entreprise.
-  
-  Emmenez votre public dans les coulisses de votre vie d’entreprise. Les gens aiment apprendre à connaître les autres via les médias sociaux ou la presse écrite. Présentez des photos de vous dans des posts sur les réseaux sociaux et même dans des situations décontractées autre que le bureau…
-  
-  Injectez un sens de l’humour dans votre contenu.
-  
-  Il est facile pour les entreprises B2C de créer du contenu hilarant – et vous devriez certainement le faire ! Tout le monde aime rire. Bien que cette stratégie soit la meilleure pour cette catégorie d’entreprises, les marques B2B peuvent également entrer dans le jeu.
-  
-  Un simple post sur les réseaux sociaux utilise un langage terre-à-terre et des emojis pour rendre la marque plus accessible à son public tout en présentant une publicité qui explique comment ses services peuvent aider à améliorer votre entonnoir de vente.
-  
-  Mais au-delà, des millions de messages clairs et concis qui circulent quotidiennement sur la toile, vous pouvez vous distinguer en insufflant un soupçon d’humour dans votre contenu de temps en temps. Inattendu, d’une marque B2B, une action pareille, vous démarquera des entreprises concurrentes sur le marché et restera mémorable auprès des clients et followers. 
-  
-  Essayez de faire sourire quelqu’un. Quoi de plus humain qu’un rire débridé ?
-  
-  Vous souhaitez louer, acheter ou vendre ?  N’oubliez pas de découvrir toutes nos annonces sur mubawab.tn ! 
-   </p>
+              <p>Bienvenue chez Maison Plus, votre partenaire de confiance pour tous vos besoins immobiliers. Forts de notre expertise et de notre engagement envers l'excellence, nous nous efforçons de fournir des services immobiliers exceptionnels à nos clients.
+
+À Maison Plus, nous comprenons que l'achat, la vente ou la location d'une propriété est l'une des décisions les plus importantes de la vie. C'est pourquoi nous nous engageons à accompagner nos clients à chaque étape du processus, en leur offrant des conseils personnalisés et des solutions sur mesure.
+
+Notre équipe dévouée est composée de professionnels chevronnés de l'immobilier, dotés d'une connaissance approfondie du marché local et d'une passion pour offrir un service client de première classe. Que vous recherchiez votre maison de rêve, que vous souhaitiez vendre votre propriété existante ou que vous envisagiez de louer un bien, nos agents immobiliers compétents sont là pour vous guider et vous soutenir.
+
+En plus de notre expertise en vente et en location, Maison Plus offre une gamme complète de services pour répondre à tous vos besoins immobiliers. De la conception et de la décoration d'intérieur à la gestion de projet et aux services de réparation, notre équipe expérimentée est là pour transformer votre espace et le rendre véritablement spécial.
+
+Ce qui distingue Maison Plus, c'est notre engagement envers l'excellence, notre intégrité et notre engagement envers la satisfaction totale du client. Nous sommes fiers de construire des relations solides et durables avec nos clients, fondées sur la confiance et le professionnalisme.
+
+Contactez-nous dès aujourd'hui pour découvrir comment Maison Plus peut vous aider à concrétiser vos rêves immobiliers. Nous sommes impatients de vous servir et de vous accompagner dans votre parcours immobilier.
+
+Bienvenue chez Maison Plus - où vos rêves immobiliers deviennent réalité. </p>
             </div>
-            <div className='right row'>
+            {/* <div className='right row'>
               <img 
                 src='https://blog.mubawab.tn/wp-content/uploads/2022/12/blog-post-1m-fan-r__cup__r__-r__cup__r__c.png' 
                 alt='' 
                 style={{ height: '400px', width:'400px'}} // Définir la hauteur maximale sur 600px
-              />
-            </div>
+              /> */}
+            {/* </div> */}
           </div>
         </section>
       </>

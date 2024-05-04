@@ -219,7 +219,7 @@ model rendezvous {
   typebien     String
   localisation String
   description  String
-
+  statut String @default("En attente")
   client   Client @relation(fields: [clientId], references: [id])
   clientId Int // Clé étrangère vers l'id de l'entité Admin
 }
