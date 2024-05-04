@@ -1,15 +1,31 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { DemandeDevisService } from './demande-devis.service';
 import { CreateDemandeDeviDto } from './dto/create-demande-devi.dto';
 import { UpdateDemandeDeviDto } from './dto/update-demande-devi.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { CurrentUser } from 'src/auth/decorator/current-user';
 
 @Controller('demande-devis')
 export class DemandeDevisController {
   constructor(private readonly demandeDevisService: DemandeDevisService) {}
-
+  
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createDemandeDeviDto: CreateDemandeDeviDto) {
-    return this.demandeDevisService.create(createDemandeDeviDto);
+  create(
+    @Body() createDemandeDeviDto: CreateDemandeDeviDto,
+    @CurrentUser() user: any,
+  ) {
+    return this.demandeDevisService.create(createDemandeDeviDto, user.clientId);
   }
 
   @Get()
@@ -23,7 +39,10 @@ export class DemandeDevisController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDemandeDeviDto: UpdateDemandeDeviDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateDemandeDeviDto: UpdateDemandeDeviDto,
+  ) {
     return this.demandeDevisService.update(+id, updateDemandeDeviDto);
   }
 

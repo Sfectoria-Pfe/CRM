@@ -7,7 +7,7 @@ import { UpdateDemandeDeviDto } from './dto/update-demande-devi.dto';
 export class DemandeDevisService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(createDemandeDeviDto: CreateDemandeDeviDto) {  
+  async create(createDemandeDeviDto: CreateDemandeDeviDto,clientId:number) {  
     const currentDate = new Date();
     const formattedDate = currentDate.toISOString(); // Utiliser la date actuelle au format ISO-8601 DateTime
 
@@ -16,7 +16,7 @@ export class DemandeDevisService {
         dateDemande: formattedDate,
         description: createDemandeDeviDto.description,
         sujet: createDemandeDeviDto.sujet,
-        clientId: createDemandeDeviDto.clientId,
+        clientId,
       }
     });
 
