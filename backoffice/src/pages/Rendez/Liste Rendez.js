@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
-import { Button } from "@mui/material"; // Importez Button depuis @mui/material
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Button, Tooltip } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff"; // Importez HighlightOffIcon depuis @mui/icons-material
-import { fetchRendezvous,updateRendezvous } from "../../store/rendezvous";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel"; // Modification ici
+import { fetchRendezvous} from "../../store/rendezvous";
+import { updateRendezvous } from "../../store/rendezvous";
 
 function ListRendezvous() {
   const dispatch = useDispatch();
@@ -14,13 +15,39 @@ function ListRendezvous() {
   const rendezvous = useSelector((state) => state.rendezvous.rendezvous.items);
 
   const handleAccept = (id) => {
-    dispatch(updateRendezvous({ id, status: "accepté" }));
+    dispatch(updateRendezvous({ id, statut: "accepté" })).then(() => {
+      // Mettre à jour localement l'état du rendez-vous
+      const updatedRendezvous = rendezvous.map((rdv) =>
+        rdv.id === id ? { ...rdv, statut: "accepté" } : rdv
+      );
+      // Mettre à jour l'état local
+      // Cela dépend de votre logique et de la gestion de l'état dans votre application
+      // setState(updatedRendezvous);
+
+      // Recharger la page pour refléter les mises à jour
+      window.location.reload();
+    });
   };
 
   const handleReject = (id) => {
-    dispatch(updateRendezvous({ id, status: "refusé" }));
+    dispatch(updateRendezvous({ id, statut: "refusé" })).then(() => {
+      // Mettre à jour localement l'état du rendez-vous
+      const updatedRendezvous = rendezvous.map((rdv) =>
+        rdv.id === id ? { ...rdv, statut: "refusé" } : rdv
+      );
+      // Mettre à jour l'état local
+      // Cela dépend de votre logique et de la gestion de l'état dans votre application
+      // setState(updatedRendezvous);
+
+      // Recharger la page pour refléter les mises à jour
+      window.location.reload();
+    });
   };
 
+
+  useEffect(() => {
+    dispatch(fetchRendezvous());
+  }, [dispatch])
   const columns = [
     {
       field: "id",
@@ -38,7 +65,6 @@ function ListRendezvous() {
       width: 150,
     },
 
-    
     {
       field: "date",
       headerName: "Date",
@@ -56,6 +82,12 @@ function ListRendezvous() {
     },
 
     {
+      field: "statut",
+      headerName: "Statut",
+      width: 150,
+    },
+
+    {
       field: "actions",
       headerName: "Actions",
       width: 180,
@@ -64,16 +96,20 @@ function ListRendezvous() {
           <Button onClick={() => navigate(`/${row.id}`)}>
             <VisibilityIcon />
           </Button>
-          <CheckCircleOutlineIcon onClick={() => handleAccept(row.id)} style={{ cursor: "pointer", color: "green" }} />
-          <HighlightOffIcon onClick={() => handleReject(row.id)} style={{ cursor: "pointer", color: "red" }} />
+          <Tooltip title="Accepté" placement="top">
+            <Button onClick={() => handleAccept(row.id)}>
+              <CheckCircleIcon style={{ color: 'green' }} />
+            </Button>
+          </Tooltip>
+          <Tooltip title="Refusé" placement="top">
+            <Button onClick={() => handleReject(row.id)}>
+              <CancelIcon style={{ color: 'red' }} />
+            </Button>
+          </Tooltip>
         </>
       ),
     },
   ];
-
-  useEffect(() => {
-    dispatch(fetchRendezvous());
-  }, [dispatch]);
 
   return (
     <div>

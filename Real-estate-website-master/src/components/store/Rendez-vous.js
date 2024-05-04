@@ -7,7 +7,8 @@ export const fetchRendezvous = createAsyncThunk("rendezvous/fetchRendezvous", as
 });
 
 export const addRendezvous = createAsyncThunk("rendezvous/addRendezvous", async (body) => {
-  const response = await axios.post("http://localhost:7000/rendezvous", body);
+    let token = localStorage.getItem("token");
+  const response = await axios.post("http://localhost:7000/rendezvous", body ,{ headers: { Authorization: "Bearer " + token }});
   return response.data;
 });
 

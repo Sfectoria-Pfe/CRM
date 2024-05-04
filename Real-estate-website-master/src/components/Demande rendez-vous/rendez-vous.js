@@ -77,10 +77,12 @@ function Demanderendezvous() {
                     <option value="maison">Maison</option>
                     <option value="appartement">Appartement</option>
                     <option value="terrain">Terrain</option>
+                    <option value="terrain">Autre</option>
+
                   </select>
                   <MDBInput wrapperClass='mb-3' size='sm' id='localisation' type='text' placeholder='Localisation préférée' name='localisation' value={rendezvous.localisation} onChange={handleChange} />
                   <textarea className="form-control mb-3" rows="4" placeholder="Description" name='description' value={rendezvous.description} onChange={handleChange}></textarea>
-                  <MDBInput wrapperClass='mb-3' size='sm' id='clientId' type='number' placeholder='ID du client' name='clientId' value={rendezvous.clientId} onChange={handleChange} />
+                  {/* <MDBInput wrapperClass='mb-3' size='sm' id='clientId' type='number' placeholder='ID du client' name='clientId' value={rendezvous.clientId} onChange={handleChange} /> */}
                   <div className="d-flex justify-content-end pt-2">
                     <Button variant='light' size='sm' onClick={resetForm}>Réinitialiser</Button>
                     <Button variant='warning' size='sm' onClick={handleSubmit}>Soumettre</Button>

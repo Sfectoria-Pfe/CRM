@@ -16,8 +16,5 @@ export class CreateRendezvousDto {
   @ApiProperty()
 
   description :string
-  @ApiProperty()
 
-
-  clientId   : number
 }

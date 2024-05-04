@@ -34,25 +34,32 @@ export const sidebarData = [
     access: ["chef", "admin", "commercial"],
     children: [
       {
-        title: "Ajouter Location",
-        path: "/addLocation",
-        icon: <AddLocationIcon />,
+        title: "Service",
+        path: "/services",
+        icon: < DescriptionIcon />,
+        access:['chef','admin','commercial']
       },
-      {
-        title: "Ajouter  Vente",
-        path: "/addVente",
-        icon: <AddLocationIcon />,
-      },
-      {
-        title: "Liste des Ventes",
-        path: "/ListeVente",
-        icon: <ListeLocationIcon />,
-      },
-      {
-        title: "Liste des Locations",
-        path: "/ListeLocation",
-        icon: <ListeLocationIcon />,
-      },
+      
+      // {
+      //   title: "Ajouter Location",
+      //   path: "/addLocation",
+      //   icon: <AddLocationIcon />,
+      // },
+      // {
+      //   title: "Ajouter  Vente",
+      //   path: "/addVente",
+      //   icon: <AddLocationIcon />,
+      // },
+      // {
+      //   title: "Liste des Ventes",
+      //   path: "/ListeVente",
+      //   icon: <ListeLocationIcon />,
+      // },
+      // {
+      //   title: "Liste des Locations",
+      //   path: "/ListeLocation",
+      //   icon: <ListeLocationIcon />,
+      // },
       {
         title: "promotion",
         path: "/Addpromotion",
@@ -141,20 +148,14 @@ export const sidebarData = [
     icon: < PersonPinIcon  />,
     access:['chef','admin','commercial']
   },
-  {
-    title: "Chats",
-    path: "/chats",
-    icon: < ChatIcon  />,
-    access:['chef','admin','commercial']
-  },
+  // {
+  //   title: "Chats",
+  //   path: "/chats",
+  //   icon: < ChatIcon  />,
+  //   access:['chef','admin','commercial']
+  // },
 
 
-  {
-    title: "Service",
-    path: "/services",
-    icon: < DescriptionIcon />,
-    access:['chef','admin','commercial']
-  },
-  
+ 
 
 ];

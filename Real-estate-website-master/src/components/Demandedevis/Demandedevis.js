@@ -78,13 +78,6 @@ export default function AddDemandeDevis() {
                   />
                   <MDBInput
                     className="form-control mb-3"
-                    placeholder="Description"
-                    name="description"
-                    value={demandeDevis.description}
-                    onChange={handleChange}
-                  />
-                  <MDBInput
-                    className="form-control mb-3"
                     placeholder="Sujet"
                     name="sujet"
                     value={demandeDevis.sujet}
@@ -92,12 +85,13 @@ export default function AddDemandeDevis() {
                   />
                   <MDBInput
                     className="form-control mb-3"
-                    placeholder="ID du client"
-                    name="clientId"
-                    type="number"
-                    value={demandeDevis.clientId}
+                    placeholder="Description"
+                    name="description"
+                    value={demandeDevis.description}
+                    type="text-area"
                     onChange={handleChange}
                   />
+                  
                   <div className="d-flex justify-content-end pt-2">
                     <Button className="custom-button" onClick={handleAddDemandeDevis} >
                       Ajouter 

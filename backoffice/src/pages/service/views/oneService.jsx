@@ -27,12 +27,13 @@ export default function OneService() {
   const cardStyle = {
     minWidth: 275,
     margin: "10px",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
   };
 
   const imageStyle = {
     width: "100%",
-    height: "150px", // Définissez ici la hauteur souhaitée pour les images
-    objectFit: "cover", // Assurez-vous que l'image remplit complètement le conteneur
+    height: "150px",
+    objectFit: "cover",
   };
 
   return (
@@ -64,9 +65,8 @@ export default function OneService() {
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {filteredServiceDetails.map((detail) => (
           <Card key={detail.id} style={cardStyle}>
-            <CardContent >
-            <img src={detail.imageURL} alt="Image Service" style={imageStyle} />
-
+            <CardContent>
+              <img src={detail.imageURL} alt="Image Service" style={imageStyle} />
               <Typography variant="h5" style={{ color: "#333", marginBottom: "10px" }}>
                 {detail.title}
               </Typography>

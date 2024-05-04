@@ -7,7 +7,7 @@ import { UpdateRendezvousDto } from './dto/update-rendezvous.dto';
 export class RendezvousService {
   constructor(private readonly prisma: PrismaService) {} 
 
-  async create(createRendezvousDto: CreateRendezvousDto) {
+  async create(createRendezvousDto: CreateRendezvousDto,clientId:number) {
     try {
       const currentDate = new Date();
       const formattedDate = currentDate.toISOString();
@@ -17,6 +17,7 @@ export class RendezvousService {
           ...createRendezvousDto,
           heure:formattedDate,
           date: formattedDate,
+          clientId,
         },
       });
   

@@ -14,11 +14,7 @@ const About = () => {
           <div className='left row'>
             <Heading title='Notre agence Mubaweb' />
 
-            <p>Quelle est la chose que les chefs d’entreprise et leurs employés, partenaires et même clients ont en commun ? Eh bien, au niveau le plus élémentaire possible, ils sont tous humains. Alors pourquoi est-il parfois si difficile pour les entreprises de mettre cela en valeur dans leurs efforts de marketing ? 
-
-De nos jours, le fait d’humaniser votre marque, représente une étape importante pour s’imposer sur le marché, ça permet d’approfondir sa relation avec les clients, de mieux communiquer avec eux et d’identifier leurs besoins. En outre, l’humanisation de votre marque fait de votre entreprise un lieu agréable à travailler.
-
-Au-delà du bureau…
+            <p>Chez Maison Plus, nous sommes votre partenaire immobilier de confiance, offrant des services exceptionnels de vente, location et conseils personnalisés. Notre équipe d'experts passionnés vous accompagne à chaque étape, avec une connaissance approfondie du marché local et un engagement envers votre satisfaction. En plus de nos services immobiliers, nous proposons des solutions de design, décoration et réparation, grâce à une équipe compétente et dévouée. Fiers de notre excellence, intégrité et service client de première classe, nous sommes là pour réaliser vos rêves immobiliers. Bienvenue chez Maison Plus, où votre bien-être est notre priorité.
  </p>
  <Link to="/more">
         <button className='btn2'>More About Us</button>
