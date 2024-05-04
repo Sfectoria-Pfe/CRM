@@ -13,6 +13,7 @@ export const fetchStage_client = createAsyncThunk("stage-client/fetchStage", asy
 
 export const sendStage_client = createAsyncThunk("stage-client/addStage", async (body) => {
   const response = await axios.post("http://localhost:7000/stage-client", body);
+ 
   return response.data;
 });
 

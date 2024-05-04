@@ -109,6 +109,7 @@ const ViewOpportunity = () => {
               {selectedStageId === stage.id && (
                 <AddStageClient
                   stageId={stage.id}
+                  opportunityId={opportunityId}
                   preFilledStageId={stage.id}
                 />
               )}

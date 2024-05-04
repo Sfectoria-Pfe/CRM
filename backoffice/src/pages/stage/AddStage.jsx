@@ -5,6 +5,7 @@ import { sendStage } from "../../store/stage";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { fetchOpportunite } from "../../store/opportunite";
 
 const AddStage = ({ opportuniteId }) => {
   const [stage, setStage] = useState({});
@@ -29,9 +30,7 @@ const AddStage = ({ opportuniteId }) => {
       .then((res) => {
         if (!res.error) {
           toast.success("Le stage a été ajouté avec succès !");
-          setTimeout(() => {
-            navigate();
-          }, 2000);
+          dispatch(fetchOpportunite(opportuniteId))
         } else {
           toast.error("Erreur lors de l'ajout du stage. Veuillez réessayer.");
         }
