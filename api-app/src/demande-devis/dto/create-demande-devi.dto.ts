@@ -9,8 +9,8 @@ export class CreateDemandeDeviDto {
  @ApiProperty()
 
  description: string;
-    @ApiProperty()
+   //  @ApiProperty()
 
-    clientId: number; 
+   //  clientId: number; 
 
 }

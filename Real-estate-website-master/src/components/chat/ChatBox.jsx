@@ -29,7 +29,7 @@ export default function Chat({ opportunity, drawer, setCloseChat }) {
   useEffect(() => {
     socket.emit("find-all-msgs-opportunity-client", {
       opportunityId: opportunity.id,
-      clientId: user.id,
+      clientId: user.clientId,
     });
   }, []); // request give me old msgs
   useEffect(() => {
@@ -43,6 +43,9 @@ export default function Chat({ opportunity, drawer, setCloseChat }) {
 
   useEffect(() => {
     socket.on('new-msg/'+opportunity.id+"/"+user.id, (data) => {
+      setMessages((prev) => [...prev, data]);
+    });
+    return ()=>socket.off('new-msg/'+opportunity.id+"/"+user.id, (data) => {
       setMessages((prev) => [...prev, data]);
     });
   }, []);
