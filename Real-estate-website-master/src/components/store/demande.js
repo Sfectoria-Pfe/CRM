@@ -8,7 +8,6 @@ export const fetchDemandesDevis = createAsyncThunk(
     return response.data;
   }
 );
-
 export const fetchDemandeDevis = createAsyncThunk(
   "demandeDevis/fetchDemandeDevis",
   async (id) => {
@@ -59,12 +58,15 @@ const demandeDevisSlice = createSlice({
       count: 0,
     },
   },
-  reducers: {},
+  reducers: {
+    // Reducers supplémentaires ici si nécessaire...
+  },
   extraReducers(builder) {
     builder.addCase(fetchDemandesDevis.fulfilled, (state, action) => {
       state.demandesDevis.items = action.payload;
       state.demandesDevis.count = action.payload.length;
     });
+
     builder.addCase(fetchDemandeDevis.fulfilled, (state, action) => {
       state.demandeDevis = action.payload;
     });
