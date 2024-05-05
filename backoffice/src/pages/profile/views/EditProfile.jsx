@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../../../store/auth";
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/Button"; // Importez Button correctement depuis react-bootstrap
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ProfileEdit() {
   const dispatch = useDispatch();
@@ -33,11 +35,16 @@ export default function ProfileEdit() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProfile(formData));
+    dispatch(updateProfile(formData)).then(() => {
+      toast.success("Profil mis à jour avec succès !");
+    }).catch(() => {
+      toast.error("Erreur lors de la mise à jour du profil");
+    });
   };
 
   return (
     <div className="gradient-custom-2 shadow p-3 mb-5 bg-white rounded" style={{ backgroundImage: 'url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMkbNiuBACRu6sLsIlT1MW4lSJlHnQG1yeVg&s")' }}>
+      <ToastContainer />
       <MDBContainer className="py-5 h-90">
         <MDBRow className="justify-content-center align-items-center h-100">
           <MDBCol lg="9" xl="7">

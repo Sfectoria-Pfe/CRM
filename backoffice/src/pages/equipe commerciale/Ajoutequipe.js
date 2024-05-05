@@ -5,9 +5,12 @@ import { createEquipeCommerciale } from "../../store/Equipe";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function AddEquipe() {
-  const [Equipe, setEquipe] = useState("");
+  const [equipe, setEquipe] = useState("");
+  const [chefIdCount, setChefIdCount] = useState(1); // Compteur pour générer des ID uniques pour les chefs
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,11 +23,15 @@ export default function AddEquipe() {
           : parseInt(value)
         : value;
 
-    setEquipe({ ...Equipe, [name]: newValue });
+    setEquipe({ ...equipe, [name]: newValue });
+  };
+
+  const handleAddChefIdInput = () => {
+    setChefIdCount(chefIdCount + 1); // Incrémente le compteur
   };
 
   const handleAddEquipe = () => {
-    dispatch(createEquipeCommerciale(Equipe))
+    dispatch(createEquipeCommerciale(equipe))
       .then((res) => {
         if (!res.error) {
           toast.success("Votre Equipe a été ajoutée avec succès !");
@@ -76,6 +83,21 @@ export default function AddEquipe() {
           required
           onChange={handleChange}
         />
+        {[...Array(chefIdCount)].map((_, index) => (
+          <input
+            key={index}
+            className="form-control"
+            placeholder={`chefId ${index + 2}`}
+            name={`chefId${index + 2}`}
+            type="number"
+            onChange={handleChange}
+          />
+        ))}
+        <FontAwesomeIcon
+          icon={faPlus}
+          onClick={handleAddChefIdInput}
+          style={{ cursor: "pointer", marginLeft: "5px" }}
+        />
       </div>
       
       <Button
@@ -85,7 +107,7 @@ export default function AddEquipe() {
           handleAddEquipe();
         }}
         className="form-button"
-        style={{ backgroundColor: "blue" }} // Ajout de la couleur de fond bleue
+        style={{ backgroundColor: "blue" }}
       >
         Ajouter la equipe
       </Button>

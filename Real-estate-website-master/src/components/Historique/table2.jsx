@@ -78,7 +78,7 @@ function ListHistorique2() {
         className="d-flex justify-content-center mb-3"
         style={{ backgroundColor: "#1976D2", color: "#fafafa" }}
       >
-        <h2>Liste des Demandes devis</h2>
+        <h2>Liste des Demandes Rendez-vous</h2>
       </div>
 
       <div style={{ height: 400, width: "100%" }}>

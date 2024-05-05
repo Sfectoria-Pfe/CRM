@@ -114,28 +114,38 @@ export class AuthService {
   }
   async updateMe(dto: UpdateAuthDto, id: number) {
     if (dto.password) {
-      throw new HttpException("u can't touch password", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Vous ne pouvez pas modifier le mot de passe", HttpStatus.BAD_REQUEST);
     }
+  
     if (dto.email) {
-      const user = await this.prisma.user.findUnique({
+      const existingUser = await this.prisma.user.findFirst({
         where: {
           email: dto.email,
+          id: {
+            not: id, // Exclude the current user
+          },
         },
       });
-      if (user) {
-        throw new HttpException('invalid email', HttpStatus.BAD_REQUEST);
+  
+      if (existingUser) {
+        throw new HttpException('L\'adresse e-mail est déjà utilisée', HttpStatus.BAD_REQUEST);
       }
     }
-    const user = await this.prisma.user.update({
-      where: { id: id },
-      data: dto,
-    });
-    const { password, ...rest } = user;
-    const token = this.jwtService.sign(rest);
-    return token;
-  }
-}
-
+  
+    try {
+      const updatedUser = await this.prisma.user.update({
+        where: { id: id },
+        data: dto,
+      });
+  
+      const { password, ...rest } = updatedUser;
+      const token = this.jwtService.sign(rest);
+      return token;
+    } catch (error) {
+      throw new HttpException('Erreur lors de la mise à jour du profil', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }}
+  
 // findAll() {
 //   return This action returns all auth;
 // }

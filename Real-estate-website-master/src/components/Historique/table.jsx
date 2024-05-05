@@ -1,18 +1,23 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { GridToolbar } from "@mui/x-data-grid";
-import { DataGrid } from '@mui/x-data-grid';
-
-import { Button, Tooltip } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { DataGrid } from "@mui/x-data-grid";
+import { fetchDemandesDevis } from "../store/demande";
+import { Button } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
+import { useNavigate } from "react-router-dom";
+import { updateClientId } from "../store/auth"; // Importez l'action pour mettre à jour l'ID du client
 
-
-function ListHistorique() {
+function ListDemandeDevis() {
   const dispatch = useDispatch();
+  const clientId = useSelector((state) => state.auth.me?.clientId);
+  const navigate = useNavigate();
+    useEffect(() => {
+    dispatch(fetchDemandesDevis());
+  }, [dispatch]);
+  const allDemandeDevis = useSelector((state) => state.demande.demandesDevis.items);
 
-  // Define the columns for the table
+// Filtrer les devis du client connecté
+const demandedevis = allDemandeDevis.filter((demande) => demande.clientId === clientId);
   const columns = [
     {
       field: "id",
@@ -35,7 +40,7 @@ function ListHistorique() {
       headerName: "etat", 
       width: 150,
       renderCell: ({ row }) => (
-        <span style={{ color: 'inherit' }}>
+        <span style={{ color: row.etat === "Acceptée" ? 'green' : row.etat === "Refusée" ? 'red' : 'inherit' }}>
           {row.etat}
         </span>
       )
@@ -49,30 +54,15 @@ function ListHistorique() {
       field: "actions",
       headerName: "Actions",
       width: 180,
-      renderCell: () => (
+      renderCell: ({ row }) => (
         <>
-          <Button disabled>
+          <Button onClick={() => navigate(`/demande-devis/${row.id}`)}>
             <VisibilityIcon />
           </Button>
-          <Tooltip title="Accepter demande" placement="top">
-            <Button disabled>
-              <CheckCircleIcon style={{ color: 'green' }} />
-            </Button>
-          </Tooltip>
-          <Tooltip title="Refuser demande" placement="top">
-            <Button disabled>
-              <CancelIcon style={{ color: 'red' }} />
-            </Button>
-          </Tooltip>
         </>
       ),
     },
   ];
-
-  useEffect(() => {
-    // Fetch demande devis data here if needed
-    // dispatch(fetchDemandesDevis());
-  }, [dispatch]);
 
   return (
     <div>
@@ -86,12 +76,11 @@ function ListHistorique() {
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}
-          rows={[]}
-        //   slots={{ toolbar: GridToolbar }}
+          rows={demandedevis}
         />
       </div>
     </div>
   );
 }
 
-export default ListHistorique;
+export default ListDemandeDevis;
