@@ -51,6 +51,20 @@ export class ChatsService {
     });
   }
 
+  async findManager(opportunityId: number) {
+    return await this.prisma.opportunite.findUnique({
+      where: { id: opportunityId },
+      include: {
+        equipe: {
+          include: {
+            chef: {
+              include: { user: true },
+            },
+          },
+        },
+      },
+    });
+  }
   update(id: number, updateChatDto: UpdateChatDto) {
     return `This action updates a #${id} chat`;
   }

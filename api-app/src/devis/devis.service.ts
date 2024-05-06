@@ -4,14 +4,25 @@ import { UpdateDeviDto } from './dto/update-devi.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class DevisService {    
-  
+export class DevisService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createdevisDto: CreateDeviDto) {
+    const { items, ...rest } = createdevisDto;
     try {
       const newdevis = await this.prisma.devis.create({
-        data: createdevisDto,
+        data: {
+          ...rest,
+          currentDate: new Date(rest.currentDate).toISOString(),
+          dateOfIssue: new Date(rest.dateOfIssue).toISOString(),
+          devisLine: {
+            create: items.map((item) => ({
+              serviceId: 1,
+              qunatity: +item.quantity,
+              prix_unitaire: +item.price,
+            })),
+          },
+        },
       });
       return newdevis;
     } catch (error) {
@@ -22,19 +33,19 @@ export class DevisService {
   async findAll() {
     return await this.prisma.devis.findMany(); // Utilisez Prisma pour récupérer tous les devis
   }
-  async findMyDevis(id:number) {
+  async findMyDevis(id: number) {
     return await this.prisma.devis.findMany({
-      where:{
-        clientId:id
-      }
+      where: {
+        clientId: id,
+      },
     }); // Utilisez Prisma pour récupérer tous les devis
   }
 
   async findOne(id: number) {
-    return await this.prisma.devis.findUnique({ where: { id } }); // Utilisez Prisma pour récupérer un devis par son ID
+    return await this.prisma.devis.findUnique({ where: { id, },include:{client:true,devisLine:true} }); // Utilisez Prisma pour récupérer un devis par son ID
   }
 
-  async update(id: number, updatedevisDto:  UpdateDeviDto) {
+  async update(id: number, updatedevisDto: UpdateDeviDto) {
     try {
       return await this.prisma.devis.update({
         where: { id },
@@ -54,7 +65,7 @@ export class DevisService {
 
       return deleteddevis;
     } catch (error) {
-      console.error("Erreur lors de la suppression du devis :", error);
+      console.error('Erreur lors de la suppression du devis :', error);
       throw error;
     }
   }

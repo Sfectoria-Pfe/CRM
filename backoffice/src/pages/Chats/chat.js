@@ -40,26 +40,26 @@ export default function Chat({ selectedClient, opportunityId }) {
         setMessages(data);
       }
     );
-    return () => {
-      socket.off(
-        "get-all-msgs-opportunity-client/" +
-          opportunityId +
-          "/" +
-          selectedClient?.senderId,
-        (data) => {
-          setMessages(data);
-        }
-      );
-    };
+    // return () => {
+    //   socket.off(
+    //     "get-all-msgs-opportunity-client/" +
+    //       opportunityId +
+    //       "/" +
+    //       selectedClient?.senderId,
+    //     (data) => {
+    //       setMessages(data);
+    //     }
+    //   );
+    // };
   }, [socket, selectedClient]); // get old msgs
 
   useEffect(() => {
     socket.on("new-msg/" + opportunityId + "/" + userId, (data) => {
       setMessages((prev) => [...prev, data]);
     });
-    return socket.off("new-msg/" + opportunityId + "/" + userId, (data) => {
-      setMessages((prev) => [...prev, data]);
-    });
+    // return socket.off("new-msg/" + opportunityId + "/" + userId, (data) => {
+    //   setMessages((prev) => [...prev, data]);
+    // });
   }, [socket]); // new msg when someone send a msg
 
   const sendMessage = (e) => {
