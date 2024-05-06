@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty } from "class-validator";
+import { IsArray, IsNotEmpty } from "class-validator";
 export class CreateDeviDto {
   @ApiProperty()
   @IsNotEmpty()
@@ -17,37 +17,14 @@ export class CreateDeviDto {
   @IsNotEmpty()
   dateOfIssue: Date;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  nom: string;
+  
+
+ 
+
+  
 
   @ApiProperty()
-  @IsNotEmpty()
-  email: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  adresse: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  nom_entreprise: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  email_entreprise: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  adresse_entreprise: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  telephone_entreprise: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  notes: string;
+  notes?: string;
 
   @ApiProperty()
   @IsNotEmpty()
@@ -66,13 +43,24 @@ export class CreateDeviDto {
   taxAmount: number;
 
   @ApiProperty()
-  @IsNotEmpty()
-  discountRate: number;
+
+  discountRate?: number;
 
   @ApiProperty()
   @IsNotEmpty()
   discountAmount: number;
 
+  @ApiProperty()
+  @IsArray()
+  items:Item[]
+
+  @ApiProperty()
+  @IsNotEmpty()
+  clientId: number;
+}
+
+
+class Item {
   @ApiProperty()
   @IsNotEmpty()
   name: string;
@@ -88,8 +76,4 @@ export class CreateDeviDto {
   @ApiProperty()
   @IsNotEmpty()
   quantity: number;
-
-  @ApiProperty()
-  @IsNotEmpty()
-  clientId: number;
 }

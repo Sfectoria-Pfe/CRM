@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Fonctions asynchrones pour les opérations CRUD sur le client
-export const fetchClients = createAsyncThunk("client/fetchClients", async () => {
-  const response = await axios.get("http://localhost:7000/clients");
+export const fetchClients = createAsyncThunk("client/fetchClients", async ({fullNameEn}) => {
+  const response = await axios.get("http://localhost:7000/clients",{params:{fullNameEn}});
   return response.data;
 });
 

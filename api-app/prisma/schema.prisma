@@ -46,7 +46,6 @@ model Employee {
 model Equipe {
   id           Int           @id @default(autoincrement())
   nom_equipe   String
-  nombre       Int
   chef         Employee      @relation(fields: [chefId], references: [id])
   chefId       Int // Clé étrangère vers l'id de l'entité Admin
   opportunites Opportunite[] // Relation avec l'entité Opportunite
@@ -179,13 +178,6 @@ model devis {
   currentDate          DateTime? // Date actuelle
   invoiceNumber        Int? // Numéro de facture
   dateOfIssue          DateTime? // Date d'émission
-  nom                  String? // Nom du client
-  email                String? // Email du client
-  adresse              String? // Adresse du client
-  nom_entreprise       String? // Nom de l'entreprise du client
-  email_entreprise     String? // Email de l'entreprise du client
-  adresse_entreprise   String? // Adresse de l'entreprise du client
-  telephone_entreprise String? // Téléphone de l'entreprise du client
   notes                String? // Notes
   total                Float? // Total
   subTotal             Float? // Sous-total
@@ -193,10 +185,6 @@ model devis {
   taxAmount            Float? // Montant de taxe
   discountRate         Float? // Taux de réduction
   discountAmount       Float? // Montant de réduction
-  name                 String
-  price                Float
-  description          String
-  quantity             Int
   client               Client      @relation(fields: [clientId], references: [id])
   clientId             Int // Clé étrangère vers l'id de l'entité Client
   devisLine            DevisLine[]

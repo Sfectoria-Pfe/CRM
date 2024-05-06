@@ -17,10 +17,17 @@ export class ClientsService {
       console.error('Erreur lors de la création du client :', error);
       throw error; // Vous pouvez remplacer cela par un type d'exception plus approprié si nécessaire
     }
-    }
+  }
 
-  async findAll() {
-    return await this.prisma.client.findMany();
+  async findAll(filter: any) {
+    let where= {};
+    if (filter.fullNameEn) {
+      where['OR'] = [
+        { nom: { contains: filter.fullNameEn } },
+        { prenom: { contains: filter.fullNameEn } },
+      ];
+    }
+    return await this.prisma.client.findMany({where});
   }
 
   async findOne(id: number) {

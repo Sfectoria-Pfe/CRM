@@ -16,8 +16,18 @@ export class ChatsGateway {
   @SubscribeMessage('send-message')
   async create(client: Socket, dto: CreateChatDto) {
     const msg = await this.chatsService.create(dto);
-    this.server.emit('new-msg/'+dto.opportunityId+"/"+dto.senderId,msg)
-    this.server.emit('new-msg/'+dto.opportunityId+"/"+dto.receiverId,msg)
+    const teamManager = await this.chatsService.findManager(dto.opportunityId);
+    this.server.emit('new-msg/' + dto.opportunityId + '/' + dto.senderId, msg);
+    if (dto.receiverId)
+      this.server.emit(
+        'new-msg/' + dto.opportunityId + '/' + dto.receiverId,
+        msg,
+      );
+    else
+      this.server.emit(
+        'new-msg/' + dto.opportunityId + '/' + teamManager.id,
+        msg,
+      );
   }
 
   @SubscribeMessage('demand-list-client-opportunity')
