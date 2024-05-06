@@ -46,7 +46,7 @@ export default function Addpromotion() {
         if (!res.error) {
           toast.success("Votre promotion a été ajoutée avec succès !");
           setTimeout(() => {
-            navigate(-1);
+            navigate(1);
           }, 2000);
         } else {
           toast.error(
@@ -62,7 +62,7 @@ export default function Addpromotion() {
   };
 
   return (
-    <div className="form-container">
+    <div className="form-container" style={{ backgroundColor: "#42a5f5", padding: "20px", borderRadius: "10px" }}>
       <h2>Ajouter une promotion</h2>
 
       <div className="form-input">
@@ -149,7 +149,7 @@ export default function Addpromotion() {
           handleAddPromotion();
         }}
         className="form-button"
-        style={{ backgroundColor: "blue" }} // Ajout de la couleur de fond bleue
+        style={{ backgroundColor: "#81c784" }} // Ajout de la couleur de fond bleue
       >
         Ajouter la promotion
       </Button>
