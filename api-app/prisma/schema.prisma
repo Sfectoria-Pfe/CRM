@@ -46,7 +46,6 @@ model Employee {
 model Equipe {
   id           Int           @id @default(autoincrement())
   nom_equipe   String
-  nombre       Int
   chef         Employee      @relation(fields: [chefId], references: [id])
   chefId       Int // Clé étrangère vers l'id de l'entité Admin
   opportunites Opportunite[] // Relation avec l'entité Opportunite

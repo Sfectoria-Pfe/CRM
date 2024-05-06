@@ -7,17 +7,21 @@ import { UpdateEquipecommercialeDto } from './dto/update-equipecommerciale.dto';
 export class EquipecommercialeService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(createEquipecommercialeDto: CreateEquipecommercialeDto) {
-    try {
-      const newEquipecommerciale = await this.prisma.equipe.create({
-        data: createEquipecommercialeDto,
-      });
-      return newEquipecommerciale;
-    } catch (error) {  
-      console.error('Erreur lors de la création d\'une nouvelle équipe commerciale :', error);
-      throw error;
-    }
-  }   
+  async create(dto: CreateEquipecommercialeDto) {
+    const { memberIds, ...rest } = dto;
+
+    const newEquipecommerciale = await this.prisma.equipe.create({
+      data: {
+        ...rest,
+        Member: {
+          create: memberIds.map((elem) => ({
+            employee: { connect: { id: elem } },
+          })),
+        },
+      },
+    });
+    return newEquipecommerciale;
+  }
   async findAll() {
     return await this.prisma.equipe.findMany();
   }
@@ -28,7 +32,10 @@ export class EquipecommercialeService {
     });
   }
 
-  async update(id: number, updateEquipecommercialeDto: UpdateEquipecommercialeDto) {
+  async update(
+    id: number,
+    updateEquipecommercialeDto: UpdateEquipecommercialeDto,
+  ) {
     try {
       const updatedEquipecommerciale = await this.prisma.equipe.update({
         where: { id },
@@ -36,7 +43,10 @@ export class EquipecommercialeService {
       });
       return updatedEquipecommerciale;
     } catch (error) {
-      console.error('Erreur lors de la mise à jour de l\'équipe commerciale :', error);
+      console.error(
+        "Erreur lors de la mise à jour de l'équipe commerciale :",
+        error,
+      );
       throw error;
     }
   }
@@ -46,7 +56,10 @@ export class EquipecommercialeService {
       await this.prisma.equipe.delete({ where: { id } });
       return `L'équipe commerciale avec l'ID ${id} a été supprimée avec succès.`;
     } catch (error) {
-      console.error('Erreur lors de la suppression de l\'équipe commerciale :', error);
+      console.error(
+        "Erreur lors de la suppression de l'équipe commerciale :",
+        error,
+      );
       throw error;
     }
   }

@@ -41,7 +41,6 @@ async function seed() {
     const equipe = await prisma.equipe.create({
       data: {
         nom_equipe: 'String',
-        nombre: 1,
         chefId: employees[0].id,
       },
     });
