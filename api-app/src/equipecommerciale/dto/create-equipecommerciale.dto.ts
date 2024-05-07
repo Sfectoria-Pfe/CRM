@@ -8,7 +8,6 @@ export class CreateEquipecommercialeDto {
   @ApiProperty()
   @IsArray()
   memberIds: number[];
-
   @ApiProperty()
   @IsNotEmpty() // Clé étrangère vers l'id de l'entité Admin
   chefId: number; // Clé étrangère vers l'id de l'entité Chef

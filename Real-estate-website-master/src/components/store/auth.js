@@ -29,11 +29,23 @@ export const getMe = createAsyncThunk("getMe",async (args)=>{
 
 
 
-export const updateUserClient = createAsyncThunk("client/updateClient", async ({ id, body }) => {
-  const response = await axios.patch(`http://localhost:7000/clients/${id}`, body);
-  return response.data;
-});
-
+export const updateProfile = createAsyncThunk(
+  "updateMe",
+  async (body, { dispatch }) => {
+    const token = localStorage.getItem("token");
+    const response = await axios.post(
+      "http://localhost:7000/auth/update-me",
+      body,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    localStorage.setItem("token", response.data);
+    dispatch(getMe());
+  }
+);
 
 
 // Création du slice pour gérer l'état du client
@@ -48,9 +60,6 @@ export const authSlice = createSlice({
           state.me = action.payload
       })
 
-      builder.addCase(updateUserClient.fulfilled, (state, action) => {
-        state.me = action.payload
-      });
   }
 })
 export default authSlice.reducer;

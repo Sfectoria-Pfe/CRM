@@ -6,48 +6,47 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 export default function Adduser() {
-  const [User, setUser] = useState('');
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    isClient: false,
+    employeeId: "",
+    clientId: "",
+  });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
- 
-
-  
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const newValue =
-        name === "employeeId" || name === "clientId"
-            ? isNaN(parseInt(value)) ? value : parseInt(value)
-            : value;
+    setUser({ ...user, [name]: value });
+  };
 
-    setUser({ ...User, [name]: newValue });
-};
+  const toggleIsClient = () => {
+    setUser({ ...user, isClient: !user.isClient });
+  };
 
-  const handleAddUser= () => {
-   
-    dispatch(sendUser(User))
+  const handleAddUser = () => {
+    dispatch(sendUser(user))
       .then((res) => {
         if (!res.error) {
-          toast.success("Votre User a été ajoutée avec succès !");
+          toast.success("Votre utilisateur a été ajouté avec succès !");
           setTimeout(() => {
             navigate(-1);
           }, 2000);
         } else {
-          toast.error(
-            "Erreur lors de l'ajout de la User. Veuillez réessayer."
-          );
+          toast.error("Erreur lors de l'ajout de l'utilisateur. Veuillez réessayer.");
         }
       })
       .catch((error) => {
-        toast.error("Erreur lors de l'ajout de la User. Veuillez réessayer.");
+        toast.error("Erreur lors de l'ajout de l'utilisateur. Veuillez réessayer.");
       });
   };
 
   return (
     <div className="form-container">
-      <h2>Ajouter une User</h2>
+      <h2>Ajouter une utilisateur</h2>
       <div className="form-input">
         <input
           className="form-control"
@@ -64,17 +63,15 @@ export default function Adduser() {
           onChange={handleChange}
         />
       </div>
-      
       <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="isClient"
-          name="isClient"
-          onChange={handleChange}
-        />
+        <Button
+          variant={user.isClient ? "success" : "danger"}
+          onClick={toggleIsClient}
+          style={{ width: "100%" }}
+        >
+          {user.isClient ? "Client" : "Non Client"}
+        </Button>
       </div>
-      
-     
       <div className="form-input">
         <input
           className="form-control"
@@ -91,18 +88,17 @@ export default function Adduser() {
           onChange={handleChange}
         />
       </div>
-      {/* La date de vente sera automatiquement ajoutée */}
       <Button
-      variant="warning"
-      onClick={(e) => {
-        e.preventDefault();
-        handleAddUser();
-      }}
-      className="form-button"
-      style={{ backgroundColor: 'blue' }} // Ajout de la couleur de fond bleue
-    >
-      Ajouter la User
-    </Button>
+        variant="warning"
+        onClick={(e) => {
+          e.preventDefault();
+          handleAddUser();
+        }}
+        className="form-button"
+        style={{ backgroundColor: "blue" }}
+      >
+        Ajouter l'utilisateur
+      </Button>
       <ToastContainer />
     </div>
   );

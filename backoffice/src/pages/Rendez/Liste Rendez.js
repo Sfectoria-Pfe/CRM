@@ -7,7 +7,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel"; // Modification ici
 import { fetchRendezvous} from "../../store/rendezvous";
-import { updateRendezvous } from "../../store/rendezvous";
+import { updateRendezStatus } from "../../store/rendezvous";
 
 function ListRendezvous() {
   const dispatch = useDispatch();
@@ -15,31 +15,23 @@ function ListRendezvous() {
   const rendezvous = useSelector((state) => state.rendezvous.rendezvous.items);
 
   const handleAccept = (id) => {
-    dispatch(updateRendezvous({ id, statut: "accepté" })).then(() => {
-      // Mettre à jour localement l'état du rendez-vous
+    dispatch(updateRendezStatus({ id, statut: "accepté" })).then(() => {
       const updatedRendezvous = rendezvous.map((rdv) =>
         rdv.id === id ? { ...rdv, statut: "accepté" } : rdv
       );
-      // Mettre à jour l'état local
-      // Cela dépend de votre logique et de la gestion de l'état dans votre application
-      // setState(updatedRendezvous);
+    
 
-      // Recharger la page pour refléter les mises à jour
       window.location.reload();
     });
   };
+  
+  
 
   const handleReject = (id) => {
-    dispatch(updateRendezvous({ id, statut: "refusé" })).then(() => {
-      // Mettre à jour localement l'état du rendez-vous
+    dispatch(updateRendezStatus({ id, statut: "refusé" })).then(() => {
       const updatedRendezvous = rendezvous.map((rdv) =>
         rdv.id === id ? { ...rdv, statut: "refusé" } : rdv
       );
-      // Mettre à jour l'état local
-      // Cela dépend de votre logique et de la gestion de l'état dans votre application
-      // setState(updatedRendezvous);
-
-      // Recharger la page pour refléter les mises à jour
       window.location.reload();
     });
   };
@@ -134,3 +126,6 @@ function ListRendezvous() {
 }
 
 export default ListRendezvous;
+
+
+

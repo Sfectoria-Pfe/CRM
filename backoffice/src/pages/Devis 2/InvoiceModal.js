@@ -142,12 +142,12 @@ class InvoiceModal extends React.Component {
                   <BiPaperPlane style={{width: '15px', height: '15px', marginTop: '-3px'}} className="me-2"/>Send Invoice
                 </Button>
               </Col>
-              <Col md={6}>
+              {/* <Col md={6}>
                 <Button variant="outline-primary" className="d-block w-100 mt-3 mt-md-0" onClick={GenerateInvoice}>
                   <BiCloudDownload style={{width: '16px', height: '16px', marginTop: '-3px'}} className="me-2"/>
                   Download Copy
                 </Button>
-              </Col>
+              </Col> */}
             </Row>
           </div>
         </Modal>

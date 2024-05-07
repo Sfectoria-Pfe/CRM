@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { Button, FormSelect } from "react-bootstrap"; // Importez FormSelect depuis react-bootstrap
+import { useDispatch, useSelector } from "react-redux"; // Importez useSelector
 import { sendServiceDetail } from "../../../store/serviceDetails";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { fetchServices } from "../../../store/services";
 
 export default function AddServiceDetail() {
   const [serviceDetail, setServiceDetail] = useState({
@@ -14,11 +15,16 @@ export default function AddServiceDetail() {
     address: "",
     price: 0,
     imageURL: "",
-    serviceId: 0, // Remplissez ceci avec l'ID du service auquel le détail est associé
+    serviceId: null, // Initialisez serviceId à null
   });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const services = useSelector((state) => state.service.services.items);
+
+  useEffect(() => {
+    dispatch(fetchServices());
+  }, [dispatch]);
 
   const preset_key = "f20pgg9j";
   const cloud_name = "dp6nkc5wl";
@@ -47,7 +53,7 @@ export default function AddServiceDetail() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === "price" ? parseFloat(value) : name === "serviceId" ? parseInt(value) : value;
+    const newValue = name === "price" || name === "serviceId" ? parseInt(value) : value; // Convertissez price et serviceId en nombre entier
 
     setServiceDetail({ ...serviceDetail, [name]: newValue });
   };
@@ -107,14 +113,13 @@ export default function AddServiceDetail() {
         />
       </div>
       <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="serviceId"
-          name="serviceId"
-          type="number"
-          min={0}
-          onChange={handleChange}
-        />
+        {/* Supprimez l'input serviceId pour éviter la duplication */}
+        <FormSelect name="serviceId" required onChange={handleChange}>
+          <option value={null}>Choisissez le service</option>
+          {services.map((elem, i) => (
+            <option key={i} value={elem.id}>{elem.name}</option>
+          ))}
+        </FormSelect>
       </div>
       <div className="form-input">
         <input

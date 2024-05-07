@@ -61,7 +61,7 @@ function ListClients() {
       width: 80,
       getActions: (row) => {
         return [
-<Link to={`${row.id}`} key={row.id}>
+          <Link to={`${row.id}`} key={row.id}>
             {" "}
             <GridActionsCellItem
               disableFocusRipple={false}
@@ -93,10 +93,15 @@ function ListClients() {
 
   return (
     <div>
-<div className="d-flex justify-content-center mb-3" style={{backgroundColor:"#1976D2",color:"#fafafa"}}>
+      <div
+        className="d-flex justify-content-center mb-3"
+        style={{ backgroundColor: "#1976D2", color: "#fafafa" }}
+      >
         <h2>Liste des clients</h2>
-      </div>     <br/><br/><br/>
-
+      </div>{" "}
+      <br />
+      <br />
+      <br />
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}

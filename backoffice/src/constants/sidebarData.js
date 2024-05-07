@@ -144,7 +144,7 @@ export const sidebarData = [
   },
   {
     title: "Users",
-    path: "/adduser",
+    path: "/listeuser",
     icon: < PersonPinIcon  />,
     access:['chef','admin','commercial']
   },

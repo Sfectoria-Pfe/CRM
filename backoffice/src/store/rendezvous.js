@@ -20,6 +20,15 @@ export const deleteRendezvous = createAsyncThunk("rendezvous/deleteRendezvous", 
   await axios.delete(`http://localhost:7000/rendezvous/${id}`);
   return id;
 });
+export const updateRendezStatus = createAsyncThunk(
+  "rendezvous/updateRendezStatus",
+  async ({ id, newStatus }) => {
+    const response = await axios.patch(`http://localhost:7000/rendezvous/${id}`, {
+      statut: newStatus,
+    });
+    return response.data;
+  }
+);
 
 const rendezvousSlice = createSlice({
   name: "rendezvous",

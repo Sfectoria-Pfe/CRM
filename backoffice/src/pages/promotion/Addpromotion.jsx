@@ -17,13 +17,12 @@ export default function Addpromotion() {
     (state) => state.opportunite.opportunites.items
   );
   const category = useSelector(
-    (state) => state.categorieClient.categories.items 
-    
+    (state) => state.categorieClient.categories.items
   );
-  
+
   useEffect(() => {
     dispatch(fetchOpportunites());
-    dispatch(fetchCategories())
+    dispatch(fetchCategories());
   }, [dispatch]);
 
   const handleChange = (e) => {
@@ -62,9 +61,15 @@ export default function Addpromotion() {
   };
 
   return (
-    <div className="form-container" style={{ backgroundColor: "#42a5f5", padding: "20px", borderRadius: "10px" }}>
+    <div
+      className="form-container"
+      style={{
+        backgroundColor: "#42a5f5",
+        padding: "20px",
+        borderRadius: "10px",
+      }}
+    >
       <h2>Ajouter une promotion</h2>
-
       <div className="form-input">
         <textarea
           className="form-control"
@@ -91,7 +96,6 @@ export default function Addpromotion() {
           placeholder="date_debut"
           name="date_debut"
           type="date"
-
           required
           onChange={handleChange}
         />
@@ -107,21 +111,20 @@ export default function Addpromotion() {
         />
       </div>
       <div className="form-input">
-        <FormSelect name="categorieClientId" required onChange={handleChange}  >
+        <FormSelect name="categorieClientId" required onChange={handleChange}>
           <option value={null}>Choisie categorie du client</option>
           {category.map((elem, i) => (
             <option value={elem.id}>{elem.nom}</option> // Utilisez 'categories' au lieu de 'CategorieClient'
           ))}
         </FormSelect>
-
-      </div> <div className="form-input">
-        <FormSelect name="opportuniteId" required onChange={handleChange}  >
+      </div>{" "}
+      <div className="form-input">
+        <FormSelect name="opportuniteId" required onChange={handleChange}>
           <option value={null}>Choisie nom du votre opportunite</option>
           {opportunites.map((elem, i) => (
             <option value={elem.id}>{elem.title}</option>
           ))}
         </FormSelect>
-        
       </div>
       {/* <div className="form-input">
         <input
@@ -141,7 +144,6 @@ export default function Addpromotion() {
           onChange={handleChange}
         />
       </div> */}
-
       <Button
         variant="warning"
         onClick={(e) => {
