@@ -4,12 +4,18 @@ import { fetchEquipesCommerciales } from "../../store/Equipe";
 import { Link } from "react-router-dom";
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { fetchEmployee } from "../../store/employee";
 
 function ListEquipeCommerciale() {
   const dispatch = useDispatch();
   const equipesCommerciales = useSelector(
     (state) => state.Equipe.equipesCommerciales.items
   );
+
+  useEffect(() => {
+    dispatch(fetchEmployee());
+  }, [dispatch]);
+
   const columns = [
     {
       field: "id",
@@ -20,11 +26,6 @@ function ListEquipeCommerciale() {
       field: "nom_equipe",
       headerName: "Nom de l'équipe commerciale",
       width: 200,
-    },
-    {
-      field: "nombre",
-      headerName: "Nombre",
-      width: 300,
     },
     {
       field: "actions",

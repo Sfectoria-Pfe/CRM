@@ -5,6 +5,7 @@ import Hero from "./hero/Hero"
  import Locate from "./location/Locate"
 import Recent from "./recent/Recent"
 import Team from "./team/Team"
+import ServicedetailsCard from "../servicedetails/servicedetails"
 
 
 
@@ -15,7 +16,9 @@ const Home = () => {
       <Featured />
       <br></br>
       <Recent />
-      <Awards />
+      {/* <Awards /> */}
+      <ServicedetailsCard/>
+
       <Locate />
       <Team />
       

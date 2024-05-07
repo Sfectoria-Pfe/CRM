@@ -45,11 +45,7 @@ const demandedevis = allDemandeDevis.filter((demande) => demande.clientId === cl
         </span>
       )
     },
-    {
-      field: "clientId",
-      headerName: "ID de la client",
-      width: 150,
-    },
+    
     {
       field: "actions",
       headerName: "Actions",
@@ -68,7 +64,7 @@ const demandedevis = allDemandeDevis.filter((demande) => demande.clientId === cl
     <div>
       <div
         className="d-flex justify-content-center mb-3"
-        style={{ backgroundColor: "#1976D2", color: "#fafafa" }}
+        style={{ backgroundColor: "#66bb6a", color: "#fafafa", padding: "10px", borderRadius: "5px", width: "50%", margin: "0 auto" }}
       >
         <h2>Liste des Demandes devis</h2>
       </div>

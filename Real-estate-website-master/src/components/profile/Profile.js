@@ -12,7 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { getMe } from '../store/auth';
 import { FaEnvelope, FaAddressCard, FaPhone } from 'react-icons/fa';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function ProfilePage() {
   const dispatch = useDispatch();
@@ -41,8 +41,8 @@ export default function ProfilePage() {
                 <h5 className="text-muted mb-1">{user && `${user.Client.nom} ${user.Client.prenom}`}</h5>
                 <h5 className="text-muted mb-4">{user && user.Client.adresse}</h5><br/>
                 <div className="d-flex justify-content-center mb-2">
-                  <MDBBtn outline className="ms-1">Edit</MDBBtn>
-                </div>
+  <Link to="/editProfile" className="btn btn-outline-primary ms-1">Edit</Link>
+</div>
               </MDBCardBody>
             </MDBCard>
           </MDBCol>

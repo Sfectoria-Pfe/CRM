@@ -29,9 +29,9 @@ export default function ViewService() {
   }, [serviceId]);
 
   const chatButtonStyle = {
-    width: "150px",
+    width: "100px",
     height: "50px",
-    borderRadius: "25px",
+    borderRadius: "50px",
     backgroundColor: "#007bff",
     color: "#fff",
     fontSize: "16px",
@@ -43,7 +43,7 @@ export default function ViewService() {
     justifyContent: "center",
     alignItems: "center",
     outline: "none",
-    transition: "background-color 0.3s",
+    gap: "5px",
   };
 
   return (
@@ -81,7 +81,7 @@ export default function ViewService() {
           <div style={{ flex: "1", paddingLeft: "20px" }}>
             {/* Affichage du chat s'il est ouvert */}
             {openChat && (
-              <div style={{ width: "300%", textAlign: "right" }}>
+              <div style={{ marginBottom: "top",width: "300%", textAlign: "right" }}>
                 <Chat
                   opportunity={pack}
                   setCloseChat={() => setOpenChat(false)}

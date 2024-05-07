@@ -342,17 +342,18 @@ function InvoiceForm() {
                 </Form.Label>
                 <Form.Control
                   placeholder="Nom entreprise"
-                  value={'FATMA&ROUA Company'}
+                  value={'MaisonPlus'}
                   type="text"
                   name="nom_entreprise"
                   className="my-2"
                   onChange={editField}
                   autoComplete="nom_entreprise"
                   required
+                  readOnly
                 />
                 <Form.Control
                   placeholder="Email entreprise"
-                  value={email_entreprise}
+                  value="MaisonPlus@gmail.com" // Entourez la valeur de guillemets
                   type="email"
                   name="email_entreprise"
                   className="my-2"
@@ -362,7 +363,7 @@ function InvoiceForm() {
                 />
                 <Form.Control
                   placeholder="Adresse entreprise"
-                  value={adresse_entreprise}
+                  value="Tunisie,Sousse,Rue de zouhour"
                   type="text"
                   name="adresse_entreprise"
                   className="my-2"
@@ -372,7 +373,7 @@ function InvoiceForm() {
                 />
                 <Form.Control
                   placeholder="Téléphone entreprise"
-                  value={telephone_entreprise}
+                  value={23459334}
                   type="text"
                   name="telephone_entreprise"
                   className="my-2"
@@ -394,14 +395,14 @@ function InvoiceForm() {
             <Row className="mt-4 justify-content-end">
               <Col lg={6}>
                 <div className="d-flex flex-row align-items-start justify-content-between">
-                  <span className="fw-bold">Subtotal:</span>
+                  <span className="fw-bold">total:</span>
                   <span>
                     {currency}
                     {subTotal}
                   </span>
                 </div>
                 <div className="d-flex flex-row align-items-start justify-content-between mt-2">
-                  <span className="fw-bold">Discount:</span>
+                  <span className="fw-bold">Remise:</span>
                   <span>
                     <span className="small">({discountRate || 0}%)</span>
                     {currency}
@@ -473,12 +474,14 @@ function InvoiceForm() {
               total={total}
             />
             <Form.Group className="mb-3">
-              <Form.Label className="fw-bold">Currency:</Form.Label>
+              <Form.Label className="fw-bold">Devise:</Form.Label>
               <Form.Select
                 onChange={(event) => onCurrencyChange(event.target.value)}
                 className="btn btn-light my-1"
                 aria-label="Change Currency"
               >
+            <option value="DT">DT (Dinar Tunisien)</option>
+
                 <option value="$">USD (United States Dollar)</option>
                 <option value="£">GBP (British Pound Sterling)</option>
                 <option value="¥">JPY (Japanese Yen)</option>
@@ -490,7 +493,7 @@ function InvoiceForm() {
               </Form.Select>
             </Form.Group>
             <Form.Group className="my-3">
-              <Form.Label className="fw-bold">Tax rate:</Form.Label>
+              <Form.Label className="fw-bold">Taux d'imposition:</Form.Label>
               <InputGroup className="my-1 flex-nowrap">
                 <Form.Control
                   name="taxRate"
@@ -509,7 +512,7 @@ function InvoiceForm() {
               </InputGroup>
             </Form.Group>
             <Form.Group className="my-3">
-              <Form.Label className="fw-bold">Discount rate:</Form.Label>
+              <Form.Label className="fw-bold">taux de remise:</Form.Label>
               <InputGroup className="my-1 flex-nowrap">
                 <Form.Control
                   name="discountRate"

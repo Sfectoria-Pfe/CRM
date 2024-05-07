@@ -36,5 +36,6 @@ export const store = configureStore({
     demandedevis,
     serviceDetails,
     Equipe,
-   categorieClient, },
+    categorieClient,
+  },
 });

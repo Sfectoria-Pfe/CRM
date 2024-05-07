@@ -4,9 +4,9 @@ import ListHistorique2 from './table2'
 function Historique() {
   return (
     <div>
-      Hitorique
+      <br/><br/>
       <ListDemandeDevis/>
-      <br/><br/><br/><br/><br/>
+      <br/><br/><br/>
       <ListHistorique2/>
     </div>
   )

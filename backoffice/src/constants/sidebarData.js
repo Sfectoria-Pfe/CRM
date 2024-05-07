@@ -29,7 +29,7 @@ export const sidebarData = [
   },
   {
     title: "Catalogue",
-    path: "/addLocation",
+    path: "/services",
     icon: <GridViewIcon />,
     access: ["chef", "admin", "commercial"],
     children: [
@@ -62,7 +62,7 @@ export const sidebarData = [
       // },
       {
         title: "promotion",
-        path: "/Addpromotion",
+        path: "/Promotion",
         icon: <DiscountIcon />,
         access:['chef','admin','commercial']
       }, 
@@ -144,7 +144,7 @@ export const sidebarData = [
   },
   {
     title: "Users",
-    path: "/adduser",
+    path: "/listeuser",
     icon: < PersonPinIcon  />,
     access:['chef','admin','commercial']
   },

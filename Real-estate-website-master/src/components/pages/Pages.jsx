@@ -24,6 +24,8 @@ import ViewPack from "../Pack/ViewPack.js";
 import ViewService from "../services/ViewService.js";
 import ChatPage from "../chat/ChatPage.jsx";
 import Historique from "../Historique/Historique.jsx";
+import EditProfile from "../profile/editProfil.js";
+import ServicedetailsCard from "../servicedetails/servicedetails.js";
 
 export const SocketContext = createContext();
 const socket = io("http://localhost:7000"); //path of the server
@@ -54,6 +56,8 @@ const Pages = () => {
           {user ? (
             <>
               <Route path="/profile" element={<Profile />} />
+              <Route path="editProfile" element={<EditProfile />} />
+
               <Route path="/chat" element={<ChatPage />} />
             </>
           ) : (
@@ -70,7 +74,7 @@ const Pages = () => {
           <Route path="/pack/:packId" element={<ViewPack />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/contact" element={<Contact />} />
-
+          <Route path="/servicedetails" element={<ServicedetailsCard/>}/>
           <Route path="/more" element={<More />} />
           <Route path="/Demandedevis" element={<Demandedevis />} />
           <Route path="/rendez-vous" element={<Demanderendezvous />} />

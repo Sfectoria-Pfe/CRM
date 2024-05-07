@@ -60,6 +60,8 @@ import InvoiceForm from "../pages/Devis 2/InvoiceForm.js"
 import AlignItemsList from "../pages/Chats/ChatClient.jsx";
 import ListEquipeCommerciale from "../pages/equipe commerciale/Listeequipe.jsx";
 import AddEquipe from "../pages/equipe commerciale/Ajoutequipe.js";
+import PromotionManagementPage from "../pages/promotion/Promotion.jsx";
+import ListUser from "../pages/user/listeuser.jsx";
 export const UserContext = createContext();
 
 function PrivateRoute({ Component, roles }) {
@@ -154,15 +156,15 @@ export default function Router() {
                 <Route path="listeemployee" element={<ListEmployee />} />
                 <Route path="listeCommerciale" element={< ListEquipeCommerciale/>} />
                 <Route path="/AddEquipeCommerciale" element={<AddEquipe />} />
-
+            <Route path="Promotion" element={<PromotionManagementPage />} />
                 <Route path="/Addpromotion" element={<AddPromotion />} />
-
                 <Route path="listepromotion" element={<ListPromotion />} />
                 <Route path="calendrier" element={<Calendrier />} />
                 <Route path="adduser" element={<Adduser />} />
                 <Route path="ListeRendezvous" element={<ListRendezvous />} />
                 <Route path="ListeDemandedevis" element={<ListDemandeDevis/>} />
                 <Route path="Dashboard" element={<Charts />} />
+                <Route path="listeuser"  element={<ListUser/>} />
 
                 <Route path="InvoiceForm" element={<InvoiceForm />} />
                 <Route path="ChatClient" element={<AlignItemsList />} />

@@ -4,6 +4,7 @@ import { fetchServiceDetails } from "../../../store/serviceDetails";
 import { Link, useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import AddServiceDetail from "./AddServicede";
 
 function ListServiceDetails() {
   const dispatch = useDispatch();
@@ -79,23 +80,28 @@ function ListServiceDetails() {
   }, [dispatch]);
 
   return (
-    <div>
-      <div className="d-flex justify-content-center mb-3" style={{ backgroundColor: "#1976D2", color: "#fafafa" }}>
-        <h2>Liste des détails de service</h2>
-      </div>
-      <br />
-      <br />
-      <br />
-
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          columns={columns}
-          rows={serviceDetails}
-          slots={{ toolbar: GridToolbar }}
-        />
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-md-6">
+          <div className="d-flex justify-content-center mb-3" style={{ backgroundColor: "#1976D2", color: "#fafafa" }}>
+            <h2>Liste des détails de service</h2>
+          </div>
+          <br />
+          <br />
+          <br />
+          <div style={{ height: 400, width: "100%" }}>
+            <DataGrid
+              columns={columns}
+              rows={serviceDetails}
+              slots={{ toolbar: GridToolbar }}
+            />
+          </div>
+        </div>
+        <div className="col-md-6" style={{ height: 400}}>
+          <AddServiceDetail />
+        </div>
       </div>
     </div>
   );
 }
-
 export default ListServiceDetails;

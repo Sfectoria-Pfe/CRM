@@ -1,37 +1,60 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { Button, FormControlLabel, Checkbox , FormControl} from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 import { createEquipeCommerciale } from "../../store/Equipe";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { fetchEmployees } from "../../store/employee";
+import { useEffect } from "react";
 
 export default function AddEquipe() {
-  const [equipe, setEquipe] = useState("");
-  const [chefIdCount, setChefIdCount] = useState(1); // Compteur pour générer des ID uniques pour les chefs
+  const [equipeState, setEquipeState] = useState({
+    nom_equipe: "",
+    chefId: "",
+    memberIds: [], // Assurez-vous que memberIds est un tableau
+  });
+  const [chefIdCount, setChefIdCount] = useState(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const equipe = useSelector((state) => state.employee.employees.items);
+  useEffect(() => {
+    dispatch(fetchEmployees());
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     const newValue =
-      name === "chefId" || name === "nombre" 
+      name === "chefId" || name === "nombre"
         ? isNaN(parseInt(value))
           ? ""
           : parseInt(value)
         : value;
 
-    setEquipe({ ...equipe, [name]: newValue });
+    setEquipeState({ ...equipeState, [name]: newValue });
   };
 
-  const handleAddChefIdInput = () => {
-    setChefIdCount(chefIdCount + 1); // Incrémente le compteur
+  const handleMemberSelection = (e) => {
+    const { value, checked } = e.target;
+    const memberId = parseInt(value);
+    
+    if (checked) {
+      // Ajouter l'ID du membre sélectionné
+      setEquipeState((prevState) => ({
+        ...prevState,
+        memberIds: [...prevState.memberIds, memberId],
+      }));
+    } else {
+      // Retirer l'ID du membre désélectionné
+      setEquipeState((prevState) => ({
+        ...prevState,
+        memberIds: prevState.memberIds.filter((id) => id !== memberId),
+      }));
+    }
   };
-
   const handleAddEquipe = () => {
-    dispatch(createEquipeCommerciale(equipe))
+    dispatch(createEquipeCommerciale(equipeState))
       .then((res) => {
         if (!res.error) {
           toast.success("Votre Equipe a été ajoutée avec succès !");
@@ -65,41 +88,41 @@ export default function AddEquipe() {
         />
       </div>
       <div className="form-input">
-        <input
+        <select
           className="form-control"
-          placeholder="nombre"
-          name="nombre"
-          type="number"
-          required
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="chefId"
           name="chefId"
-          type="number"
           required
           onChange={handleChange}
-        />
-        {[...Array(chefIdCount)].map((_, index) => (
-          <input
-            key={index}
-            className="form-control"
-            placeholder={`chefId ${index + 2}`}
-            name={`chefId${index + 2}`}
-            type="number"
-            onChange={handleChange}
-          />
-        ))}
-        <FontAwesomeIcon
-          icon={faPlus}
-          onClick={handleAddChefIdInput}
-          style={{ cursor: "pointer", marginLeft: "5px" }}
-        />
+        >
+          <option value={null}>Choisir Chef</option>
+          {equipe.map((elem, i) => (
+            <option key={i} value={elem.id}>
+              {elem.prenom} {elem.nom}
+            </option>
+          ))}
+        </select>
       </div>
-      
+
+      <div className="form-input">
+  <FormControl component="fieldset">
+    <legend>Choisir membres :</legend>
+    {equipe.map((elem, i) => (
+      <FormControlLabel
+        key={i}
+        control={
+          <Checkbox
+            checked={equipeState.memberIds.includes(elem.id)}
+            onChange={handleMemberSelection}
+            value={elem.id.toString()} // Assurez-vous que la valeur est une chaîne
+            color="primary"
+          />
+        }
+        label={`${elem.prenom} ${elem.nom}`}
+      />
+    ))}
+  </FormControl>
+</div>
+
       <Button
         variant="warning"
         onClick={(e) => {
