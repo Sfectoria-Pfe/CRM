@@ -137,13 +137,55 @@ export class AuthService {
       }
     }
 
-      const {email,...employee}=dto
-      const updatedUser = await this.prisma.user.update({
-        where: { id: id },
-        include: { Employee: true },
-        data: {email:email,Employee:{update:{data:employee}}},
+    const { email, ...employee } = dto;
+    const updatedUser = await this.prisma.user.update({
+      where: { id: id },
+      include: { Employee: true },
+      data: {
+        email: email,
+        Employee: { update: { data: { ...employee, email } } },
+      },
+    });
+
+    const { password, ...rest } = updatedUser;
+    const token = this.jwtService.sign(rest);
+    return token;
+  }
+  async updateMeClient(dto: UpdateAuthDto, id: number) {
+    if (dto['password']) {
+      throw new HttpException(
+        'Vous ne pouvez pas modifier le mot de passe',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (dto.email) {
+      const existingUser = await this.prisma.user.findFirst({
+        where: {
+          email: dto.email,
+          id: {
+            not: id, // Exclude the current user
+          },
+        },
       });
-    
+
+      if (existingUser) {
+        throw new HttpException(
+          "L'adresse e-mail est déjà utilisée",
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+
+    const { email, ...client } = dto;
+    const updatedUser = await this.prisma.user.update({
+      where: { id: id },
+      include: { Client: true },
+      data: {
+        email: email,
+        Client: { update: { data: { ...client, email } } },
+      },
+    });
 
     const { password, ...rest } = updatedUser;
     const token = this.jwtService.sign(rest);

@@ -16,6 +16,10 @@ export class ClientsController {
   findAll(@Query() filter:any) {
     return this.clientsService.findAll(filter);
   }
+  @Get('without-account')
+  findAllWithoutAccount( ) {
+    return this.clientsService.findAllWithoutAccount();
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

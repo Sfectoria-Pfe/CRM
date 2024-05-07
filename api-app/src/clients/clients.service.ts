@@ -20,14 +20,20 @@ export class ClientsService {
   }
 
   async findAll(filter: any) {
-    let where= {};
+    let where = {};
     if (filter.fullNameEn) {
       where['OR'] = [
         { nom: { contains: filter.fullNameEn } },
         { prenom: { contains: filter.fullNameEn } },
       ];
     }
-    return await this.prisma.client.findMany({where});
+    return await this.prisma.client.findMany({ where });
+  }
+  async findAllWithoutAccount() {
+    const response = await this.prisma.client.findMany({
+      include: { user: { select: { email: true } } },
+    });
+    return response.filter((elem) => elem.user.length === 0);
   }
 
   async findOne(id: number) {

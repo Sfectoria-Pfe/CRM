@@ -34,7 +34,7 @@ export const updateProfile = createAsyncThunk(
   async (body, { dispatch }) => {
     const token = localStorage.getItem("token");
     const response = await axios.post(
-      "http://localhost:7000/auth/update-me",
+      "http://localhost:7000/auth/update-me-client",
       body,
       {
         headers: {

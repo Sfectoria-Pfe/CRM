@@ -38,6 +38,12 @@ export class AuthController {
   updateMe(@Body() dto: UpdateAuthDto, @CurrentUser() user) {
     return this.authService.updateMe(dto, user.id);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('update-me-client')
+  updateMeClient(@Body() dto: UpdateAuthDto, @CurrentUser() user) {
+    return this.authService.updateMeClient(dto, user.id);
+  }
   
   @ApiSecurity('apiKey') // for swagger
   @UseGuards(JwtAuthGuard) // the get don't work without token

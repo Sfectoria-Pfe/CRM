@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendUser } from "../../store/user";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Form from "react-bootstrap/Form";
+import { fetchClients, fetchClientsWithoutAccount } from "../../store/client";
+import { fetchEmployees } from "../../store/employee";
 
 export default function Adduser() {
+  const employees = useSelector((state) => state.employee.employees.items);
+  const clients = useSelector((state) => state.client.clients.items);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -14,10 +21,24 @@ export default function Adduser() {
     employeeId: "",
     clientId: "",
   });
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    dispatch(fetchClientsWithoutAccount());
+    dispatch(fetchEmployees());
+  }, [dispatch]);
+  useEffect(() => {
+    if (user.isClient) setData(clients);
+    else setData(employees);
+  }, [user.isClient, employees, clients]);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
+  const handleChangeSelect = (e) => {
+    if (user.isClient) {
+      setUser({ ...user, clientId: e.target.value });
+    } else {
+      setUser({ ...user, employeeId: e.target.value });
+    }
+  };
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
@@ -36,11 +57,15 @@ export default function Adduser() {
             navigate(-1);
           }, 2000);
         } else {
-          toast.error("Erreur lors de l'ajout de l'utilisateur. Veuillez réessayer.");
+          toast.error(
+            "Erreur lors de l'ajout de l'utilisateur. Veuillez réessayer."
+          );
         }
       })
       .catch((error) => {
-        toast.error("Erreur lors de l'ajout de l'utilisateur. Veuillez réessayer.");
+        toast.error(
+          "Erreur lors de l'ajout de l'utilisateur. Veuillez réessayer."
+        );
       });
   };
 
@@ -64,15 +89,35 @@ export default function Adduser() {
         />
       </div>
       <div className="form-input">
-        <Button
+        <div className="d-flex gap-2">
+          <Form.Label>Employee</Form.Label>
+          <Form.Check // prettier-ignore
+            type="switch"
+            id="custom-switch"
+            value={user.isClient}
+            onChange={()=>{toggleIsClient()}}
+          />
+          <Form.Label>Client</Form.Label>
+        </div>
+        {/* <Button
           variant={user.isClient ? "success" : "danger"}
           onClick={toggleIsClient}
           style={{ width: "100%" }}
         >
           {user.isClient ? "Client" : "Non Client"}
-        </Button>
+        </Button> */}
       </div>
-      <div className="form-input">
+      <Form.Select required onChange={handleChangeSelect}>
+        <option value={null}>
+          Choisie nom du votre {user.isClient ? "Client" : "Employee"}{" "}
+        </option>
+        {data.map((elem, i) => (
+          <option value={elem.id}>
+            {elem.nom} {elem.prenom}
+          </option>
+        ))}
+      </Form.Select>
+      {/* <div className="form-input">
         <input
           className="form-control"
           placeholder="employeeId"
@@ -87,7 +132,7 @@ export default function Adduser() {
           name="clientId"
           onChange={handleChange}
         />
-      </div>
+      </div> */}
       <Button
         variant="warning"
         onClick={(e) => {
