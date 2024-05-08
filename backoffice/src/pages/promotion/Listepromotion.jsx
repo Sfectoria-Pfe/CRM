@@ -87,11 +87,17 @@ function ListPromotion() {
   }, [dispatch]);
   return (
     <div>
-      <div className="d-flex justify-content-end m-3">
+      <div
+        className="d-flex justify-content-center mb-3"
+        style={{ backgroundColor: "#1976D2", color: "#fafafa" }}
+      >
+        <h2>Liste des Promotions</h2>
+      </div>{" "}
+      {/* <div className="d-flex justify-content-end m-3">
       <Link className="btn btn-light" to="/Addpromotion">
           Add promotion
-        </Link>
-      </div>
+        </Link> */}
+      {/* </div> */}
 
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid

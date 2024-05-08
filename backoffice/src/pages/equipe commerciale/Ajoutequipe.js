@@ -1,13 +1,32 @@
-import React, { useState } from "react";
-import { Button, FormControlLabel, Checkbox , FormControl} from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  FormControlLabel,
+  Checkbox,
+  FormControl,
+  Select,
+  MenuItem,
+  ListItemText,
+  InputLabel,
+  OutlinedInput,
+} from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { createEquipeCommerciale } from "../../store/Equipe";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { fetchEmployees } from "../../store/employee";
-import { useEffect } from "react";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 220,
+    },
+  },
+};
 
 export default function AddEquipe() {
   const [equipeState, setEquipeState] = useState({
@@ -19,6 +38,7 @@ export default function AddEquipe() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const equipe = useSelector((state) => state.employee.employees.items);
+
   useEffect(() => {
     dispatch(fetchEmployees());
   }, [dispatch]);
@@ -53,6 +73,7 @@ export default function AddEquipe() {
       }));
     }
   };
+
   const handleAddEquipe = () => {
     dispatch(createEquipeCommerciale(equipeState))
       .then((res) => {
@@ -96,32 +117,51 @@ export default function AddEquipe() {
         >
           <option value={null}>Choisir Chef</option>
           {equipe.map((elem, i) => (
-            <option key={i} value={elem.id}>
-              {elem.prenom} {elem.nom}
-            </option>
+            elem.role === "chef" && (
+              <option key={i} value={elem.id}>
+                {elem.prenom} {elem.nom}
+              </option>
+            )
           ))}
         </select>
       </div>
 
       <div className="form-input">
-  <FormControl component="fieldset">
-    <legend>Choisir membres :</legend>
-    {equipe.map((elem, i) => (
-      <FormControlLabel
-        key={i}
-        control={
-          <Checkbox
-            checked={equipeState.memberIds.includes(elem.id)}
+        <FormControl component="fieldset">
+          <legend>Choisir membres :</legend>
+          <br />
+          <Select
+            style={{ width: 440, height: 30 }}
+            labelId="demo-multiple-checkbox-label"
+            id="demo-multiple-checkbox"
+            multiple
+            value={equipeState.memberIds}
             onChange={handleMemberSelection}
-            value={elem.id.toString()} // Assurez-vous que la valeur est une chaîne
-            color="primary"
-          />
-        }
-        label={`${elem.prenom} ${elem.nom}`}
-      />
-    ))}
-  </FormControl>
-</div>
+            input={<OutlinedInput label="Membres" />}
+            renderValue={(selected) =>
+              equipe
+                .filter((elem) => selected.includes(elem.id))
+                .map((elem) => `${elem.prenom} ${elem.nom}`)
+                .join(", ")
+            }
+            MenuProps={MenuProps}
+          >
+            {equipe.map((elem) => (
+              elem.role === "commercial" && (
+                <MenuItem key={elem.id} value={elem.id}>
+                  <Checkbox
+                   checked={equipeState.memberIds.includes(elem.id)}
+                   onChange={handleMemberSelection}
+                   value={elem.id.toString()} // Assurez-vous que la valeur est une chaîne
+                   color="primary"
+                  />
+                  <ListItemText primary={`${elem.prenom} ${elem.nom}`} />
+                </MenuItem>
+              )
+            ))}
+          </Select>
+        </FormControl>
+      </div>
 
       <Button
         variant="warning"

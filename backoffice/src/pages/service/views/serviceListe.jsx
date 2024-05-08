@@ -49,7 +49,9 @@ function ServiceListe() {
       width: 80,
       getActions: (row) => {
         return [
+          
           <Link to={`/services/${row.id}`} key={row.id}>
+           
             <GridActionsCellItem
               disableFocusRipple={false}
               icon={<VisibilityIcon />}
@@ -69,12 +71,18 @@ function ServiceListe() {
 
   return (
     <div>
+      
+      <div
+        className="d-flex justify-content-center mb-3"
+        style={{ backgroundColor: "#1976D2", color: "#fafafa" }}
+      >
+        <h2>Liste des Services</h2>
+      </div>
       <div className="d-flex justify-content-end m-3">
-        <Link className="btn btn-light" to="addservice ">
+        <Link className="btn btn-light" style={{backgroundColor:"#81d4fa"}} to="addservice ">
           Ajouter Service
         </Link>
       </div>
-
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}

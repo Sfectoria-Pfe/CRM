@@ -25,7 +25,7 @@ export default function OneService() {
   );
 
   const cardStyle = {
-    minWidth: 275,
+    width: "300px", // Set a fixed width for each card
     margin: "10px",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
   };
@@ -38,7 +38,7 @@ export default function OneService() {
 
   return (
     <div style={{ padding: "20px", backgroundColor: "#f9f9f9", borderRadius: "10px", boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)" }}>
-      <h2 style={{ color: "#1976D2", marginBottom: "20px", borderBottom: "2px solid #1976D2", paddingBottom: "10px" }}>Détails du Service</h2>
+      <h2 style={{ color: "#1976D2", marginBottom: "20px", borderBottom: "2px solid #1976D2", paddingBottom: "10px" }}>plus des informations sur  Service Associé</h2>
       <div style={{ marginBottom: "20px" }}>
         <Typography variant="h5" style={{ color: "#333", marginBottom: "10px" }}>
           Nom: <span style={{ fontWeight: "bold" }}>{service?.name}</span>
@@ -61,27 +61,29 @@ export default function OneService() {
           Ajouter Détail du Service
         </Button>
       </Link>
-      <h3 style={{ color: "#1976D2", marginBottom: "10px" }}>Détails des Services Associés</h3>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {filteredServiceDetails.map((detail) => (
-          <Card key={detail.id} style={cardStyle}>
-            <CardContent>
-              <img src={detail.imageURL} alt="Image Service" style={imageStyle} />
-              <Typography variant="h5" style={{ color: "#333", marginBottom: "10px" }}>
-                {detail.title}
-              </Typography>
-              <Typography variant="body1" style={{ color: "#555" }}>
-                {detail.description}
-              </Typography>
-              <Typography variant="body2" style={{ color: "#888" }}>
-                Adresse: {detail.address}
-              </Typography>
-              <Typography variant="body2" style={{ color: "#888" }}>
-                Prix: {detail.price}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
+      <div>
+        <h3 style={{ color: "#1976D2", marginBottom: "10px" }}>Détails des Services Associés</h3>
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {filteredServiceDetails.map((detail) => (
+            <Card key={detail.id} style={cardStyle}>
+              <CardContent>
+                <img src={detail.imageURL} alt="Image Service" style={imageStyle} />
+                <Typography variant="h5" style={{ color: "#333", marginBottom: "10px" }}>
+                  {detail.title}
+                </Typography>
+                <Typography variant="body1" style={{ color: "#555" }}>
+                  {detail.description}
+                </Typography>
+                <Typography variant="body2" style={{ color: "#888" }}>
+                  Adresse: {detail.address}
+                </Typography>
+                <Typography variant="body2" style={{ color: "#888" }}>
+                  Prix: {detail.price}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );

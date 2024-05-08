@@ -17,35 +17,21 @@ function ListDevis() {
       width: 150,
     },
     {
-      field: "numero_devis",
+      field: "invoiceNumber ",
       headerName: "Numéro de devis",
       width: 150,
     },
     {
-      field: "date_estimation",
+      field: "dateOfIssue",
       headerName: "Date d'estimation",
       width: 200,
     },
     {
-      field: "montant_total",
+      field: " Montant Total ",
       headerName: "Montant total",
       width: 150,
     },
-    {
-      field: "prix_unitaire",
-      headerName: "Prix unitaire",
-      width: 150,
-    },
-    {
-      field: "service",
-      headerName: "Service",
-      width: 150,
-    },
-    {
-      field: "TVA",
-      headerName: "TVA",
-      width: 100,
-    },
+    
     {
         field: "clientId",
         headerName: "clientId",

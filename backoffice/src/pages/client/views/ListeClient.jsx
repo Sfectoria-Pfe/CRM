@@ -100,8 +100,11 @@ function ListClients() {
         <h2>Liste des clients</h2>
       </div>{" "}
       <br />
-      <br />
-      <br />
+      <div className="d-flex justify-content-end m-3">
+      <Link className="btn btn-light" to="/addClient">
+          Ajouter Client
+        </Link> 
+      </div>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}

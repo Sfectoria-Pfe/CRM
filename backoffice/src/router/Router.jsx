@@ -105,7 +105,7 @@ export default function Router() {
           <Routes>
             {user ? (
               <Route path="/" element={<App />}>
-                <Route index element={<Dashboard />} />
+                <Route index element={<Charts />}  />
                 <Route path="products" element={<Product />}>
                   <Route index element={<ProductList />} />
                   <Route path=":id" element={<ProductDetails />} />
