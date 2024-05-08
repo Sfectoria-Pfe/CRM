@@ -56,22 +56,12 @@ export default function AddEquipe() {
   };
 
   const handleMemberSelection = (e) => {
-    const { value, checked } = e.target;
-    const memberId = parseInt(value);
-    
-    if (checked) {
-      // Ajouter l'ID du membre sélectionné
-      setEquipeState((prevState) => ({
-        ...prevState,
-        memberIds: [...prevState.memberIds, memberId],
-      }));
-    } else {
-      // Retirer l'ID du membre désélectionné
-      setEquipeState((prevState) => ({
-        ...prevState,
-        memberIds: prevState.memberIds.filter((id) => id !== memberId),
-      }));
-    }
+    const { value } = e.target;
+
+    setEquipeState((prevState) => ({
+      ...prevState,
+      memberIds: value,
+    }));
   };
 
   const handleAddEquipe = () => {
@@ -116,13 +106,14 @@ export default function AddEquipe() {
           onChange={handleChange}
         >
           <option value={null}>Choisir Chef</option>
-          {equipe.map((elem, i) => (
-            elem.role === "chef" && (
-              <option key={i} value={elem.id}>
-                {elem.prenom} {elem.nom}
-              </option>
-            )
-          ))}
+          {equipe.map(
+            (elem, i) =>
+              elem.role === "chef" && (
+                <option key={i} value={elem.id}>
+                  {elem.prenom} {elem.nom}
+                </option>
+              )
+          )}
         </select>
       </div>
 
@@ -146,19 +137,19 @@ export default function AddEquipe() {
             }
             MenuProps={MenuProps}
           >
-            {equipe.map((elem) => (
-              elem.role === "commercial" && (
-                <MenuItem key={elem.id} value={elem.id}>
-                  <Checkbox
-                   checked={equipeState.memberIds.includes(elem.id)}
-                   onChange={handleMemberSelection}
-                   value={elem.id.toString()} // Assurez-vous que la valeur est une chaîne
-                   color="primary"
-                  />
-                  <ListItemText primary={`${elem.prenom} ${elem.nom}`} />
-                </MenuItem>
-              )
-            ))}
+            {equipe.map(
+              (elem) =>
+                elem.role === "commercial" && (
+                  <MenuItem key={elem.id} value={elem.id}>
+                    <Checkbox
+                      checked={equipeState.memberIds.includes(elem.id)}
+                      value={elem.id} // Assurez-vous que la valeur est une chaîne
+                      color="primary"
+                    />
+                    <ListItemText primary={`${elem.prenom} ${elem.nom}`} />
+                  </MenuItem>
+                )
+            )}
           </Select>
         </FormControl>
       </div>

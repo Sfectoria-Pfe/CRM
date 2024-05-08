@@ -61,6 +61,7 @@ export const Services = () => {
                   </Card.Text>
                   <Card.Text>{serviceOpportunite?.Service?.type}</Card.Text>
                   <Card.Text>Prix: {serviceOpportunite?.prix}</Card.Text>
+                  {opportunite?.promotion?.length?<Card.Text>promotion {opportunite?.promotion[0]?. pourcentage}%</Card.Text>:''}
                   {/* <Link to={`/pack/${serviceOpportunite?.Service.id}`}>
                     <Button variant="primary">Voire plus </Button>
                   </Link> */}

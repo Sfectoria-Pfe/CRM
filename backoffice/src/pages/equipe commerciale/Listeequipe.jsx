@@ -12,10 +12,6 @@ function ListEquipeCommerciale() {
     (state) => state.Equipe.equipesCommerciales.items
   );
 
-  useEffect(() => {
-    dispatch(fetchEmployee());
-  }, [dispatch]);
-
   const columns = [
     {
       field: "id",

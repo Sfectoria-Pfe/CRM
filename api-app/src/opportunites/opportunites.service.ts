@@ -8,15 +8,21 @@ export class OpportunitesService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createOpportuniteDto: CreateOpportuniteDto) {
-    try {
-      const newOpportunite = await this.prisma.opportunite.create({
-        data: createOpportuniteDto,
-      });
-      return newOpportunite;
-    } catch (error) {
-      console.error("Erreur lors de la création de l'opportunité :", error);
-      throw error;
-    }
+    const { serviceIds, ...rest } = createOpportuniteDto;
+    const newOpportunite = await this.prisma.opportunite.create({
+      data: {
+        ...rest,
+        service_Opportunites: {
+          create: serviceIds.map((elem) => ({
+            serviceId: elem,
+            isPromotion: false,
+            prix: 500,
+            discountAmout: 10,
+          })),
+        },
+      },
+    });
+    return newOpportunite;
   }
 
   async findAll(numberService: number) {
@@ -53,6 +59,7 @@ export class OpportunitesService {
         // stage: { some: { StageClient: { some: { archived: false } } } },
       },
       include: {
+        promotion: { include: { CategorieClient: true } },
         stage: {
           include: {
             StageClient: { include: { Client: true, Comment: true } },

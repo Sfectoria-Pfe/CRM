@@ -93,6 +93,7 @@ const Pack = () => {
                 </Card.Title>
               </>
             ))}
+            {opportunite?.promotion?.length?<Card.Text>promotion {opportunite?.promotion[0]?. pourcentage}%</Card.Text>:''}
           </Card.Body>
           <Card.Footer>
             <Link to={`/pack/${opportunite.id}`}>

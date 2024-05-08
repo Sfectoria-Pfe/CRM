@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty } from "class-validator";
+import { IsArray, IsNotEmpty } from "class-validator";
 
 export class CreateOpportuniteDto {
   
@@ -9,5 +9,8 @@ export class CreateOpportuniteDto {
     @ApiProperty()
     @IsNotEmpty()
     equipeId: number;
+    @ApiProperty()
+    @IsArray()
+    serviceIds: number[];
     
 }
