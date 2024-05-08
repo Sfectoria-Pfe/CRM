@@ -86,7 +86,7 @@ function ListUser() {
         </div>
         <div style={{ width: "2%" }}></div> {/* Adjust the width for spacing */}
         <div style={{ width: "40%", height: "calc(100vh - 200px)" }}>
-          <Adduser />
+<Adduser />
         </div>
       </div>
     </div>

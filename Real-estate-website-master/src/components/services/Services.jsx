@@ -80,12 +80,12 @@ export const Services = () => {
 
   return (
     <>
-    <section className="blog-out mb">
+    {/* <section className="blog-out mb">
         <Back name="Pack" title="Notre pack" cover={img} />
         <div className="container recent">
           <Row style={{ display: "flex" }}>{ServiceCards()}</Row>
         </div>
-      </section>
+      </section> */}
       <section className="services mb">
         <Back name="Services" title="Notre Service " cover={img} />
         <Container>
@@ -108,7 +108,7 @@ export const Services = () => {
           {ServiceCards()}
           <br />
           <br />
-          <h1
+          {/* <h1
             className="section-title"
             style={{
               backgroundColor: "#00695c",
@@ -123,7 +123,7 @@ export const Services = () => {
           {/* <LocationCard /> */}
           <br />
           <br />
-          <h1
+          {/* <h1
             className="section-title"
             style={{
               backgroundColor: "#00695c",
@@ -134,7 +134,7 @@ export const Services = () => {
           >
             Notre immobilier pour la vente
           </h1>
-          {/* <Recent /> */}
+          <Recent /> */} 
         </Container>
       </section>
     </>

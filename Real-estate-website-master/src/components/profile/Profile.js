@@ -35,13 +35,13 @@ export default function ProfilePage() {
                   src={user && user.Client.image}
                   alt="avatar"
                   className="rounded-circle"
-                  style={{ width: '150px',height:'100px' }}
+                  style={{ width: '150px',height:'150px' }}
                   fluid
                 /><br/><br/>
-                <h5 className="text-muted mb-1">{user && `${user.Client.nom} ${user.Client.prenom}`}</h5>
-                <h5 className="text-muted mb-4">{user && user.Client.adresse}</h5><br/>
+                <h4 >Bienvenue:{user && `${user.Client.nom} ${user.Client.prenom}`}</h4>
+                <h5 >{user && user.Client.adresse}</h5>
                 <div className="d-flex justify-content-center mb-2">
-  <Link to="/editProfile" className="btn btn-outline-primary ms-1">Edit</Link>
+  <Link to="/editProfile" className="btn btn-outline-primary ms-1">Modifier votre informations</Link>
 </div>
               </MDBCardBody>
             </MDBCard>
