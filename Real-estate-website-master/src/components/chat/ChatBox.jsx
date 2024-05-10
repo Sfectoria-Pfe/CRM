@@ -63,7 +63,7 @@ export default function Chat({ opportunity, drawer, setCloseChat }) {
   };
   if (drawer)
     return (
-      <div className="position-fixed col-md-6 col-12" >
+      <div style={{position:"fixed"}} >
         <MDBCard style={{height:550}}>
           <MDBCardHeader
             className="d-flex justify-content-between align-items-center p-3"

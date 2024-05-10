@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { fetchOpportunites } from "../../store/opportunite";
-import { fetchCategories } from "../../store/categorieClient";
+import { fetchCategories } from "../../store/categorieclient";
 
 export default function Addpromotion() {
   const [Promotion, setPromotion] = useState("");
@@ -17,8 +17,9 @@ export default function Addpromotion() {
     (state) => state.opportunite.opportunites.items
   );
   const category = useSelector(
-    (state) => state.categorieClient.categories.items
+    ((state) => state.categorieclient.categories.items)
   );
+
 
   useEffect(() => {
     dispatch(fetchOpportunites());

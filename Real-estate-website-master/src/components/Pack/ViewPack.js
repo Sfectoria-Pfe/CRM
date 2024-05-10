@@ -79,7 +79,7 @@ export default function ViewPack() {
         </Button>
       </div>
 
-      <div style={{ flex: "1", paddingLeft: "20px" }}>
+      <div style={{ flex: "1", paddingLeft: "50px" }}>
         {/* Affichage du chat s'il est ouvert */}
         {openChat && (
           <div style={{ width: "300%", textAlign: "right" }}>

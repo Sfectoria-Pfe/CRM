@@ -9,17 +9,17 @@ class Charts2 extends Component {
         const options = {
             animationEnabled: true,
             title:{
-                text: "Monthly Sales - 2017"
+                text: "analyse des services"
             },
             axisX: {
                 valueFormatString: "MMM"
             },
             axisY: {
-                title: "Sales (in USD)",
-                prefix: "$"
+                title: "analyse des services",
+                prefix: ""
             },
             data: [{
-                yValueFormatString: "$#,###",
+                yValueFormatString: "#,###",
                 xValueFormatString: "MMMM",
                 type: "spline",
                 dataPoints: [

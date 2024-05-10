@@ -11,7 +11,7 @@ import { faFacebookMessenger } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { faDollarSign, faCheck } from "@fortawesome/free-solid-svg-icons"; // Importez les icônes nécessaires
-
+import "../Pack/promot.css";
 const Pack = () => {
   const [packs, setPacks] = useState([]);
 
@@ -93,8 +93,9 @@ const Pack = () => {
                 </Card.Title>
               </>
             ))}
-            {opportunite?.promotion?.length?<Card.Text>promotion {opportunite?.promotion[0]?. pourcentage}%</Card.Text>:''}
-          </Card.Body>
+<div className={opportunite?.promotion?.length ? "animation" : ""} style={{ backgroundColor: 'green', color: '#ffffe6', fontSize: '25px' }}>
+  {opportunite?.promotion?.length ? <Card.Text style={{ color: '#ffffff' }}>promotion {opportunite?.promotion[0]?.pourcentage}%</Card.Text> : ''}
+</div>          </Card.Body>
           <Card.Footer>
             <Link to={`/pack/${opportunite.id}`}>
               <Button variant="primary">Voire plus </Button>

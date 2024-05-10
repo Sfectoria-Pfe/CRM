@@ -15,9 +15,10 @@ const Home = () => {
       <Hero />
       <Featured />
       <br></br>
-      <Recent />
+      <h1 >Decouvrez Les plus moderne Maisons</h1>
+      {/* <Recent /> */}
       {/* <Awards /> */}
-      <ServicedetailsCard/>
+     <br/> <ServicedetailsCard/>
 
       <Locate />
       <Team />

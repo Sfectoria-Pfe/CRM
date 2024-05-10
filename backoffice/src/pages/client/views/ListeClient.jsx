@@ -44,6 +44,11 @@ function ListClients() {
       width: 150,
     },
     {
+      field:"categorieId",
+      headerName:"Id du categorie Client",
+      width:"150",
+    },
+    {
       field: "image",
       headerName: "Image",
       width: 150,
@@ -101,7 +106,7 @@ function ListClients() {
       </div>{" "}
       <br />
       <div className="d-flex justify-content-end m-3">
-      <Link className="btn btn-light" to="/addClient">
+      <Link className="btn btn-light" to="addClient">
           Ajouter Client
         </Link> 
       </div>

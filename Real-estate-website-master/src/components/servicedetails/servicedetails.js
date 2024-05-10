@@ -11,6 +11,8 @@ function SevicedetailseCard(props) {
         <Card.Img style={{width:"470px",height:"200px"}} src={props.image} />
         <Card.Body>
           <Card.Title>{props.nom}</Card.Title>
+          <Card.Title>{props.title}</Card.Title>
+
           <div className="custom-price-container">
             <div className="custom-price-label">Prix</div>
             <div className="custom-price-value">{props.prix} DT</div>
@@ -61,9 +63,10 @@ function ServicedetailsCard() {
                 key={serviceDetail.id}
                 id={serviceDetail.id}
                 image={serviceDetail.imageURL}
-                nom={serviceDetail.description}
+                nom={serviceDetail.title}
                 prix={serviceDetail.price}
                 adresse={serviceDetail.address}
+
               />
             ))
           )}
