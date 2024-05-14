@@ -64,7 +64,7 @@ export default function AddServiceDetail() {
         if (!res.error) {
           toast.success("Le détail de service a été ajouté avec succès !");
           setTimeout(() => {
-            navigate(0);
+            navigate(-1);
           }, 2000); // Redirige après 2 secondes
         } else {
           toast.error("Erreur lors de l'ajout du détail de service. Veuillez réessayer.");

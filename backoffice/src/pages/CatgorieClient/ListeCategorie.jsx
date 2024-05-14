@@ -6,11 +6,17 @@ import { Button, TextField, Grid, Paper, Typography } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { fetchCategories,deleteCategory,sendCategory } from "../../store/categorieclient";
+import {
+  fetchCategories,
+  deleteCategory,
+  sendCategory,
+} from "../../store/categorieClient";
 
 function ListCategoryClients() {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.categorieclient.categories.items);
+  const categories = useSelector(
+    (state) => state.categorieClient.categories.items
+  );
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -26,16 +32,16 @@ function ListCategoryClients() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      sendCategory({ nom, description })
-    ).then(() => {
-      // Réinitialiser les champs après l'envoi réussi
-      setNom("");
-      setDescription("");
-      setError(null);
-    }).catch((err) => {
-      setError(err.message);
-    });
+    dispatch(sendCategory({ nom, description }))
+      .then(() => {
+        // Réinitialiser les champs après l'envoi réussi
+        setNom("");
+        setDescription("");
+        setError(null);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
   };
 
   const columns = [
@@ -60,10 +66,18 @@ function ListCategoryClients() {
       width: 180,
       renderCell: ({ row }) => (
         <>
-          <Button component={Link} to={`/edit-category/${row.id}`} startIcon={<EditIcon />}>
+          <Button
+            component={Link}
+            to={`/edit-category/${row.id}`}
+            startIcon={<EditIcon />}
+          >
             Edit
           </Button>
-          <Button onClick={() => handleDelete(row.id)} startIcon={<DeleteIcon />} color="error">
+          <Button
+            onClick={() => handleDelete(row.id)}
+            startIcon={<DeleteIcon />}
+            color="error"
+          >
             Delete
           </Button>
         </>
@@ -74,7 +88,9 @@ function ListCategoryClients() {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <Typography variant="h4" gutterBottom>Ajouter une Catégorie</Typography>
+        <Typography variant="h4" gutterBottom>
+          Ajouter une Catégorie
+        </Typography>
         <Paper elevation={3} style={{ padding: "20px" }}>
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
@@ -97,13 +113,26 @@ function ListCategoryClients() {
                 />
               </Grid>
             </Grid>
-            {error && <Typography variant="body2" color="error">{error}</Typography>}
-            <Button type="submit" variant="contained" color="primary" style={{ marginTop: "10px" }}>Ajouter</Button>
+            {error && (
+              <Typography variant="body2" color="error">
+                {error}
+              </Typography>
+            )}
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              style={{ marginTop: "10px" }}
+            >
+              Ajouter
+            </Button>
           </form>
         </Paper>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h4" gutterBottom>Liste des Catégories de Clients</Typography>
+        <Typography variant="h4" gutterBottom>
+          Liste des Catégories de Clients
+        </Typography>
         <Paper elevation={3}>
           <DataGrid
             columns={columns}

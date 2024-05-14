@@ -69,31 +69,31 @@ export default function ViewService() {
               </Col>
             ))}
           </Row>
-          <Row>
-            <Col>
-              <div style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
-                <Button
-                  style={chatButtonStyle}
-                  variant="primary"
-                  onClick={() => {
-                    setOpenChat(!openChat);
-                  }}
-                >
-                  {openChat ? "Close Chat" : <><FaComments style={{ marginRight: "5px" }} /> Chat</>}
-                </Button>
-                {/* Affichage du chat s'il est ouvert */}
-                {openChat && (
-                  <div style={{ marginLeft: "20px" }}>
-                    <Chat
-                      opportunity={pack}
-                      setCloseChat={() => setOpenChat(false)}
-                      drawer={true}
-                    />
-                  </div>
-                )}
-              </div>
-            </Col>
-          </Row>
+          <Button
+  style={chatButtonStyle}
+  variant="primary"
+  onClick={() => {
+    setOpenChat(!openChat);
+  }}
+>
+  <div style={{ display: "flex", alignItems: "center" }}>
+    <span style={{ marginRight: "5px" }}>
+      {openChat ? "" : <FaComments />}
+    </span>
+    {openChat ? "Close Chat" : "Chat"}
+  </div>
+</Button>
+{openChat && (
+  <div style={{ position: "absolute", top: "40px", left: "500px", padding: '1px' }}>
+    <Chat
+      opportunity={pack}
+      setCloseChat={() => setOpenChat(false)}
+      drawer={true}
+    />
+  </div>
+)}
+
+         
         </>
       )}
     </div>

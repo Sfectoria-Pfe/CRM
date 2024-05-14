@@ -15,8 +15,23 @@ export default function AddClient() {
     const { name, value } = e.target;
 
     setClient({ ...client, [name]: value });
-};
- const handleAddClient = () => {
+  };
+
+  const handleAddClient = () => {
+    // Validation du CIN et du numéro de téléphone
+    const cinRegex = /^\d{8}$/;
+    const phoneRegex = /^\d{8}$/;
+
+    if (!cinRegex.test(client.cin)) {
+      toast.error("Veuillez saisir un numéro de CIN valide (8 chiffres) !");
+      return;
+    }
+
+    if (!phoneRegex.test(client.telephone)) {
+      toast.error("Veuillez saisir un numéro de téléphone valide (8 chiffres) !");
+      return;
+    }
+
     dispatch(sendClient(client))
       .then((res) => {
         if (!res.error) {
@@ -74,6 +89,15 @@ export default function AddClient() {
           className="form-control"
           placeholder="Téléphone"
           name="telephone"
+          type="text"
+          onChange={handleChange}
+        />
+      </div>
+      <div className="form-input">
+        <input
+          className="form-control"
+          placeholder="CIN"
+          name="cin"
           type="text"
           onChange={handleChange}
         />

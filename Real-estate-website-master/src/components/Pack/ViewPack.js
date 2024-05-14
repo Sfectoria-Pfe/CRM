@@ -4,6 +4,7 @@ import Chat from "../chat/ChatBox";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FaComments } from "react-icons/fa";
+import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 
 export default function ViewPack() {
   const { packId } = useParams();
@@ -38,19 +39,27 @@ export default function ViewPack() {
   return (
     <div style={{ display: "flex" }}>
       {/* Première colonne pour afficher les informations */}
-      <div style={{ flex: "1", paddingRight: "20px" }}>
+      <div style={{ flex: "1", paddingRight: "15px" }}>
         <div style={packInfoStyle}>
           <h6 style={packTitleStyle}>{pack.title}</h6>
-         <h2> 
-              
-              {pack.service_Opportunites.reduce(
-                (acc, elem) => elem.prix + acc,
-                0
-              )}{" "}
-              DT    </h2>    </div>
-  <br/><br/>
+          <h2>
+            {pack.service_Opportunites.reduce((acc, elem) => elem.prix + acc, 0)} DT
+          </h2>
+        </div>
+        <br/>
+        <Button
+          style={chatButtonStyle}
+          variant="primary"
+          onClick={() => {
+            setOpenChat(!openChat);
+          }}
+        >
+          <FaComments /> Chat
+        </Button>
+        <br/><br/>
         <h3 style={servicesTitleStyle}>Les services :</h3>
         <ul style={servicesListStyle}>
+        
           {pack.service_Opportunites &&
             pack.service_Opportunites.map((serviceOpportunite) => (
               <li key={serviceOpportunite.id} style={serviceItemStyle}>
@@ -67,28 +76,20 @@ export default function ViewPack() {
               </li>
             ))}
         </ul>
-
-        <Button
-          style={chatButtonStyle}
-          variant="primary"
-          onClick={() => {
-            setOpenChat(true);
-          }}
-        >
-          <FaComments /> Chat
-        </Button>
+        {/* Bouton de chat */}
+       
       </div>
 
-      <div style={{ flex: "1", paddingLeft: "50px" }}>
+      <div style={{ flex: "1", paddingLeft: "20px" }}>
         {/* Affichage du chat s'il est ouvert */}
         {openChat && (
-          <div style={{ width: "300%", textAlign: "right" }}>
-            <Chat
-              opportunity={pack}
-              setCloseChat={() => setOpenChat(false)}
-              drawer={true}
-            />
-          </div>
+         <div style={{ width: "300%", textAlign: "right" }}>
+           <Chat
+             opportunity={pack}
+             setCloseChat={() => setOpenChat(false)}
+             drawer={true}
+           />
+         </div>
         )}
       </div>
     </div>
@@ -97,24 +98,24 @@ export default function ViewPack() {
 
 const packInfoStyle = {
   textAlign: "center",
-  border: "2px solid #007bff",
-  borderRadius: "100px",
-  backgroundColor: "#a5d6a7",
-
+ fontSize:"40px",
+  color:"#000000",
+  backgroundColor:"#b3b3ff",
   padding: "20px",
 };
 
 const packTitleStyle = {
-  fontSize: "32px",
+  fontSize: "50px",
   marginBottom: "10px",
-  fontWeight: "bold",
-  width: "100%", 
-  padding: "10px", // Ajoute un remplissage intérieur pour donner de l'espace autour du texte
+  marginLeft: "1%",
+  color: "#000000",
+  transition: "all 0.3s ease-in-out", 
+  backgroundColor:"#b3b3ff"
 };
 const serviceCardStyle = {
   backgroundColor: "#f4f4f4",
-  borderRadius: "10px",
-  padding: "20px",
+  borderRadius: "18px",
+  padding: "25px",
   margin: "10px",
   flex: "1 0 calc(50% - 20px)", 
 };
@@ -122,12 +123,12 @@ const serviceCardStyle = {
 const packPriceStyle = {
   fontSize: "24px",
   fontWeight: "bold",
-  color: "#007bff",
+  color: "#000000",
 };
 
 const servicesTitleStyle = {
-  fontSize: "24px",
-  marginBottom: "20px",
+  fontSize: "40px",
+  marginBottom: "5px",
   color: "#007bff", // Couleur bleue
   textTransform: "uppercase", // Convertir le texte en majuscules
   fontWeight: "bold", // Texte en gras
@@ -148,12 +149,19 @@ const serviceItemStyle = {
 
 const serviceDetailStyle = {
   flex: "1",
+  border: "4px solid #007bff", // Bordure de 4 pixels solide de couleur bleue
+  borderRadius: "10px", // Coins arrondis
+  padding: "10px", // Remplissage intérieur
+  fontSize: "30px", // Taille de police
+  fontWeight: "bold", // Texte en gras
+  color: "#000000" // Couleur du texte
 };
 
+
 const serviceImageStyle = {
-  width: "150px",
-  height: "140px",
-  marginLeft: "20px",
+  width: "300px",
+  height: "250px",
+  marginLeft: "50px",
 };
 
 const chatButtonStyle = {

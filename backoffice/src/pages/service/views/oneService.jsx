@@ -1,12 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchService } from "../../../store/services";
 import { Link, useParams } from "react-router-dom";
 
+
+import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete"; // Importer les icônes Edit et Delete
+import { deleteServiceDetail, updateServiceDetail } from "../../../store/serviceDetails"; // Importer l'action deleteServiceDetail et updateServiceDetail
 
 export default function OneService() {
   const dispatch = useDispatch();
@@ -25,7 +31,7 @@ export default function OneService() {
   );
 
   const cardStyle = {
-    width: "300px", // Set a fixed width for each card
+    width: "300px", // Définir une largeur fixe pour chaque carte
     margin: "10px",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
   };
@@ -34,6 +40,35 @@ export default function OneService() {
     width: "100%",
     height: "150px",
     objectFit: "cover",
+  };
+
+  // État pour gérer l'édition
+  const [editedDetail, setEditedDetail] = useState(null);
+
+  // Fonction de gestion d'événements pour démarrer l'édition d'un détail de service
+  const startEditDetail = (detail) => {
+    setEditedDetail({ ...detail });
+  };
+
+  // Fonction de gestion d'événements pour annuler l'édition
+  const cancelEditDetail = () => {
+    setEditedDetail(null);
+  };
+
+  // Fonction de gestion d'événements pour enregistrer les modifications
+  const saveEditedDetail = () => {
+    dispatch(updateServiceDetail({ id: editedDetail.id, body: editedDetail }));
+    setEditedDetail(null);
+  };
+
+  // Fonction de gestion d'événements pour supprimer un détail de service
+  const handleDeleteDetail = (id) => {
+    dispatch(deleteServiceDetail(id)); // Appeler l'action deleteServiceDetail avec l'ID du détail de service à supprimer
+  };
+
+  // Fonction de gestion d'événements pour mettre à jour les détails modifiés
+  const handleEditChange = (e) => {
+    setEditedDetail({ ...editedDetail, [e.target.name]: e.target.value });
   };
 
   return (
@@ -68,23 +103,111 @@ export default function OneService() {
             <Card key={detail.id} style={cardStyle}>
               <CardContent>
                 <img src={detail.imageURL} alt="Image Service" style={imageStyle} />
-                <Typography variant="h5" style={{ color: "#333", marginBottom: "10px" }}>
-                  {detail.title}
-                </Typography>
-                <Typography variant="body1" style={{ color: "#555" }}>
-                  {detail.description}
-                </Typography>
-                <Typography variant="body2" style={{ color: "#888" }}>
-                  Adresse: {detail.address}
-                </Typography>
-                <Typography variant="body2" style={{ color: "#888" }}>
-                  Prix: {detail.price}
-                </Typography>
+                {editedDetail && editedDetail.id === detail.id ? (
+                  // Afficher le formulaire d'édition
+                  <EditForm
+                    editedDetail={editedDetail}
+                    handleEditChange={handleEditChange}
+                    cancelEditDetail={cancelEditDetail}
+                    saveEditedDetail={saveEditedDetail}
+                  />
+                ) : (
+                  // Afficher les détails normaux
+                  <>
+                    <Typography variant="h5" style={{ color: "#333", marginBottom: "10px" }}>
+                      {detail.title}
+                    </Typography>
+                    <Typography variant="body1" style={{ color: "#555" }}>
+                      {detail.description}
+                    </Typography>
+                    <Typography variant="body2" style={{ color: "#888" }}>
+                      Adresse: {detail.address}
+                    </Typography>
+                    <Typography variant="body2" style={{ color: "#888" }}>
+                      Prix: {detail.price}
+                    </Typography>
+                  </>
+                )}
+                {/* Ajouter les icônes d'édition et de suppression */}
+                <IconButton aria-label="edit" onClick={() => startEditDetail(detail)}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton aria-label="delete" onClick={() => handleDeleteDetail(detail.id)}>
+                  <DeleteIcon className="deleteIcon" style={{ color: "red" }} />
+                </IconButton>
               </CardContent>
             </Card>
           ))}
         </div>
       </div>
+    </div>
+  );
+}
+
+// Composant de formulaire d'édition
+function EditForm({ editedDetail, handleEditChange, cancelEditDetail, saveEditedDetail }) {
+  return (
+    <div style={{ position: "absolute", bottom: "0", left: "50%", transform: "translate(-50%, 50%)", backgroundColor: "#81d4fa", padding: "20px", borderRadius: "10px", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", zIndex: 9999, width: "400px" }}>
+      <Typography variant="h6" style={{ marginBottom: "10px" }}>
+        Modifier le détail
+      </Typography>
+      <div style={{ marginBottom: "10px" }}>
+        <label>
+          Titre:
+          <input
+            type="text"
+            name="title"
+            value={editedDetail.title}
+            onChange={handleEditChange}
+            required
+            style={{ width: "100%", padding: "8px", borderRadius: "5px", border: "1px solid #ccc" }}
+          />
+        </label>
+      </div>
+      <div style={{ marginBottom: "10px" }}>
+        <label>
+          Description:
+          <textarea
+            name="description"
+            value={editedDetail.description}
+            onChange={handleEditChange}
+            rows={4}
+            required
+            style={{ width: "100%", padding: "8px", borderRadius: "5px", border: "1px solid #ccc" }}
+          />
+        </label>
+      </div>
+      <div style={{ marginBottom: "10px" }}>
+        <label>
+          Adresse:
+          <input
+            type="text"
+            name="address"
+            value={editedDetail.address}
+            onChange={handleEditChange}
+            style={{ width: "100%", padding: "8px", borderRadius: "5px", border: "1px solid #ccc" }}
+          />
+        </label>
+      </div>
+      <div style={{ marginBottom: "10px" }}>
+        <label>
+          Prix:
+          <input
+            type="text"
+            name="price"
+            value={editedDetail.price}
+            onChange={handleEditChange}
+            required
+            style={{ width: "100%", padding: "8px", borderRadius: "5px", border: "1px solid #ccc" }}
+          />
+        </label>
+      </div>
+      <Button onClick={saveEditedDetail} variant="contained" color="primary" style={{ marginRight: "10px" }}>
+        Enregistrer
+      </Button>
+      <Button onClick={cancelEditDetail} variant="contained">
+        Annuler
+      </Button>
     </div>
   );
 }

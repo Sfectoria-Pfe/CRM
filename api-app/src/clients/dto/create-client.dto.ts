@@ -23,7 +23,7 @@ export class CreateClientDto {
   telephone: string;
 
   @ApiProperty()
-  categorieId?: number;
+  categorieId: number;
   @ApiProperty()
   image?: string;
 }

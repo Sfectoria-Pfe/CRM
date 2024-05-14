@@ -65,6 +65,7 @@ import ListUser from "../pages/user/listeuser.jsx";
 import AddCategoryForm from "../pages/CatgorieClient/AddCtegorie.jsx";
 import CategoryDataGrid from "../pages/CatgorieClient/ListeCategorie.jsx";
 import ListCategoryClients from "../pages/CatgorieClient/ListeCategorie.jsx";
+import UpdateServicePage from "../pages/service/views/updateservice.jsx";
 export const UserContext = createContext();
 
 function PrivateRoute({ Component, roles }) {
@@ -171,12 +172,15 @@ export default function Router() {
 
                 <Route path="InvoiceForm" element={<InvoiceForm />} />
                 <Route path="ChatClient" element={<AlignItemsList />} />
+                <Route path="/services/update/:id" element={<UpdateServicePage />} />
+
                  <Route path="AddCategorie"  element={<AddCategoryForm/>} />
                  <Route path="Listecategory" element={<ListCategoryClients/>} />
                 <Route path="servicesdetails" element={<Servicede />}>
                 <Route index element={<ListServiceDetails />} />
                 <Route path="addservicedetails" element={<AddServiceDetail />} />
                 <Route path=":serviceId"  element={<OneService/>} />
+
                 </Route>
 
               </Route>

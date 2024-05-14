@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import { fetchOpportunites } from "../../store/opportunite";
-import { fetchCategories } from "../../store/categorieclient";
+import { fetchCategories } from "../../store/categorieClient";
 
 export default function Addpromotion() {
   const [Promotion, setPromotion] = useState("");
@@ -17,9 +17,8 @@ export default function Addpromotion() {
     (state) => state.opportunite.opportunites.items
   );
   const category = useSelector(
-    ((state) => state.categorieclient.categories.items)
+    (state) => state.categorieClient.categories.items
   );
-
 
   useEffect(() => {
     dispatch(fetchOpportunites());
@@ -28,14 +27,17 @@ export default function Addpromotion() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const newValue =
-      name === "pourcentage" ||
-      name === "opportuniteId" ||
-      name === "categorieClientId"
-        ? isNaN(parseInt(value))
-          ? parseFloat(value)
-          : parseInt(value)
-        : value;
+    let newValue;
+
+    if (name === "pourcentage") {
+      // Vérifier si la valeur est un nombre
+      const floatValue = parseFloat(value);
+      // Vérifier si la valeur est entre 0 et 99
+      newValue = isNaN(floatValue) ? "" : Math.min(99, Math.max(0, floatValue));
+    } else {
+      // Convertir les autres champs en nombres entiers
+      newValue = isNaN(parseInt(value)) ? value : parseInt(value);
+    }
 
     setPromotion({ ...Promotion, [name]: newValue });
   };
@@ -88,6 +90,7 @@ export default function Addpromotion() {
           type="number"
           required
           min={0}
+          max={99}
           onChange={handleChange}
         />
       </div>
@@ -96,16 +99,6 @@ export default function Addpromotion() {
           className="form-control"
           placeholder="date_debut"
           name="date_debut"
-          type="date"
-          required
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="date_fin"
-          name="date_fin"
           type="date"
           required
           onChange={handleChange}

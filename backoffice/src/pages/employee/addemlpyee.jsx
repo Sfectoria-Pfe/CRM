@@ -7,20 +7,20 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-export default function Addemployee() {
-  const [Employee, setEmployee] = useState({
+export default function AddEmployee() {
+  const [employee, setEmployee] = useState({
     cin: "",
     nom: "",
     prenom: "",
     adresse: "",
     email: "",
     telephone: "",
-    role:"",
+    role: "",
   });
   const [emailError, setEmailError] = useState("");
   const [cinError, setCinError] = useState("");
   const [telephoneError, setTelephoneError] = useState("");
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -55,15 +55,15 @@ export default function Addemployee() {
     // Vérification des contraintes pour différents champs
     if (name === "cin") {
       // Vérification pour CIN (doit contenir exactement 8 chiffres)
-      if (value.length > 8) {
-        setCinError("Le CIN doit comporter 8 chiffres au maximum.");
+      if (value.length !== 8) {
+        setCinError("Le CIN doit comporter exactement 8 chiffres.");
       } else {
         setCinError("");
       }
     } else if (name === "telephone") {
       // Vérification pour le téléphone (doit contenir exactement 8 chiffres)
-      if (value.length > 8) {
-        setTelephoneError("Le numéro de téléphone doit comporter 8 chiffres au maximum.");
+      if (value.length !== 8) {
+        setTelephoneError("Le numéro de téléphone doit comporter exactement 8 chiffres.");
       } else {
         setTelephoneError("");
       }
@@ -90,7 +90,7 @@ export default function Addemployee() {
     }
 
     // Envoi de la requête de création d'employé
-    dispatch(createEmployee(Employee))
+    dispatch(createEmployee(employee))
       .then((res) => {
         if (!res.error) {
           toast.success("Votre employé a été ajouté avec succès !");
@@ -176,21 +176,18 @@ export default function Addemployee() {
         <br />
         {image && <img src={image} alt="Uploaded" />}
       </div>
-
-
-
       <div className="form-input">
-  <select
-    className="form-control"
-    placeholder="Role"
-    name="role"
-
-    onChange={handleChange}
-  >
-    <option value="">Sélectionner un rôle</option>
-    <option value="commercial">Commercial</option>
-    <option value="chef">Chef</option>
-  </select></div>
+        <select
+          className="form-control"
+          placeholder="Role"
+          name="role"
+          onChange={handleChange}
+        >
+          <option value="">Sélectionner un rôle</option>
+          <option value="commercial">Commercial</option>
+          <option value="chef">Chef</option>
+        </select>
+      </div>
       <Button
         variant="warning"
         onClick={(e) => {

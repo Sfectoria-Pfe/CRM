@@ -63,7 +63,7 @@ export default function Chat({ opportunity, drawer, setCloseChat }) {
   };
   if (drawer)
     return (
-      <div style={{position:"fixed"}} >
+      <div className="position-fixed col-md-6 col-12" >
         <MDBCard style={{height:550}}>
           <MDBCardHeader
             className="d-flex justify-content-between align-items-center p-3"
@@ -107,7 +107,7 @@ export default function Chat({ opportunity, drawer, setCloseChat }) {
                   } mb-3`}
                 >
                   <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava5-bg.webp"
+                    src={msg.Sender.Client?.image}
                     alt="avatar 1"
                     style={{ width: "35px", height: "35px" }}
                     className=" rounded-circle"

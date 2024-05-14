@@ -1,16 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchClients } from "../../../store/client";
-import { Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { fetchClients, updateClient } from "../../../store/client";
+import { fetchCategories } from "../../../store/categorieClient";
+import { Button, MenuItem, Select } from "@mui/material";
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
-import { useDemoData } from "@mui/x-data-grid-generator";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import OneClient from "./oneClient";
+import EditIcon from "@mui/icons-material/Edit";
+import { Link, useNavigate } from "react-router-dom";
 function ListClients() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const clients = useSelector((state) => state.client.clients.items);
+  const categories = useSelector(
+    (state) => state.categorieClient.categories.items
+  );
+
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedClientId, setEditedClientId] = useState(null);
+
+  const navigate = useNavigate();
+  const handleCategoryChange = (event) => {
+    setSelectedCategoryId(event.target.value);
+  };
+
+  const handleEditClick = (clientId) => {
+    setIsEditing(true);
+    setEditedClientId(clientId);
+  };
+
+  const handleSaveClick = () => {
+    // Envoyer la mise à jour de la catégorie au backend
+    dispatch(
+      updateClient({
+        id: editedClientId,
+        body: { categorieId: selectedCategoryId },
+      })
+    );
+    setIsEditing(false);
+  };
 
   const columns = [
     {
@@ -44,9 +71,22 @@ function ListClients() {
       width: 150,
     },
     {
-      field:"categorieId",
-      headerName:"Id du categorie Client",
-      width:"150",
+      field: "categorieId",
+      headerName: "Catégorie",
+      width: 150,
+      renderCell: (params) =>
+        isEditing && params.row.id === editedClientId ? (
+          <Select value={selectedCategoryId} onChange={handleCategoryChange}>
+            {categories.map((category) => (
+              <MenuItem key={category.id} value={category.id}>
+                {category.nom}
+              </MenuItem>
+            ))}
+          </Select>
+        ) : (
+          categories.find((category) => category.id === params.row.categorieId)
+            ?.nom
+        ),
     },
     {
       field: "image",
@@ -65,35 +105,51 @@ function ListClients() {
       type: "actions",
       width: 80,
       getActions: (row) => {
-        return [
-          <Link to={`${row.id}`} key={row.id}>
-            {" "}
-            <GridActionsCellItem
-              disableFocusRipple={false}
-              icon={<VisibilityIcon />}
-              label="Look"
+        if (isEditing && row.id === editedClientId) {
+          return [
+            <Button
+              key="save"
+              variant="contained"
+              color="primary"
               size="small"
-              edge="start"
-              onClick={() => {
-                navigate(`/clients/${row.id}`);
-              }}
-            />
-          </Link>,
-        ];
+              onClick={handleSaveClick}
+            >
+              Save
+            </Button>,
+          ];
+        } else {
+          return [
+            <Link to={`${row.id}`} key={row.id}>
+              <GridActionsCellItem
+                disableFocusRipple={false}
+                icon={<VisibilityIcon />}
+                label="Look"
+                size="small"
+                edge="start"
+                onClick={() => {
+                  navigate(`/clients/${row.id}`);
+                }}
+              />
+            </Link>,
+            <Button
+              key="edit"
+              variant="contained"
+              color="primary"
+              size="small"
+              startIcon={<EditIcon />}
+              onClick={() => handleEditClick(row.id)}
+            >
+              {isEditing && editedClientId === row.id ? "Cancel" : "Edit"}
+            </Button>,
+          ];
+        }
       },
     },
   ];
 
-  const VISIBLE_FIELDS = [
-    "name",
-    "rating",
-    "country",
-    "dateCreated",
-    "isAdmin",
-  ];
-
   useEffect(() => {
     dispatch(fetchClients());
+    dispatch(fetchCategories());
   }, [dispatch]);
 
   return (
@@ -103,12 +159,6 @@ function ListClients() {
         style={{ backgroundColor: "#1976D2", color: "#fafafa" }}
       >
         <h2>Liste des clients</h2>
-      </div>{" "}
-      <br />
-      <div className="d-flex justify-content-end m-3">
-      <Link className="btn btn-light" to="addClient">
-          Ajouter Client
-        </Link> 
       </div>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid

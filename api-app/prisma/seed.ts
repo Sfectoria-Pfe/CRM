@@ -164,7 +164,6 @@ async function seed() {
     await prisma.promotion.create({
       data: {
         date_debut: new Date('10-10-2023').toISOString(),
-        date_fin: new Date('10-1-2024').toISOString(),
         description: 'test',
         pourcentage: 10,
         opportuniteId: opportunity.id,

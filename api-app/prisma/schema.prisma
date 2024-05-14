@@ -72,7 +72,7 @@ model Client {
   telephone    String
   image        String?
   categorie    CategorieClient? @relation(fields: [categorieId], references: [id])
-  categorieId  Int?
+  categorieId  Int?  @default(1)
   devis        devis[]
   rendezvous   rendezvous[]
   stages       StageClient[]
@@ -94,9 +94,8 @@ model Promotion {
   description       String
   pourcentage       Float
   date_debut        DateTime
-  date_fin          DateTime
   CategorieClient   CategorieClient @relation(fields: [categorieClientId], references: [id])
-  categorieClientId Int
+  categorieClientId Int   @default(1)
   Opportunite       Opportunite     @relation(fields: [opportuniteId], references: [id])
   opportuniteId     Int
 }

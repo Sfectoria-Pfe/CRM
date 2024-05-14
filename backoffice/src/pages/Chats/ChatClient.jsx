@@ -42,7 +42,8 @@ export default function AlignItemsList({ opportunityId,setSelectedClient }) {
             }}
           >
             <ListItemAvatar>
-              <Avatar alt={client?.Client?.nom} src={client.image} />
+              <Avatar alt={client?.Client?.nom} src={client?.Client?.image} />
+          
             </ListItemAvatar>
             <ListItemText
               primary={client?.Client?.nom}

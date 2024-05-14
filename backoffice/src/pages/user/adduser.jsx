@@ -47,7 +47,7 @@ export default function Adduser() {
   const toggleIsClient = () => {
     setUser({ ...user, isClient: !user.isClient });
   };
-
+  
   const handleAddUser = () => {
     dispatch(sendUser(user))
       .then((res) => {

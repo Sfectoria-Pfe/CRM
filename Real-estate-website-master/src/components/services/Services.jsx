@@ -9,7 +9,7 @@ import LocationCard from "../home/location/locationcard";
 import Recent from "../home/recent/Recent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookMessenger } from "@fortawesome/free-brands-svg-icons";
-import "../Pack/promot.css"
+
 export const Services = () => {
   const [services, setServices] = useState([]);
 
@@ -32,10 +32,10 @@ export const Services = () => {
 
   const ServiceCards = () => {
     return (
-      <Row xs={1} sm={2} md={3} >
+      <Row xs={1} sm={2} md={3}>
         {services.map((opportunite) =>
           opportunite.service_Opportunites.map((serviceOpportunite) => (
-            <Col 
+            <Col
               key={serviceOpportunite?.serviceId}
               xs={12}
               sm={6}
@@ -56,24 +56,22 @@ export const Services = () => {
                   <Card.Title className="custom-name">
                     {serviceOpportunite?.Service?.name}
                   </Card.Title>
-                  {/* <Card.Text>
+                  <Card.Text>
                     {serviceOpportunite?.Service?.description}
-                  </Card.Text> */}
+                  </Card.Text>
                   <Card.Text>{serviceOpportunite?.Service?.type}</Card.Text>
                   <Card.Text>Prix: {serviceOpportunite?.prix}</Card.Text>
-                  <div className={opportunite?.promotion?.length ? "animation" : ""} style={{ backgroundColor: 'green', color: '#ffffe6', fontSize: '25px' }}>
-  {opportunite?.promotion?.length ? <Card.Text style={{ color: '#ffffff' }}>promotion {opportunite?.promotion[0]?.pourcentage}%</Card.Text> : ''}
-</div>                   {/* <Link to={`/pack/${serviceOpportunite?.Service.id}`}>
+                  {opportunite?.promotion?.length?<Card.Text>promotion {opportunite?.promotion[0]?. pourcentage}%</Card.Text>:''}
+                  {/* <Link to={`/pack/${serviceOpportunite?.Service.id}`}>
                     <Button variant="primary">Voire plus </Button>
                   </Link> */}
                 </Card.Body>
                 <Card.Footer>
-                <Link to={`/service/${opportunite.id}`}>
-                    <Button variant="primary">Voire plus </Button>
-                  </Link>
                 </Card.Footer>
               </Card>
-                 
+                 <Link to={`/service/${opportunite.id}`}>
+                    <Button variant="primary">Voire plus </Button>
+                  </Link>
             </Col>
           ))
         )}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { sendCategory } from "../../store/categorieclient";
+import { sendCategory } from "../../store/categorieClient";
 
 export default function AddCategoryForm() {
   const dispatch = useDispatch();
@@ -10,16 +10,16 @@ export default function AddCategoryForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      sendCategory({ nom, description })
-    ).then(() => {
-      // Réinitialiser les champs après l'envoi réussi
-      setNom("");
-      setDescription("");
-      setError(null);
-    }).catch((err) => {
-      setError(err.message);
-    });
+    dispatch(sendCategory({ nom, description }))
+      .then(() => {
+        // Réinitialiser les champs après l'envoi réussi
+        setNom("");
+        setDescription("");
+        setError(null);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
   };
 
   return (
