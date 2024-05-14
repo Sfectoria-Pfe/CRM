@@ -7,8 +7,8 @@ export class CreateStageClientDto {
     description :string
     @ApiProperty()
     @IsNotEmpty()
-    clientId? :number
+    clientId :number
     @ApiProperty()
     @IsNotEmpty()
-    stageId? : number
+    stageId : number
 }

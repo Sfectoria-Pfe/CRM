@@ -63,25 +63,25 @@ const ViewOpportunity = () => {
     );
     const { id } = stageClient;
 
-    dispatch(updateStage_client({ id, stageId: targetStageId })).then((res) => {
-      if (!res.error) {
-        let aux = [...stages];
-        for (let i = 0; i < stages.length; i++) {
-          if (stages[i].id === stage.id) {
-            aux[i] = {
-              ...aux[i],
-              StageClient: aux[i].StageClient.filter((elem) => elem.id !== id),
-            };
-          }
-          if (stages[i].id === targetStageId) {
-            aux[i] = {
-              ...aux[i],
-              StageClient: [...aux[i].StageClient, stageClient],
-            };
-          }
-        }
-        setStages(aux);
-      }
+    dispatch(updateStage_client({ id, stageId: targetStageId,opportunityId })).then((res) => {
+      // if (!res.error) {
+      //   let aux = [...stages];
+      //   for (let i = 0; i < stages.length; i++) {
+      //     if (stages[i].id === stage.id) {
+      //       aux[i] = {
+      //         ...aux[i],
+      //         StageClient: aux[i].StageClient.filter((elem) => elem.id !== id),
+      //       };
+      //     }
+      //     if (stages[i].id === targetStageId) {
+      //       aux[i] = {
+      //         ...aux[i],
+      //         StageClient: [...aux[i].StageClient, stageClient],
+      //       };
+      //     }
+      //   }
+      //   setStages(aux);
+      // }
     });
   };
 
@@ -113,7 +113,7 @@ const ViewOpportunity = () => {
                   preFilledStageId={stage.id}
                 />
               )}
-              {stage?.StageClient?.map((elem) => (
+              {stage?.StageClient?.filter(el=>el.archived!==true).map((elem) => (
                 <OpportunityCard
                   key={elem.id}
                   opportunity={elem?.Client}

@@ -50,6 +50,11 @@ export default function OneClient() {
           <strong style={styles.strong}>Téléphone:</strong> {client?.telephone}
         </div>
       </div>
+      {client?.stages.map((elem,i)=><div>
+        oppotynity : {elem.Stage.Opportunite.title}
+        stage : {elem.Stage.nom}
+        stage : {elem.description}
+      </div>)}
     </div>
   );
 }

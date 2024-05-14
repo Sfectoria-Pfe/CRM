@@ -72,7 +72,7 @@ model Client {
   telephone    String
   image        String?
   categorie    CategorieClient? @relation(fields: [categorieId], references: [id])
-  categorieId  Int?  @default(1)
+  categorieId  Int?             @default(1)
   devis        devis[]
   rendezvous   rendezvous[]
   stages       StageClient[]
@@ -95,7 +95,7 @@ model Promotion {
   pourcentage       Float
   date_debut        DateTime
   CategorieClient   CategorieClient @relation(fields: [categorieClientId], references: [id])
-  categorieClientId Int   @default(1)
+  categorieClientId Int             @default(1)
   Opportunite       Opportunite     @relation(fields: [opportuniteId], references: [id])
   opportuniteId     Int
 }
@@ -132,6 +132,8 @@ model Opportunite {
   service_Opportunites Service_Opportunite[]
   promotion            Promotion[]
   MsgsClient           MsgsClient[]
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
 }
 
 model Service_Opportunite {
@@ -142,6 +144,8 @@ model Service_Opportunite {
   prix          Float
   isPromotion   Boolean
   discountAmout Float
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 
   @@unique([opportuniteId, serviceId])
 }
@@ -152,16 +156,21 @@ model Stage {
   Opportunite   Opportunite?  @relation(fields: [opportuniteId], references: [id])
   opportuniteId Int
   StageClient   StageClient[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model StageClient {
   id          Int       @id @default(autoincrement())
   description String
-  Client      Client?   @relation(fields: [clientId], references: [id])
-  clientId    Int?
-  Stage       Stage?    @relation(fields: [stageId], references: [id])
-  stageId     Int?
+  Client      Client    @relation(fields: [clientId], references: [id])
+  clientId    Int
+  Stage       Stage     @relation(fields: [stageId], references: [id])
+  stageId     Int
   Comment     Comment[]
+  win         Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   archived    Boolean   @default(false)
 }
 
@@ -169,24 +178,27 @@ model Comment {
   id            Int         @id @default(autoincrement())
   stageClient   StageClient @relation(fields: [stageClientId], references: [id])
   stageClientId Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  content       String
 }
 
 model devis {
-  id                   Int         @id @default(autoincrement())
-  currency             String? // Devise utilisée ('$' dans votre exemple)
-  currentDate          DateTime? // Date actuelle
-  invoiceNumber        Int? // Numéro de facture
-  dateOfIssue          DateTime? // Date d'émission
-  notes                String? // Notes
-  total                Float? // Total
-  subTotal             Float? // Sous-total
-  taxRate              Float? // Taux de taxe
-  taxAmount            Float? // Montant de taxe
-  discountRate         Float? // Taux de réduction
-  discountAmount       Float? // Montant de réduction
-  client               Client      @relation(fields: [clientId], references: [id])
-  clientId             Int // Clé étrangère vers l'id de l'entité Client
-  devisLine            DevisLine[]
+  id             Int         @id @default(autoincrement())
+  currency       String? // Devise utilisée ('$' dans votre exemple)
+  currentDate    DateTime? // Date actuelle
+  invoiceNumber  Int? // Numéro de facture
+  dateOfIssue    DateTime? // Date d'émission
+  notes          String? // Notes
+  total          Float? // Total
+  subTotal       Float? // Sous-total
+  taxRate        Float? // Taux de taxe
+  taxAmount      Float? // Montant de taxe
+  discountRate   Float? // Taux de réduction
+  discountAmount Float? // Montant de réduction
+  client         Client      @relation(fields: [clientId], references: [id])
+  clientId       Int // Clé étrangère vers l'id de l'entité Client
+  devisLine      DevisLine[]
 }
 
 model DevisLine {
@@ -206,9 +218,9 @@ model rendezvous {
   typebien     String
   localisation String
   description  String
-  statut String @default("En attente")
-  client   Client @relation(fields: [clientId], references: [id])
-  clientId Int // Clé étrangère vers l'id de l'entité Admin
+  statut       String   @default("En attente")
+  client       Client   @relation(fields: [clientId], references: [id])
+  clientId     Int // Clé étrangère vers l'id de l'entité Admin
 }
 
 model Vente {

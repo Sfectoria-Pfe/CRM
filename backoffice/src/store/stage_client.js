@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { fetchOpportunite } from "./opportunite";
 
 export const fetchStage_clients = createAsyncThunk("stage-client/fetchStages", async () => {
   const response = await axios.get("http://localhost:7000/stage-client");
@@ -17,9 +18,10 @@ export const sendStage_client = createAsyncThunk("stage-client/addStage", async 
   return response.data;
 });
 
-export const updateStage_client = createAsyncThunk("stage-client/updateStage", async ({ id, stageId }) => {
+export const updateStage_client = createAsyncThunk("stage-client/updateStage", async ({ id, stageId,opportunityId },{dispatch}) => {
   console.log(stageId);
   const response = await axios.patch(`http://localhost:7000/stage-client/${id}`, {stageId});
+  dispatch(fetchOpportunite(opportunityId))
   return response.data;
 });
 
@@ -50,14 +52,14 @@ const stageSlice = createSlice({
     builder.addCase(sendStage_client.fulfilled, (state, action) => {
       state.stage_clients.items.push(action.payload); // Ajoute le nouveau stage
     });
-    builder.addCase(updateStage_client.fulfilled, (state, action) => {
-      const updatedStage = action.payload;
-      const index = state.stage_clients.items.findIndex(stage => stage.id === updatedStage.id);
-      if (index !== -1) {
-        state.stage_clients.items[index] = updatedStage;
-        state.stage_client = updatedStage;
-      }
-    });
+    // builder.addCase(updateStage_client.fulfilled, (state, action) => {
+    //   const updatedStage = action.payload;
+    //   const index = state.stage_clients.items.findIndex(stage => stage.id === updatedStage.id);
+    //   if (index !== -1) {
+    //     state.stage_clients.items[index] = updatedStage;
+    //     state.stage_client = updatedStage;
+    //   }
+    // });
     builder.addCase(deleteStage_client.fulfilled, (state, action) => {
       state.stage_clients.items = state.stage_clients.items.filter(stage => stage.id !== action.payload);
       state.stage_clients.count--;

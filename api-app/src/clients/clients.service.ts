@@ -37,7 +37,30 @@ export class ClientsService {
   }
 
   async findOne(id: number) {
-    const client = await this.prisma.client.findUnique({ where: { id } });
+    const client = await this.prisma.client.findUnique({
+      where: { id },
+      include: {
+        stages: {
+          orderBy: {
+            Stage: {
+              opportuniteId: 'asc',
+            },
+          },
+          include: {
+            Stage: {
+              include: {
+                Opportunite: {
+                  include: {
+                    service_Opportunites: { include: { Service: true } },
+                  },
+                },
+              },
+            },
+            Comment: true,
+          },
+        },
+      },
+    });
     return client;
   }
 
