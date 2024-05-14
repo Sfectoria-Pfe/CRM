@@ -10,9 +10,7 @@ export class CreatePromotionDto {
   @ApiProperty()
   @IsNotEmpty()
   date_debut: string;
-  @ApiProperty()
-  @IsNotEmpty()
-  date_fin: string;
+  
   @ApiProperty()
   @IsNotEmpty()
   opportuniteId : number;

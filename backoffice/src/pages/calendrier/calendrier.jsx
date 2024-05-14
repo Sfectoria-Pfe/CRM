@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unused-state */
-import * as React from 'react';
+import React from 'react';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
@@ -35,8 +34,10 @@ import Notes from '@mui/icons-material/Notes';
 import Close from '@mui/icons-material/Close';
 import CalendarToday from '@mui/icons-material/CalendarToday';
 import Create from '@mui/icons-material/Create';
+import moment from 'moment';
 
-import { appointments } from '../../pages/calendrier/appoitmentdata.js'
+import { appointments } from '../../pages/calendrier/appoitmentdata.js';
+
 const PREFIX = 'Demo';
 const classes = {
   content: `${PREFIX}-content`,
@@ -91,6 +92,7 @@ const StyledDiv = styled('div')(({ theme }) => ({
     marginLeft: theme.spacing(2),
   },
 }));
+
 const StyledFab = styled(Fab)(({ theme }) => ({
   [`&.${classes.addButton}`]: {
     position: 'absolute',
@@ -98,12 +100,14 @@ const StyledFab = styled(Fab)(({ theme }) => ({
     right: theme.spacing(4),
   },
 }));
+
 class AppointmentFormContainerBasic extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
       appointmentChanges: {},
+      data: JSON.parse(localStorage.getItem('appointments')) || appointments,
     };
 
     this.getAppointmentData = () => {
@@ -126,6 +130,23 @@ class AppointmentFormContainerBasic extends React.PureComponent {
     };
     this.setState({
       appointmentChanges: nextChanges,
+    });
+  }
+
+  saveDataToLocalStorage(data) {
+    localStorage.setItem('appointments', JSON.stringify(data));
+  }
+
+  commitChanges({ added, changed, deleted }) {
+    this.setState((state) => {
+      let { data } = state;
+      if (added) {
+        const startingAddedId = data.length > 0 ? data[data.length - 1].id + 1 : 0;
+        const newData = [...data, { id: startingAddedId, ...added }];
+        this.saveDataToLocalStorage(newData); // Appel de la méthode pour sauvegarder les données ajoutées
+        data = newData;
+      }
+      return { data, addedAppointment: {} };
     });
   }
 
@@ -177,13 +198,17 @@ class AppointmentFormContainerBasic extends React.PureComponent {
       label: field[0].toUpperCase() + field.slice(1),
       className: classes.textField,
     });
-
+    
     const pickerEditorProps = field => ({
-      // keyboard: true,
-      value: displayAppointmentData[field],
-      onChange: date => this.changeAppointment({
-        field: [field], changes: date ? date.toDate() : new Date(displayAppointmentData[field]),
-      }),
+      value: displayAppointmentData[field] ? moment(displayAppointmentData[field]) : null,
+      onChange: date => {
+        if (date) {
+          this.changeAppointment({
+            field: [field],
+            changes: date,
+          });
+        }
+      },
       ampm: false,
       inputFormat: 'DD/MM/YYYY HH:mm',
       onError: () => null,
@@ -284,13 +309,12 @@ class AppointmentFormContainerBasic extends React.PureComponent {
   }
 }
 
-/* eslint-disable-next-line react/no-multi-comp */
-export default class Demo extends React.PureComponent {
+class Demo extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       data: appointments,
-      currentDate: '2018-06-27',
+      currentDate: '2024-05-01',
       confirmationVisible: false,
       editingFormVisible: false,
       deletedAppointmentId: undefined,
@@ -493,3 +517,5 @@ export default class Demo extends React.PureComponent {
     );
   }
 }
+
+export default Demo;

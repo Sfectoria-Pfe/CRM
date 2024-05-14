@@ -31,12 +31,12 @@ function ListDevis() {
       headerName: "Montant total",
       width: 150,
     },
-    
+
     {
-        field: "clientId",
-        headerName: "clientId",
-        width: 150,
-      },
+      field: "clientId",
+      headerName: "clientId",
+      width: 150,
+    },
     {
       field: "actions",
       type: "actions",

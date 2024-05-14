@@ -43,22 +43,29 @@ function Demanderendezvous() {
   };
 
   const handleSubmit = () => {
-    dispatch(addRendezvous(rendezvous))
-      .then((res) => {
-        if (!res.error) {
-          toast.success("Le rendez-vous a été ajouté avec succès !");
-          resetForm();
-        } else {
+    const currentDate = new Date();
+    const selectedDate = new Date(rendezvous.date);
+
+    if (selectedDate < currentDate) {
+      toast.error("La date de rendez-vous est expirée !");
+    } else {
+      dispatch(addRendezvous(rendezvous))
+        .then((res) => {
+          if (!res.error) {
+            toast.success("Le rendez-vous a été ajouté avec succès !");
+            resetForm();
+          } else {
+            toast.error("Erreur lors de l'ajout du rendez-vous. Veuillez réessayer.");
+          }
+        })
+        .catch(() => {
           toast.error("Erreur lors de l'ajout du rendez-vous. Veuillez réessayer.");
-        }
-      })
-      .catch(() => {
-        toast.error("Erreur lors de l'ajout du rendez-vous. Veuillez réessayer.");
-      });
+        });
+    }
   };
 
   return (
-    <MDBContainer className='py-3' style={{ backgroundColor: "#c8e6c9" }}>
+    <MDBContainer className='py-3'>
       <ToastContainer /> 
       <MDBRow className='justify-content-center'>
         <MDBCol md='10'>
@@ -78,11 +85,9 @@ function Demanderendezvous() {
                     <option value="appartement">Appartement</option>
                     <option value="terrain">Terrain</option>
                     <option value="terrain">Autre</option>
-
                   </select>
                   <MDBInput wrapperClass='mb-3' size='sm' id='localisation' type='text' placeholder='Localisation préférée' name='localisation' value={rendezvous.localisation} onChange={handleChange} />
                   <textarea className="form-control mb-3" rows="4" placeholder="Description" name='description' value={rendezvous.description} onChange={handleChange}></textarea>
-                  {/* <MDBInput wrapperClass='mb-3' size='sm' id='clientId' type='number' placeholder='ID du client' name='clientId' value={rendezvous.clientId} onChange={handleChange} /> */}
                   <div className="d-flex justify-content-end pt-2">
                     <Button variant='light' size='sm' onClick={resetForm}>Réinitialiser</Button>
                     <Button variant='warning' size='sm' onClick={handleSubmit}>Soumettre</Button>

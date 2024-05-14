@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { Nav, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import image from"../../images/Logo maisonplus.png"
+import image from "../../images/Logo maisonplus.png";
+import { FaUser, FaHistory, FaSignOutAlt } from "react-icons/fa";
+
 const Header = ({ user }) => {
   const [navList, setNavList] = useState(false);
 
   return (
     <>
       <header className="header">
-        <div className="container flex" >
+        <div className="container flex">
           <div className="logo">
-            <img style={{width:"100px"}}
-            src={image}
+            <img
+              style={{ width: "100px" }}
+              src={image}
               alt="logo"
             />
           </div>
@@ -29,10 +32,18 @@ const Header = ({ user }) => {
               <Nav.Link as={Link} to="/packs" className="nav-link">
                 <span>Pack</span>
               </Nav.Link>
-              <Nav.Link as={Link} to={user?"/Demandedevis":'LoginForm'} className="nav-link">
+              <Nav.Link
+                as={Link}
+                to={user ? "/Demandedevis" : "LoginForm"}
+                className="nav-link"
+              >
                 <span>Demande devis</span>
               </Nav.Link>
-              <Nav.Link as={Link} to={user?"/rendez-vous":'LoginForm'} className="nav-link">
+              <Nav.Link
+                as={Link}
+                to={user ? "/rendez-vous" : "LoginForm"}
+                className="nav-link"
+              >
                 <span>Demande rendez-vous</span>
               </Nav.Link>
             </Nav>
@@ -53,21 +64,28 @@ const Header = ({ user }) => {
                   />
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={() => {
-                      
+                <Dropdown.Menu style={{backgroundColor:"#84cda5"}}>
+                  <Dropdown.Item 
+                    onClick={() => {
                       window.location.pathname = "/profile";
-                    }}>Profile</Dropdown.Item>
-                  <Dropdown.Item onClick={() => {
-                      
-                      window.location.pathname = "/historique";}}>Historique</Dropdown.Item>
+                    }}
+                  >
+                    <FaUser /> Profile
+                  </Dropdown.Item>
+                  <Dropdown.Item  
+                    onClick={() => {
+                      window.location.pathname = "/historique";
+                    }}
+                  >
+                    <FaHistory /> Historique
+                  </Dropdown.Item>
                   <Dropdown.Item
                     onClick={() => {
                       localStorage.removeItem("token");
                       window.location.pathname = "/";
                     }}
                   >
-                    Logout
+                    <FaSignOutAlt /> Logout
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -79,11 +97,7 @@ const Header = ({ user }) => {
           </div>
           <div className="toggle">
             <button onClick={() => setNavList(!navList)}>
-              {navList ? (
-                <i className="fa fa-times"></i>
-              ) : (
-                <i className="fa fa-bars"></i>
-              )}
+              {navList ? <i className="fa fa-times"></i> : <i className="fa fa-bars"></i>}
             </button>
           </div>
         </div>

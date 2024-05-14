@@ -23,14 +23,14 @@ class Charts1 extends Component {
             animationEnabled: true,
             exportEnabled: true,
             title: {
-                text: "charts",
+                text: "analyse de opportunité",
                 fontFamily: "verdana"
             },
             axisY: {
-                title: "in Eur",
+                title: "analyse de opportunité",
                 includeZero: true,
-                prefix: "€",
-                suffix: "k"
+                prefix: "",
+                suffix: ""
             },
             toolTip: {
                 shared: true,
@@ -66,7 +66,7 @@ class Charts1 extends Component {
             },
             {
                 type: "stackedColumn",
-                name: "Marketing",
+                name: "Location",
                 showInLegend: true,
                 yValueFormatString: "#,###k",
                 dataPoints: [
@@ -86,7 +86,7 @@ class Charts1 extends Component {
             },
             {
                 type: "stackedColumn",
-                name: "Sales",
+                name: "Vente",
                 showInLegend: true,
                 yValueFormatString: "#,###k",
                 dataPoints: [
@@ -106,7 +106,7 @@ class Charts1 extends Component {
             },
             {
                 type: "stackedColumn",
-                name: "IT",
+                name: "autre",
                 showInLegend: true,
                 yValueFormatString: "#,###k",
                 dataPoints: [

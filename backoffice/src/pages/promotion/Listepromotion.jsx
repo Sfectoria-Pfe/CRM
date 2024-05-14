@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPromotion } from "../../store/promotion";
+import { fetchPromotion, deletePromotion } from "../../store/promotion"; // Assurez-vous d'importer l'action de suppression
 import { Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
 import { useDemoData } from "@mui/x-data-grid-generator";
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 function ListPromotion() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,28 +46,37 @@ function ListPromotion() {
       width: 150,
     },
     {
-      field: "categorieId",
+      field: "categorieClientId",
       headerName: "categorieId",
       width: 150,
     },
     {
       field: "actions",
       type: "actions",
-      width: 80,
-      getActions: (row) => {
-        return [
-          <GridActionsCellItem
-            disableFocusRipple={false}
-            icon={<VisibilityIcon />}
-            label="Look"
-            size="small"
-            edge="start"
-            onClick={() => {
-              navigate(`${row.id}`);
-            }}
-          />,
-        ];
-      },
+      width: 160,
+      getActions: (row) => [
+        <GridActionsCellItem
+          disableFocusRipple={false}
+          icon={<VisibilityIcon />}
+          label="Look"
+          size="small"
+          edge="start"
+          onClick={() => {
+            navigate(`${row.id}`);
+          }}
+        />,
+        <GridActionsCellItem
+          disableFocusRipple={false}
+          icon={<DeleteIcon />}
+          label="Delete"
+          size="small"
+          edge="start"
+          onClick={() => {
+            // Logique pour supprimer la promotion
+            handleDeletePromotion(row.id);
+          }}
+        />
+      ],
     },
   ];
 
@@ -85,6 +96,25 @@ function ListPromotion() {
   useEffect(() => {
     dispatch(fetchPromotion());
   }, [dispatch]);
+
+  // Fonction pour supprimer la promotion
+  const handleDeletePromotion = (id) => {
+    dispatch(deletePromotion(id))
+      .then((res) => {
+        if (!res.error) {
+          // Gérer le succès de la suppression
+          console.log("Promotion supprimée avec succès !");
+        } else {
+          // Gérer l'erreur lors de la suppression
+          console.error("Erreur lors de la suppression de la promotion :", res.error);
+        }
+      })
+      .catch((error) => {
+        // Gérer l'erreur lors de la suppression
+        console.error("Erreur lors de la suppression de la promotion :", error);
+      });
+  };
+
   return (
     <div>
       <div
@@ -92,12 +122,7 @@ function ListPromotion() {
         style={{ backgroundColor: "#1976D2", color: "#fafafa" }}
       >
         <h2>Liste des Promotions</h2>
-      </div>{" "}
-      {/* <div className="d-flex justify-content-end m-3">
-      <Link className="btn btn-light" to="/Addpromotion">
-          Add promotion
-        </Link> */}
-      {/* </div> */}
+      </div>
 
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid

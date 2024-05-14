@@ -20,6 +20,8 @@ import DiscountIcon from '@mui/icons-material/Discount';
 import ListIcon from '@mui/icons-material/List';
 import AddIcon from '@mui/icons-material/Add';
 
+
+import GroupsIcon from '@mui/icons-material/Groups';
 export const sidebarData = [
   {
     title: "Dashboard",
@@ -78,7 +80,21 @@ export const sidebarData = [
     title: "Clients",
     path: "/clients",
     icon: <PersonIcon />,
-    access:['chef','admin','commercial']
+    access: ['chef', 'admin', 'commercial'],
+    children: [
+      {
+        title: "CategorieClient",
+        path: "/Listecategory",
+        icon: <GroupsIcon />,
+        access: ['chef', 'admin', 'commercial']
+      },
+      {
+        title: "Clients",
+        path: "/clients",
+        icon: <PersonIcon />,
+        access: ['chef', 'admin', 'commercial']
+      }
+    ]
   },
   {
     title: "Devis",

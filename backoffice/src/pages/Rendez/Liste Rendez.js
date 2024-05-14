@@ -5,41 +5,26 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { Button, Tooltip } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel"; // Modification ici
-import { fetchRendezvous} from "../../store/rendezvous";
-import { updateRendezStatus } from "../../store/rendezvous";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { fetchRendezvous, updateRendezStatus } from "../../store/rendezvous";
 
 function ListRendezvous() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const rendezvous = useSelector((state) => state.rendezvous.rendezvous.items);
 
-  const handleAccept = (id) => {
-    dispatch(updateRendezStatus({ id, statut: "accepté" })).then(() => {
-      const updatedRendezvous = rendezvous.map((rdv) =>
-        rdv.id === id ? { ...rdv, statut: "accepté" } : rdv
-      );
-    
+  useEffect(() => {
+    dispatch(fetchRendezvous());
+  }, [dispatch]);
 
-      window.location.reload();
-    });
+  const handleAccept = (id) => {
+    dispatch(updateRendezStatus({ id, newStatus: "Accepté" }));
   };
-  
-  
 
   const handleReject = (id) => {
-    dispatch(updateRendezStatus({ id, statut: "refusé" })).then(() => {
-      const updatedRendezvous = rendezvous.map((rdv) =>
-        rdv.id === id ? { ...rdv, statut: "refusé" } : rdv
-      );
-      window.location.reload();
-    });
+    dispatch(updateRendezStatus({ id, newStatus: "Refusé" }));
   };
 
-
-  useEffect(() => {
-  dispatch(fetchRendezvous());
-}, [dispatch])
   const columns = [
     {
       field: "id",
@@ -71,12 +56,17 @@ function ListRendezvous() {
       field: "clientId",
       headerName: "Client",
       width: 150,
-    },
+      },
 
     {
       field: "statut",
       headerName: "Statut",
       width: 150,
+      renderCell: ({ row }) => (
+        <span style={{ color: row.statut === "Accepté" ? 'green' : row.statut === "Refusé" ? 'red' : 'inherit' }}>
+          {row.statut}
+        </span>
+      )
     },
 
     {
@@ -88,7 +78,7 @@ function ListRendezvous() {
           <Button onClick={() => navigate(`/${row.id}`)}>
             <VisibilityIcon />
           </Button>
-          <Tooltip title="Accepté" placement="top">
+          <Tooltip title="Accepté" placement="top"stycolor="green">
             <Button onClick={() => handleAccept(row.id)}>
               <CheckCircleIcon style={{ color: 'green' }} />
             </Button>
@@ -103,17 +93,9 @@ function ListRendezvous() {
     },
   ];
 
-  useEffect(() => {
-    dispatch(fetchRendezvous());
-  }, [dispatch]);
-
   return (
     <div>
-      <div className="d-flex justify-content-center mb-3" style={{backgroundColor:"#1976D2",color:"#fafafa"}}>
-        <h2>Liste des Demandes Rendez-vous</h2>
-      </div>  
-
- <br/><br/>
+      {/* Liste des rendez-vous */}
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}
@@ -126,6 +108,3 @@ function ListRendezvous() {
 }
 
 export default ListRendezvous;
-
-
-

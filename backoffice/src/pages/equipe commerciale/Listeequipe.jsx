@@ -1,16 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEquipesCommerciales } from "../../store/Equipe";
 import { Link } from "react-router-dom";
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { fetchEmployee } from "../../store/employee";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
 
 function ListEquipeCommerciale() {
   const dispatch = useDispatch();
   const equipesCommerciales = useSelector(
     (state) => state.Equipe.equipesCommerciales.items
   );
+
+  const [selectedEquipe, setSelectedEquipe] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const handleViewDetails = (equipe) => {
+    setSelectedEquipe(equipe.row);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setSelectedEquipe(null);
+    setOpen(false);
+  };
 
   const columns = [
     {
@@ -27,20 +44,17 @@ function ListEquipeCommerciale() {
       field: "actions",
       type: "actions",
       width: 80,
-      getActions: (row) => {
-        return [
-          <Link to={`/equipescommerciale/${row.id}`} key={row.id}>
-            {" "}
-            <GridActionsCellItem
-              disableFocusRipple={false}
-              icon={<VisibilityIcon />}
-              label="Voir"
-              size="small"
-              edge="start"
-            />
-          </Link>,
-        ];
-      },
+      getActions: (row) => [
+        <GridActionsCellItem
+          key={row.id}
+          disableFocusRipple={false}
+          icon={<VisibilityIcon />}
+          label="Voir"
+          size="small"
+          edge="start"
+          onClick={() => handleViewDetails(row)}
+        />,
+      ],
     },
   ];
 
@@ -63,6 +77,24 @@ function ListEquipeCommerciale() {
           slots={{ toolbar: GridToolbar }}
         />
       </div>
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Détails de l'équipe commerciale</DialogTitle>
+        <DialogContent>
+          {selectedEquipe && (
+            <div>
+              <p>ID: {selectedEquipe.id}</p>
+              <p>Nom: {selectedEquipe.nom_equipe}</p>
+              {/* Ajoutez d'autres propriétés de l'équipe commerciale ici */}
+            </div>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Fermer
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

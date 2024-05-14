@@ -11,10 +11,10 @@ class Chartss4 extends Component {
             animationEnabled: true,
             exportEnabled: true,
             title: {
-                text: "Number of iPhones Sold"
+                text: "Les opportunités à gagner"
             },
             axisY: {
-                title: "Number of iPhones ( in Million )"
+                title: "Les opportunités à gagner"
             },
             data: [
             {

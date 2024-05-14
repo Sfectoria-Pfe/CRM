@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTools, faUser, faBriefcase } from '@fortawesome/free-solid-svg-icons';
 import CanvasJSReact from "@canvasjs/react-charts";
 import Charts1 from "./chartss2";
 import Charts2 from "./chartss3";
@@ -12,7 +14,7 @@ class Charts extends Component {
       exportEnabled: true,
       animationEnabled: true,
       title: {
-        text: "Charts",
+        text: "analyse de client",
       },
       data: [
         {
@@ -24,11 +26,12 @@ class Charts extends Component {
           indexLabelFontSize: 16,
           indexLabel: "{label} - {y}%",
           dataPoints: [
-            { y: 18, label: "Direct" },
-            { y: 49, label: "Organic Search" },
-            { y: 9, label: "Paid Search" },
-            { y: 5, label: "Referral" },
-            { y: 19, label: "Social" },
+            { y: 18, label: "Nouveau" },
+{ y: 49, label: "Fidèle" },
+{ y: 9, label: "Contact" },
+{ y: 5, label: "Client perdu" },
+{ y: 19, label: "Divers" },
+
           ],
         },
       ],
@@ -36,32 +39,45 @@ class Charts extends Component {
 
     return (
       <div>
-        <div className="d-flex justify-content-around gap-3 text-white">
+        <div className="d-flex justify-content-around gap-3">
           <div
-            className="bg-primary shadow text-center col p-5 rounded"
-            // style={{ height: 100 }}
+            className="custom-bg shadow text-center col p-5 rounded"
+            style={{
+              background: 'linear-gradient(to bottom right, #007bff, #ffffff)',
+              boxShadow: '0 0 20px rgba(0, 0, 255, 0.5)'
+            }}
           >
-            <h6>Clients</h6>
-            <h2>4.1 M</h2>
+            <FontAwesomeIcon icon={faTools} size="2x" />
+            <h4>Services</h4>
+            <h2>20</h2>
           </div>
+
           <div
-            className="bg-success shadow text-center col p-5 rounded"
-            
+            className="custom-bg-success shadow text-center col p-5 rounded"
+            style={{
+              background: 'linear-gradient(to bottom right, #28a745, #ffffff)',
+              boxShadow: '0 0 20px rgba(40, 167, 69, 0.5)'
+            }}
           >
-            <h6>Clients</h6>
-            <h2>4.1 M</h2>
+            <FontAwesomeIcon icon={faUser} size="2x" />
+            <h4>Clients</h4>
+            <h2>239</h2>
           </div>
+
           <div
-            className="bg-danger shadow text-center col p-5 rounded"
-           
+            className="custom-bg-danger shadow text-center col p-5 rounded"
+            style={{
+              background: 'linear-gradient(to bottom right, #dc3545, #ffffff)',
+              boxShadow: '0 0 20px rgba(220, 53, 69, 0.5)'
+            }}
           >
-            <h6>Clients</h6>
-            <h2>4.1 M</h2>
+            <FontAwesomeIcon icon={faBriefcase} size="2x" />
+            <h4>Opportunités</h4>
+            <h2>25</h2>
           </div>
         </div>
+
         <div style={{ display: "flex", marginBottom: "40px" }}>
-          {" "}
-          {/* Ajout de marges en bas pour séparer les rangées de graphiques */}
           <div style={{ width: "50%", padding: "10px" }}>
             <CanvasJSChart options={options} />
           </div>
