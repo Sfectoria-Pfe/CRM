@@ -11,11 +11,12 @@ import {
   fetchStage_client,
   updateStage_client,
 } from "../../../store/stage_client";
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiMessageSquare } from "react-icons/fi"; // Importez FiMessageSquare pour l'icône du commentaire
 import AddStageClient from "../../stage-client/AddStage-client";
 import AddStage from "../../stage/AddStage";
 import Chat from "../../Chats/chat";
 import AlignItemsList from "../../Chats/ChatClient"; // Importez le composant AlignItemsList
+import AddCommentForm from "../../Comments/Addcomment"; // Importez le composant AddCommentForm
 
 const ViewOpportunity = () => {
   const { opportunityId } = useParams();
@@ -23,6 +24,8 @@ const ViewOpportunity = () => {
   const [stages, setStages] = useState([]);
   const [showAddStageForm, setShowAddStageForm] = useState(false);
   const [selectedStageId, setSelectedStageId] = useState(null);
+  const [selectedStageClientId, setSelectedStageClientId] = useState(null); // État pour suivre le stage client sélectionné pour ajouter un commentaire
+  const [showCommentForm, setShowCommentForm] = useState(false); // État pour contrôler la visibilité du formulaire de commentaire
   const dispatch = useDispatch();
   const opportunity = useSelector((state) => state.opportunite.opportunite);
   const [showChat, setShowChat] = useState(false);
@@ -63,7 +66,7 @@ const ViewOpportunity = () => {
     );
     const { id } = stageClient;
 
-    dispatch(updateStage_client({ id, stageId: targetStageId,opportunityId })).then((res) => {
+    dispatch(updateStage_client({ id, stageId: targetStageId, opportunityId })).then((res) => {
       // if (!res.error) {
       //   let aux = [...stages];
       //   for (let i = 0; i < stages.length; i++) {
@@ -89,10 +92,21 @@ const ViewOpportunity = () => {
     setShowChat(!showChat);
   };
 
+  const handleToggleCommentForm = (stageClientId) => {
+    setSelectedStageClientId(stageClientId);
+    setShowCommentForm(true); // Afficher le formulaire de commentaire lorsqu'on clique sur l'icône de commentaire
+  };
+
+  const handleCloseCommentForm = () => {
+    setShowCommentForm(false); // Masquer le formulaire de commentaire
+  };
+
   return (
     <div>
-      <button onClick={handleToggleChat}>Chat</button>
-
+<button onClick={handleToggleChat} style={{
+        width:"70px",height:"50px",backgroundColor:"blue",padding:"10px",color:"white",borderRadius:"30px"
+      }}>Chat</button>
+<br/><br/>
       <div className="crm-board">
         <div className="stages-container">
           {stages?.map((stage, index) => (
@@ -113,14 +127,23 @@ const ViewOpportunity = () => {
                   preFilledStageId={stage.id}
                 />
               )}
-              {stage?.StageClient?.filter(el=>el.archived!==true).map((elem) => (
-                <OpportunityCard
-                  key={elem.id}
-                  opportunity={elem?.Client}
-                  onDragStart={(event) =>
-                    handleDragStart(event, elem, stage, index)
-                  }
-                />
+              {stage?.StageClient?.filter(el => !el.archived).map((elem) => (
+                <div key={elem.id} className="stage-client-container">
+                  <OpportunityCard
+                    opportunity={elem?.Client}
+                    onDragStart={(event) =>
+                      handleDragStart(event, elem, stage, index)
+                    }
+                  />
+                  <FiMessageSquare onClick={() => handleToggleCommentForm(elem.id)} />
+                  {/* Passer l'ID du stage client sélectionné au composant AddCommentForm */}
+                  {selectedStageClientId === elem.id && showCommentForm && (
+                    <div className="comment-form-popup">
+                      <AddCommentForm stageClientId={elem.id} />
+                      <button onClick={handleCloseCommentForm}>Fermer</button>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           ))}

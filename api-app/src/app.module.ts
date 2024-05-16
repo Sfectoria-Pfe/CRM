@@ -21,9 +21,10 @@ import { ChatsModule } from './chats/chats.module';
 import { DemandeDevisModule } from './demande-devis/demande-devis.module';
 import { PromotionModule } from './promotion/promotion.module';
 import { ServiceDetailsModule } from './service-details/service-details.module';
+import { ComentsModule } from './coments/coments.module';
 
 @Module({
-  imports: [UsersModule, PrisamaModule, ServicesModule, AuthModule, VentesModule, LocationsModule, ClientsModule, CategorieclientsModule, DevisModule, RendezvousModule,  EquipecommercialeModule, OpportunitesModule, StagesModule, StageClientModule, EmployeesModule, ChatsModule, DemandeDevisModule, PromotionModule, ServiceDetailsModule],
+  imports: [UsersModule, PrisamaModule, ServicesModule, AuthModule, VentesModule, LocationsModule, ClientsModule, CategorieclientsModule, DevisModule, RendezvousModule,  EquipecommercialeModule, OpportunitesModule, StagesModule, StageClientModule, EmployeesModule, ChatsModule, DemandeDevisModule, PromotionModule, ServiceDetailsModule, ComentsModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

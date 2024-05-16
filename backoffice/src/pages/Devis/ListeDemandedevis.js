@@ -80,9 +80,9 @@ function ListDemandeDevis() {
       width: 180,
       renderCell: ({ row }) => (
         <>
-          <Button onClick={() => navigate(`/demande-devis/${row.id}`)}>
+          {/* <Button onClick={() => navigate(`/demande-devis/${row.id}`)}>
             <VisibilityIcon />
-          </Button>
+          </Button> */}
           <Tooltip title="Accepter demande" placement="top">
             <Button onClick={() => handleAccept(row.id)}>
               <CheckCircleIcon style={{ color: 'green' }} />

@@ -5,16 +5,19 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class DevisService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(createdevisDto: CreateDeviDto) {
     const { items, ...rest } = createdevisDto;
     try {
+      const currentDate = rest.currentDate instanceof Date ? rest.currentDate.toISOString() : new Date().toISOString();
+      const dateOfIssue = rest.dateOfIssue instanceof Date ? rest.dateOfIssue.toISOString() : new Date().toISOString();
+
       const newdevis = await this.prisma.devis.create({
         data: {
           ...rest,
-          currentDate: new Date(rest.currentDate).toISOString(),
-          dateOfIssue: new Date(rest.dateOfIssue).toISOString(),
+          currentDate,
+          dateOfIssue,
           devisLine: {
             create: items.map((item) => ({
               serviceId: 1,
@@ -29,44 +32,46 @@ export class DevisService {
       console.error('Erreur lors de la création de la devis :', error);
       throw error;
     }
-  }
+}
   async findAll() {
-    return await this.prisma.devis.findMany(); // Utilisez Prisma pour récupérer tous les devis
+    return await this.prisma.devis.findMany();
   }
+
   async findMyDevis(id: number) {
     return await this.prisma.devis.findMany({
       where: {
         clientId: id,
       },
-    }); // Utilisez Prisma pour récupérer tous les devis
+    });
   }
 
   async findOne(id: number) {
-    return await this.prisma.devis.findUnique({ where: { id, },include:{client:true,devisLine:true} }); // Utilisez Prisma pour récupérer un devis par son ID
+    return await this.prisma.devis.findUnique({
+      where: { id },
+      include: { client: true, devisLine: true }
+    });
   }
 
-  async update(id: number, updatedevisDto: UpdateDeviDto) {
+  async update(id: number, updateDeviDto: UpdateDeviDto) {
     try {
       return await this.prisma.devis.update({
         where: { id },
-        data: updatedevisDto,
+        data: updateDeviDto,
       });
     } catch (error) {
-      console.error('Erreur lors de la mise à jour du devis :', error);
-      throw error;
+      console.error('Error updating quote:', error);
+      throw new Error('Error updating quote: ' + error.message);
     }
   }
 
   async remove(id: number) {
     try {
-      const deleteddevis = await this.prisma.devis.delete({
-        where: { id: id },
+      return await this.prisma.devis.delete({
+        where: { id },
       });
-
-      return deleteddevis;
     } catch (error) {
-      console.error('Erreur lors de la suppression du devis :', error);
-      throw error;
+      console.error('Error deleting quote:', error);
+      throw new Error('Error deleting quote: ' + error.message);
     }
   }
 }

@@ -90,7 +90,7 @@ function InvoiceForm() {
         if (!res.error) {
           toast.success("Le devis a été ajouté avec succès !");
           setTimeout(() => {
-            navigate(-1);
+            navigate();
           }, 2000);
         } else {
           toast.error("Erreur lors de l'ajout du devis. Veuillez réessayer.");
