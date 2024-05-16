@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDevi } from "../../store/devis";
 import { useParams } from "react-router-dom";
-// import { Button } from "@mui/material";
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { PDFViewer, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
@@ -67,18 +66,18 @@ function OneDevis() {
               <div className="w-100">
                 <h4 className="fw-bold my-2">{devis?.client?.nom||'John Uberbacher'}</h4>
                 <h6 className="fw-bold text-secondary mb-1">
-                  Invoice #: {devis?.id||''}
+                  Devis n° : {devis?.id||''}
                 </h6>
               </div>
               <div className="text-end ms-4">
-                <h6 className="fw-bold mt-1 mb-2">Amount&nbsp;Due:</h6>
+                <h6 className="fw-bold mt-1 mb-2">Montant à&nbsp;payer :</h6>
                 <h5 className="fw-bold text-secondary"> {devis?.currency} {devis?.total}</h5>
               </div>
             </div>
             <div className="p-4">
               <Row className="mb-4">
                 <Col md={4}>
-                  <div className="fw-bold">information de client</div>
+                  <div className="fw-bold">Informations du client</div>
                   <div>{devis?.client?.nom||''}</div>
                   <div>{devis?.client?.email||''}</div>
                   <div>{devis?.client?.adresse||''}</div>
@@ -86,25 +85,25 @@ function OneDevis() {
 
                 </Col>
                 <Col md={4}>
-                  <div className="fw-bold">information de entreprise</div>
-                  <div>{'fatma & roua '||''}</div>
-                  <div>{"contact@sfectoria.com"||''}</div>
-                  <div>{'Montplaisir'||''}</div>
-                  <div>{'55180992'||''}</div>
+                  <div className="fw-bold">Informations de l'entreprise</div>
+                  <div>{"MaisonPlus "||''}</div>
+                  <div>{"MaisonPlus@gmail.com"||''}</div>
+                  <div>{"MTunisie, Sousse, Rue de zouhour"||''}</div>
+                  <div>{"23459334"||''}</div>
 
                 </Col>
                 <Col md={4}>
-                  <div className="fw-bold mt-2">Date Of Issue:</div>
+                  <div className="fw-bold mt-2">Date d'émission :</div>
                   <div>{devis?.dateOfIssue||''}</div>
                 </Col>
               </Row>
               <Table className="mb-0">
                 <thead>
                   <tr>
-                    <th>QTY</th>
+                    <th>Quantité</th>
                     <th>DESCRIPTION</th>
-                    <th className="text-end">PRICE</th>
-                    <th className="text-end">AMOUNT</th>
+                    <th className="text-end">Prix</th>
+                    <th className="text-end">MONTANT</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -133,7 +132,7 @@ function OneDevis() {
                   </tr>
                   <tr className="text-end">
                     <td></td>
-                    <td className="fw-bold" style={{width: '100px'}}>SUBTOTAL</td>
+                    <td className="fw-bold" style={{width: '100px'}}>SOUS-TOTAL</td>
                     <td className="text-end" style={{width: '100px'}}>{devis?.currency} {devis?.subTotal}</td>
                   </tr>
                   {devis?.taxAmmount != 0.00 &&
@@ -146,7 +145,7 @@ function OneDevis() {
                   {devis?.discountAmmount != 0.00 &&
                     <tr className="text-end">
                       <td></td>
-                      <td className="fw-bold" style={{width: '100px'}}>DISCOUNT</td>
+                      <td className="fw-bold" style={{width: '100px'}}>REMISE</td>
                       <td className="text-end" style={{width: '100px'}}>{devis?.currency} {devis?.discountAmmount}</td>
                     </tr>
                   }
@@ -167,13 +166,13 @@ function OneDevis() {
             <Row>
               <Col md={6}>
                 <Button variant="primary" className="d-block w-100" onClick={GenerateInvoice}>
-                  <BiPaperPlane style={{width: '15px', height: '15px', marginTop: '-3px'}} className="me-2"/>Send Invoice
+                  <BiPaperPlane style={{width: '15px', height: '15px', marginTop: '-3px'}} className="me-2"/>Envoyer le devis
                 </Button>
               </Col>
               <Col md={6}>
                 <Button variant="outline-primary" className="d-block w-100 mt-3 mt-md-0" onClick={GenerateInvoice}>
                   <BiCloudDownload style={{width: '16px', height: '16px', marginTop: '-3px'}} className="me-2"/>
-                  Download Copy
+                  Télécharger une copie
                 </Button>
               </Col>
             </Row>
@@ -184,38 +183,38 @@ function OneDevis() {
         startIcon={<SaveAltIcon />}
         onClick={handleExportPDF}
       >
-        Export PDF
+        Exporter en PDF
       </Button>
       {pdfExported && (
         <PDFViewer width="100%" height={600}>
           <Document>
             <Page size="A4" style={styles.page}>
               <View style={styles.section}>
-                <Text style={styles.strong}>Numéro de devis:</Text>
+                <Text style={styles.strong}>Numéro de devis :</Text>
                 <Text>{devis.numero_devis}</Text>
               </View>
               <View style={styles.section}>
-                <Text style={styles.strong}>Date d'estimation:</Text>
+                <Text style={styles.strong}>Date d'estimation :</Text>
                 <Text>{devis.date_estimation}</Text>
               </View>
               <View style={styles.section}>
-                <Text style={styles.strong}>Montant total:</Text>
+                <Text style={styles.strong}>Montant total :</Text>
                 <Text>{devis.montant_total}</Text>
               </View>
               <View style={styles.section}>
-                <Text style={styles.strong}>Prix unitaire:</Text>
+                <Text style={styles.strong}>Prix unitaire :</Text>
                 <Text>{devis.prix_unitaire}</Text>
               </View>
               <View style={styles.section}>
-                <Text style={styles.strong}>Service:</Text>
+                <Text style={styles.strong}>Service :</Text>
                 <Text>{devis.service}</Text>
               </View>
               <View style={styles.section}>
-                <Text style={styles.strong}>TVA:</Text>
+                <Text style={styles.strong}>TVA :</Text>
                 <Text>{devis.TVA}</Text>
               </View>
               <View style={styles.section}>
-                <Text style={styles.strong}>Client:</Text>
+                <Text style={styles.strong}>Client :</Text>
                 <Text>{devis.client?.nom} {devis.client?.prenom}</Text>
               </View>
             </Page>
