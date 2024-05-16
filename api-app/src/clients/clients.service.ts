@@ -27,7 +27,7 @@ export class ClientsService {
         { prenom: { contains: filter.fullNameEn } },
       ];
     }
-    return await this.prisma.client.findMany({ where });
+    return await this.prisma.client.findMany({ where ,include:{categorie:true}});
   }
   async findAllWithoutAccount() {
     const response = await this.prisma.client.findMany({
