@@ -12,6 +12,10 @@ export class EmployeesController {
     return this.employeesService.create(createEmployeeDto);
   }
 
+  @Get('without-account')
+  findAllWithoutAccount( ) {
+    return this.employeesService.findAllWithoutAccount();
+  }
   @Get()
   findAll() {
     return this.employeesService.findAll();

@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Form from "react-bootstrap/Form";
 import { fetchClients, fetchClientsWithoutAccount } from "../../store/client";
-import { fetchEmployees } from "../../store/employee";
+import { fetchEmployees, fetchemployeesWithoutAccount } from "../../store/employee";
 
 export default function Adduser() {
   const employees = useSelector((state) => state.employee.employees.items);
@@ -18,13 +18,13 @@ export default function Adduser() {
     email: "",
     password: "",
     isClient: false,
-    employeeId: "",
-    clientId: "",
+    employeeId: null,
+    clientId: null,
   });
   const [data, setData] = useState([]);
   useEffect(() => {
     dispatch(fetchClientsWithoutAccount());
-    dispatch(fetchEmployees());
+    dispatch(fetchemployeesWithoutAccount());
   }, [dispatch]);
   useEffect(() => {
     if (user.isClient) setData(clients);
@@ -33,9 +33,9 @@ export default function Adduser() {
 
   const handleChangeSelect = (e) => {
     if (user.isClient) {
-      setUser({ ...user, clientId: e.target.value });
+      setUser({ ...user, clientId: +e.target.value });
     } else {
-      setUser({ ...user, employeeId: e.target.value });
+      setUser({ ...user, employeeId: +e.target.value });
     }
   };
   
@@ -49,7 +49,7 @@ export default function Adduser() {
   };
   
   const handleAddUser = () => {
-    dispatch(sendUser(user))
+   dispatch(sendUser(user))
       .then((res) => {
         if (!res.error) {
           toast.success("Votre utilisateur a été ajouté avec succès !");

@@ -33,9 +33,9 @@ function Charts() {
     dispatch(fetchOpportunites());
     dispatch(fetchStage_clients());
   }, []);
-const fideleClient = clients.filter((elem)=>elem.categorie.nom ==="Fidele")
-const nouveauClient = clients.filter((elem)=>elem.categorie.nom ==="Nouveau")
-const perduClient = clients.filter((elem)=>elem.categorie.nom ==="Perdu")
+const fideleClient = clients.filter((elem)=>elem?.categorie?.nom ==="Fidele")
+const nouveauClient = clients.filter((elem)=>elem?.categorie?.nom ==="Nouveau")
+const perduClient = clients.filter((elem)=>elem?.categorie?.nom ==="Perdu")
 console.log(perduClient.length ,"perduClient "); 
 console.log(nouveauClient.length ,"nouveauClient "); 
 console.log(nouveauClient.length ,"nouveauClient "); 
