@@ -11,6 +11,7 @@ function ListDevis() {
   const devis = useSelector((state) => state.devis.devis.items);
 
   const columns = [
+    
     {
       field: "id",
       headerName: "Devis ID",
@@ -27,16 +28,21 @@ function ListDevis() {
       width: 200,
     },
     {
-      field: " Montant Total ",
+      field: "total",
       headerName: "Montant total",
       width: 150,
     },
-
-    {
-      field: "clientId",
-      headerName: "clientId",
-      width: 150,
+    {field: "discountAmount",
+    headerName: "Promotion",
+    width: 150,
+      
     },
+    
+    {
+        field: "clientId",
+        headerName: "clientId",
+        width: 150,
+      },
     {
       field: "actions",
       type: "actions",

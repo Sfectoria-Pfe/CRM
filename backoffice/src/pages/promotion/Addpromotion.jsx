@@ -48,7 +48,7 @@ export default function Addpromotion() {
         if (!res.error) {
           toast.success("Votre promotion a été ajoutée avec succès !");
           setTimeout(() => {
-            navigate(1);
+            navigate(0);
           }, 2000);
         } else {
           toast.error(

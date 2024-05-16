@@ -56,3 +56,62 @@
   margin-bottom: 20px;
   text-align: center;
 }
+/* Style de la boîte de dialogue de commentaire */
+.comment-form-popup {
+  position: fixed; /* Position fixe pour rester visible même en faisant défiler */
+  top: 50%; /* Alignement vertical au centre */
+  left: 50%; /* Alignement horizontal au centre */
+  transform: translate(-50%, -50%); /* Centrage absolu */
+  background-color: white; /* Couleur de fond */
+  padding: 20px; /* Espacement intérieur */
+  border-radius: 8px; /* Coins arrondis */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  z-index: 9999; /* Assurez-vous que la boîte de dialogue apparaît au-dessus du reste du contenu */
+}
+
+/* Style du bouton de fermeture */
+.comment-form-popup button {
+  background-color: transparent; /* Fond transparent */
+  border: none; /* Pas de bordure */
+  position: absolute; /* Position absolue pour faciliter le positionnement */
+  top: 10px; /* Espacement depuis le haut */
+  right: 10px; /* Espacement depuis la droite */
+  cursor: pointer; /* Curseur pointeur */
+}
+
+/* Style du bouton de soumission */
+.comment-form-popup button[type="submit"] {
+
+  margin-right: 10px;
+  background-color: #27ae60; /* Couleur de fond */
+  color: white; /* Couleur du texte */
+  border: none; /* Pas de bordure */
+  padding: 10px 20px; /* Espacement intérieur */
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Curseur pointeur */
+ 
+ 
+  transition: background-color 0.3s ease; /* Animation de transition */
+}
+
+/* Style du bouton de fermeture */
+.comment-form-popup button.close-btn {
+
+
+  margin-left: 10px;
+  background-color: transparent; /* Fond transparent */
+  color: #888; /* Couleur du texte */
+  font-size: 16px; /* Taille de la police */
+  border: none; /* Pas de bordure */
+  padding: 5px 10px; /* Espacement intérieur */
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Curseur pointeur */
+  transition: background-color 0.3s ease; /* Animation de transition */
+}
+
+/* Style du bouton de fermeture au survol */
+.comment-form-popup button.close-btn:hover {
+  color: #555; /* Variation de couleur du texte */
+  background-color: #f2f2f2; /* Variation de couleur de fond */
+}
+
