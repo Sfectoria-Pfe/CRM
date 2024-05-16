@@ -12,6 +12,12 @@ export class EmployeesService {
       data: createEmployeeDto, // Utilisez l'objet DTO pour créer un nouvel employé
     });
   }
+  async findAllWithoutAccount() {
+    const response = await this.prisma.employee.findMany({
+      include: { user: { select: { email: true } } },
+    });
+    return response.filter((elem) => elem.user.length === 0);
+  }
 
   async findAll() {
     return await this.prisma.employee.findMany(); // Retournez tous les employés

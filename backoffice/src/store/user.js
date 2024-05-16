@@ -18,7 +18,10 @@ export const fetchUserById = createAsyncThunk(
 );
 
 export const sendUser = createAsyncThunk("user/sendUser", async (body) => {
-  const response = await axios.post("http://localhost:7000/users", body);
+  const token = localStorage.getItem("token");
+  const response = await axios.post("http://localhost:7000/users", body,{
+    headers: { Authorization: "Bearer " + token },
+  });
   return response.data;
 });
 

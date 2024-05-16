@@ -78,6 +78,7 @@ model Client {
   stages       StageClient[]
   user         User[]
   demandeDevis DemandeDevis[]
+  createdAt Date
 }
 
 model CategorieClient {
