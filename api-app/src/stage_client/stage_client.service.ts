@@ -46,6 +46,16 @@ export class StageClientService {
   async findAll() {
     return await this.prisma.stageClient.findMany();
   }
+  async findAllWinned() {
+    const winnedStageClients =await this.prisma.stageClient.findMany({
+      where: {
+        win: true ,
+        archived:true// Assuming 'win' is a boolean column
+      }
+    });
+    console.log(winnedStageClients);
+    return winnedStageClients;
+  }
 
   async findOne(id: number) {
     const stageClient = await this.prisma.stageClient.findUnique({

@@ -34,8 +34,20 @@ async function seed() {
     );
     const category = await prisma.categorieClient.create({
       data: {
-        nom: 'String',
-        description: 'String',
+        nom: 'Fidele',
+        description: 'Clients fidèles et réguliers',
+      },
+    });
+    const category2 = await prisma.categorieClient.create({
+      data: {
+        nom: 'Nouveau',
+        description: 'Nouveaux clients récemment acquis',
+      },
+    });
+    const category3 = await prisma.categorieClient.create({
+      data: {
+        nom: 'Perdu',
+        description: 'Clients perdus ou inactifs',
       },
     });
     const equipe = await prisma.equipe.create({
@@ -160,16 +172,26 @@ async function seed() {
         },
       },
     });
-
-    await prisma.promotion.create({
+    const stage1 = await prisma.stage.create({
       data: {
-        date_debut: new Date('10-10-2023').toISOString(),
-        description: 'test',
-        pourcentage: 10,
-        opportuniteId: opportunity.id,
-        categorieClientId: category.id,
+        nom: 'Stage 1',
+        opportuniteId: opportunity1.id, // Assuming you have an 'opportunity1' object from your previous code
       },
     });
+    const stage2 = await prisma.stage.create({
+      data: {
+        nom: 'Stage 2',
+        opportuniteId: opportunity2.id, // Assuming you have an 'opportunity2' object from your previous code
+      },
+    });
+    const stage3 = await prisma.stage.create({
+      data: {
+        nom: 'Stage 3',
+        opportuniteId: opportunity3.id, // Assuming you have an 'opportunity3' object from your previous code
+      },
+    });
+
+    const currentDate = new Date();
     const clients = await Promise.all(
       dataClient.map(
         async (elem) =>
@@ -186,8 +208,51 @@ async function seed() {
             },
             include: { user: true },
           }),
+         
       ),
     );
+
+    const randomDate = (start, end) => {
+      return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    };
+    
+    // Define the range for random dates (e.g., last 6 months)
+    // const currentDate = new Date();
+    const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 6, 1); // Start date (6 months ago)
+    const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0); // End date (last day of the previous month)
+    
+    
+    // Array containing data for 15 StageClient entries with different values and random createdAt dates
+    const stageClientData = Array(15).fill(null).map((_, index) => ({
+      description: `Stage Client ${index + 1}`,
+      win: index % 2 === 0, // Alternate between true and false for win field
+      archived: index % 2 === 0, // Alternate between true and false for archived field
+      clientId: index % 5 + 1, // Assign clientId from 1 to 5 in a loop
+      stageId: stage2.id, // Assuming you have a 'stage2' object from the first code snippet
+      createdAt: randomDate(startDate, endDate), // Generate a random date within the defined range
+    }));
+    
+
+// Adding Stage Clients with different creation dates
+const createdStageClients = await Promise.all(
+  stageClientData.map(async (data) => {
+    const stageClient = await prisma.stageClient.create({
+      data,
+    });
+    return stageClient;
+  })
+);
+    await prisma.promotion.create({
+      data: {
+        date_debut: new Date('10-10-2023').toISOString(),
+        description: 'test',
+        pourcentage: 10,
+        opportuniteId: opportunity.id,
+        categorieClientId: category.id,
+      },
+    });
+   
+    
     console.log(clients[0].user[0]);
     
     const locations = await prisma.location.createMany({

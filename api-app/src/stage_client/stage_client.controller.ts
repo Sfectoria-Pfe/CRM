@@ -16,6 +16,10 @@ export class StageClientController {
   findAll() {
     return this.stageClientService.findAll();
   }
+  @Get('winned')
+  findAllWinned() {
+    return this.stageClientService.findAllWinned();
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

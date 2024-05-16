@@ -30,7 +30,7 @@ export class OpportunitesController {
   findAll(@Query() query:any) { //@Role(['admin','chef']) role
     return this.opportunitesService.findAll(+query.numberService);
   }
-
+  
   @Get(':id')
   findOne(@Param('id') id: string,
 // @CurrentUser() user

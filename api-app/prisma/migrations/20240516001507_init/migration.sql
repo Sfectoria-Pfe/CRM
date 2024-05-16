@@ -31,7 +31,6 @@ CREATE TABLE `Employee` (
 CREATE TABLE `Equipe` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `nom_equipe` VARCHAR(191) NOT NULL,
-    `nombre` INTEGER NOT NULL,
     `chefId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -54,7 +53,7 @@ CREATE TABLE `Client` (
     `adresse` VARCHAR(191) NOT NULL,
     `telephone` VARCHAR(191) NOT NULL,
     `image` VARCHAR(191) NULL,
-    `categorieId` INTEGER NULL,
+    `categorieId` INTEGER NULL DEFAULT 1,
 
     UNIQUE INDEX `Client_email_key`(`email`),
     PRIMARY KEY (`id`)
@@ -75,8 +74,7 @@ CREATE TABLE `Promotion` (
     `description` VARCHAR(191) NOT NULL,
     `pourcentage` DOUBLE NOT NULL,
     `date_debut` DATETIME(3) NOT NULL,
-    `date_fin` DATETIME(3) NOT NULL,
-    `categorieClientId` INTEGER NOT NULL,
+    `categorieClientId` INTEGER NOT NULL DEFAULT 1,
     `opportuniteId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -97,6 +95,7 @@ CREATE TABLE `Service` (
 -- CreateTable
 CREATE TABLE `ServiceDetail` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(191) NOT NULL,
     `imageURL` VARCHAR(255) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
     `address` VARCHAR(191) NOT NULL,
@@ -111,6 +110,8 @@ CREATE TABLE `Opportunite` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
     `equipeId` INTEGER NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -122,6 +123,8 @@ CREATE TABLE `Service_Opportunite` (
     `prix` DOUBLE NOT NULL,
     `isPromotion` BOOLEAN NOT NULL,
     `discountAmout` DOUBLE NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `Service_Opportunite_opportuniteId_serviceId_key`(`opportuniteId`, `serviceId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -131,6 +134,8 @@ CREATE TABLE `Stage` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `nom` VARCHAR(191) NOT NULL,
     `opportuniteId` INTEGER NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -139,8 +144,12 @@ CREATE TABLE `Stage` (
 CREATE TABLE `StageClient` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `description` VARCHAR(191) NOT NULL,
-    `clientId` INTEGER NULL,
-    `stageId` INTEGER NULL,
+    `clientId` INTEGER NOT NULL,
+    `stageId` INTEGER NOT NULL,
+    `win` BOOLEAN NOT NULL DEFAULT false,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `archived` BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -149,6 +158,9 @@ CREATE TABLE `StageClient` (
 CREATE TABLE `Comment` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `stageClientId` INTEGER NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `content` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -156,13 +168,29 @@ CREATE TABLE `Comment` (
 -- CreateTable
 CREATE TABLE `devis` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `numero_devis` INTEGER NOT NULL,
-    `date_estimation` DATETIME(3) NOT NULL,
-    `montant_total` DOUBLE NOT NULL,
-    `prix_unitaire` DOUBLE NOT NULL,
-    `service` VARCHAR(191) NOT NULL,
-    `TVA` DOUBLE NOT NULL,
+    `currency` VARCHAR(191) NULL,
+    `currentDate` DATETIME(3) NULL,
+    `invoiceNumber` INTEGER NULL,
+    `dateOfIssue` DATETIME(3) NULL,
+    `notes` VARCHAR(191) NULL,
+    `total` DOUBLE NULL,
+    `subTotal` DOUBLE NULL,
+    `taxRate` DOUBLE NULL,
+    `taxAmount` DOUBLE NULL,
+    `discountRate` DOUBLE NULL,
+    `discountAmount` DOUBLE NULL,
     `clientId` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `DevisLine` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `serviceId` INTEGER NOT NULL,
+    `prix_unitaire` DOUBLE NOT NULL,
+    `qunatity` INTEGER NOT NULL,
+    `devisId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -175,6 +203,7 @@ CREATE TABLE `rendezvous` (
     `typebien` VARCHAR(191) NOT NULL,
     `localisation` VARCHAR(191) NOT NULL,
     `description` VARCHAR(191) NOT NULL,
+    `statut` VARCHAR(191) NOT NULL DEFAULT 'En attente',
     `clientId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -214,25 +243,12 @@ CREATE TABLE `Location` (
 -- CreateTable
 CREATE TABLE `MsgsClient` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `opportunityId` INTEGER NOT NULL,
     `senderId` INTEGER NOT NULL,
-    `roomId` INTEGER NULL,
-    `userId` INTEGER NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Participants` (
-    `userId` INTEGER NULL,
-    `opportuniteId` INTEGER NULL,
-    `roomId` INTEGER NOT NULL,
-
-    UNIQUE INDEX `Participants_roomId_key`(`roomId`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `Room` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `content` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `receiverId` INTEGER NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -289,10 +305,10 @@ ALTER TABLE `Service_Opportunite` ADD CONSTRAINT `Service_Opportunite_serviceId_
 ALTER TABLE `Stage` ADD CONSTRAINT `Stage_opportuniteId_fkey` FOREIGN KEY (`opportuniteId`) REFERENCES `Opportunite`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `StageClient` ADD CONSTRAINT `StageClient_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `Client`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `StageClient` ADD CONSTRAINT `StageClient_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `Client`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `StageClient` ADD CONSTRAINT `StageClient_stageId_fkey` FOREIGN KEY (`stageId`) REFERENCES `Stage`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `StageClient` ADD CONSTRAINT `StageClient_stageId_fkey` FOREIGN KEY (`stageId`) REFERENCES `Stage`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Comment` ADD CONSTRAINT `Comment_stageClientId_fkey` FOREIGN KEY (`stageClientId`) REFERENCES `StageClient`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -301,22 +317,22 @@ ALTER TABLE `Comment` ADD CONSTRAINT `Comment_stageClientId_fkey` FOREIGN KEY (`
 ALTER TABLE `devis` ADD CONSTRAINT `devis_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `Client`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `DevisLine` ADD CONSTRAINT `DevisLine_serviceId_fkey` FOREIGN KEY (`serviceId`) REFERENCES `Service`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `DevisLine` ADD CONSTRAINT `DevisLine_devisId_fkey` FOREIGN KEY (`devisId`) REFERENCES `devis`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `rendezvous` ADD CONSTRAINT `rendezvous_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `Client`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `MsgsClient` ADD CONSTRAINT `MsgsClient_roomId_fkey` FOREIGN KEY (`roomId`) REFERENCES `Room`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `MsgsClient` ADD CONSTRAINT `MsgsClient_opportunityId_fkey` FOREIGN KEY (`opportunityId`) REFERENCES `Opportunite`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `MsgsClient` ADD CONSTRAINT `MsgsClient_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `MsgsClient` ADD CONSTRAINT `MsgsClient_senderId_fkey` FOREIGN KEY (`senderId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Participants` ADD CONSTRAINT `Participants_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Participants` ADD CONSTRAINT `Participants_opportuniteId_fkey` FOREIGN KEY (`opportuniteId`) REFERENCES `Opportunite`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `Participants` ADD CONSTRAINT `Participants_roomId_fkey` FOREIGN KEY (`roomId`) REFERENCES `Room`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `MsgsClient` ADD CONSTRAINT `MsgsClient_receiverId_fkey` FOREIGN KEY (`receiverId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `DemandeDevis` ADD CONSTRAINT `DemandeDevis_clientId_fkey` FOREIGN KEY (`clientId`) REFERENCES `Client`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
