@@ -97,9 +97,9 @@ function ListServiceDetails() {
             />
           </div>
         </div>
-        <div className="col-md-6" style={{ height: 400}}>
+        {/* <div className="col-md-6" style={{ height: 400}}>
           <AddServiceDetail />
-        </div>
+        </div> */}
       </div>
     </div>
   );

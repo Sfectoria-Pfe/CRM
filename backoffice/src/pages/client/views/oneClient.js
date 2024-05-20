@@ -82,6 +82,7 @@ export default function OneClient() {
               <th style={styles.th}>Description du stage</th>
               <th style={styles.th}>Date du stage</th>
               <th style={styles.th}>Commentaire</th>
+              <th style={styles.th}>Date du commentaire</th>
             </tr>
           </thead>
           <tbody>
@@ -93,13 +94,28 @@ export default function OneClient() {
                 <td style={styles.td}>{new Date(elem.Stage.createdAt).toLocaleDateString()}</td>
                 <td style={styles.td}>
                   {elem.Comment.length > 0 ? (
-                    <ul>
+                    <ul style={{ padding: 0, margin: 0, listStyle: "none" }}>
                       {elem.Comment.map((comment, index) => (
-                        <li key={index}>{comment.content}</li>
+                        <li key={index} style={{ marginBottom: "5px" }}>
+                          {comment.content}
+                        </li>
                       ))}
                     </ul>
                   ) : (
                     "Aucun commentaire"
+                  )}
+                </td>
+                <td style={styles.td}>
+                  {elem.Comment.length > 0 ? (
+                    <ul style={{ padding: 0, margin: 0, listStyle: "none" }}>
+                      {elem.Comment.map((comment, index) => (
+                        <li key={index} style={{ marginBottom: "5px" }}>
+                          {new Date(comment.createdAt).toLocaleDateString()}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    ""
                   )}
                 </td>
               </tr>

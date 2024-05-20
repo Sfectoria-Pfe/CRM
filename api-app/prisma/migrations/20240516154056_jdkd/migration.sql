@@ -8,6 +8,3 @@
 -- AlterTable
 ALTER TABLE `comment` DROP COLUMN `createdAt`,
     DROP COLUMN `updatedAt`;
-
--- AlterTable
-ALTER TABLE `stageclient` ADD COLUMN `win` BOOLEAN NOT NULL DEFAULT false;

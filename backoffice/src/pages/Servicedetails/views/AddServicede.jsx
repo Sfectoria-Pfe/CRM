@@ -1,30 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { Button, FormSelect } from "react-bootstrap"; // Importez FormSelect depuis react-bootstrap
-import { useDispatch, useSelector } from "react-redux"; // Importez useSelector
+import { Button, Modal, Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { sendServiceDetail } from "../../../store/serviceDetails";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { fetchServices } from "../../../store/services";
 
-export default function AddServiceDetail() {
+export default function AddServiceDetail({ toggleAddDetailForm }) {
   const [serviceDetail, setServiceDetail] = useState({
     title: "",
     description: "",
     address: "",
     price: 0,
     imageURL: "",
-    serviceId: null, // Initialisez serviceId à null
+    serviceId: null, // initialisé à null par défaut
   });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const services = useSelector((state) => state.service.services.items);
+  const { serviceId } = useParams(); // Récupérer l'ID du service depuis les paramètres d'URL
 
   useEffect(() => {
     dispatch(fetchServices());
-  }, [dispatch]);
+    // Mettre à jour le serviceId dans le state du formulaire avec l'ID du service actuellement affiché
+    setServiceDetail((prevServiceDetail) => ({
+      ...prevServiceDetail,
+      serviceId: parseInt(serviceId),
+    }));
+  }, [dispatch, serviceId]);
 
   const preset_key = "f20pgg9j";
   const cloud_name = "dp6nkc5wl";
@@ -32,15 +38,11 @@ export default function AddServiceDetail() {
 
   const handleFile = (event) => {
     const file = event.target.files[0];
-    console.log("Fichier sélectionné :", file);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", preset_key);
     axios
-      .post(
-        `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
-        formData
-      )
+      .post(`https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`, formData)
       .then((res) => {
         setImage(res.data.secure_url);
         setServiceDetail((prevServiceDetail) => ({
@@ -53,7 +55,7 @@ export default function AddServiceDetail() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === "price" || name === "serviceId" ? parseInt(value) : value; // Convertissez price et serviceId en nombre entier
+    const newValue = name === "price" || name === "serviceId" ? parseInt(value) : value;
 
     setServiceDetail({ ...serviceDetail, [name]: newValue });
   };
@@ -64,8 +66,7 @@ export default function AddServiceDetail() {
         if (!res.error) {
           toast.success("Le détail de service a été ajouté avec succès !");
           setTimeout(() => {
-            navigate(-1);
-          }, 2000); // Redirige après 2 secondes
+          }, 2000);
         } else {
           toast.error("Erreur lors de l'ajout du détail de service. Veuillez réessayer.");
         }
@@ -76,62 +77,69 @@ export default function AddServiceDetail() {
   };
 
   return (
-    <div className="form-container">
-      <h2>Ajouter un détail de service</h2>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Titre"
-          name="title"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Description"
-          name="description"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Adresse"
-          name="address"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Prix"
-          name="price"
-          type="number"
-          min={0}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        {/* Supprimez l'input serviceId pour éviter la duplication */}
-        <FormSelect name="serviceId" required onChange={handleChange}>
-          <option value={null}>Choisissez le service</option>
-          {services.map((elem, i) => (
-            <option key={i} value={elem.id}>{elem.name}</option>
-          ))}
-        </FormSelect>
-      </div>
-      <div className="form-input">
-        <input
-          type="file"
-          className="form-control"
-          name="imageURL"
-          onChange={handleFile}
-        />
-      </div>
-      <Button variant="warning" onClick={handleAddServiceDetail} className="form-button">
-        Ajouter le détail de service
-      </Button>
+    <div>
+      <Button variant="contained" color="primary" onClick={() => toggleAddDetailForm(true)}>Ajouter Détail du Service</Button>
+      {/* Conditionner l'affichage du formulaire d'ajout en fonction de l'état */}
+      <Modal show={true} onHide={() => toggleAddDetailForm(false)} dialogClassName="modal-sidebar"style={{padding:"40px"}}>
+        <Modal.Header closeButton>
+          <Modal.Title>Ajouter un détail de service</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formTitle">
+              <Form.Label>Titre</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Titre"
+                name="title"
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formDescription">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Description"
+                name="description"
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formAddress">
+              <Form.Label>Adresse</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Adresse"
+                name="address"
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formPrice">
+              <Form.Label>Prix</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Prix"
+                name="price"
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            {/* Le champ serviceId est initialisé automatiquement avec l'ID du service actuellement affiché */}
+            <input type="hidden" name="serviceId" value={serviceDetail.serviceId} />
+
+            <Form.Group controlId="formImage">
+              <Form.Label>Image</Form.Label>
+              <Form.Control type="file" name="imageURL" onChange={handleFile} />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => toggleAddDetailForm(false)}>Fermer</Button>
+          <Button variant="primary" onClick={handleAddServiceDetail}>Ajouter</Button>
+        </Modal.Footer>
+      </Modal>
       <ToastContainer />
     </div>
   );

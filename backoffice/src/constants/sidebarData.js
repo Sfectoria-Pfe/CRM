@@ -27,7 +27,7 @@ export const sidebarData = [
     title: "Dashboard",
     path: "/Dashboard",
     icon: <HomeIcon />,
-    access:['chef','admin','commercial']
+    access:['admin']
   },
   {
     title: "Catalogue",
@@ -66,7 +66,7 @@ export const sidebarData = [
         title: "promotion",
         path: "/Promotion",
         icon: <DiscountIcon />,
-        access:['chef','admin','commercial']
+        access:['admin']
       }, 
     ],
   },
@@ -74,7 +74,7 @@ export const sidebarData = [
     title: "Opportunities",
     path: "/opportunities",
     icon: < DiamondIcon />,
-    access:['chef','admin']
+    access:['chef','admin','commercial']
   },
   {
     title: "Clients",
@@ -100,22 +100,28 @@ export const sidebarData = [
     title: "Devis",
     icon: <DescriptionIcon />,
     path: "/devis",
-    access: ["admin", "manager"],
+    access: ['admin', 'commercial','chef'],
     children: [
       {
         title: "Liste Demande Devis",
         icon: <RequestIcon />,
         path: "/ListeDemandedevis",
+        access: ['admin', 'commercial','chef'],
+
       },
       {
         title: " Ajouter Devis",
         icon: <DevisIcon />,
         path: "/InvoiceForm",
+        access: [ 'commercial','chef'],
+
       },
       {
         title: "List Devis",
         icon: <ListDevisIcon />,
         path: "/devis",
+        access: ['admin', 'commerciale','chef'],
+
       },
     ],
   },
@@ -142,12 +148,16 @@ export const sidebarData = [
   },{
     title: "Employés",
     path: "/listeemployee",
+    
     icon: < PeopleAltIcon  />,
+    access: ['admin'],
     children: [
       {
         title: "Liste Equipe",
         icon: <ListIcon/>,
         path: "/listeCommerciale",
+        access: ['chef', 'admin'],
+
       },
       {
         title: "List Employees",
@@ -162,7 +172,7 @@ export const sidebarData = [
     title: "Users",
     path: "/listeuser",
     icon: < PersonPinIcon  />,
-    access:['chef','admin','commercial']
+    access:['admin']
   },
   // {
   //   title: "Chats",

@@ -1,46 +1,60 @@
-import React, { Component } from 'react';
-import CanvasJSReact from '@canvasjs/react-charts';
-//var CanvasJSReact = require('@canvasjs/react-charts');
- 
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-class Chartss4 extends Component {
-    render() {
-        const options = {
-            theme: "light2",
-            animationEnabled: true,
-            exportEnabled: true,
-            title: {
-                text: "Les opportunités à gagner"
-            },
-            axisY: {
-                title: "Les opportunités à gagner"
-            },
-            data: [
-            {
-                type: "area",
-                xValueFormatString: "YYYY",
-                yValueFormatString: "#,##0.## Million",
-                dataPoints: [
-                    { x: new Date(2017, 0), y: 7.6},
-                    { x: new Date(2016, 0), y: 7.3},
-                    { x: new Date(2015, 0), y: 6.4},
-                    { x: new Date(2014, 0), y: 5.3},
-                    { x: new Date(2013, 0), y: 4.5},
-                    { x: new Date(2012, 0), y: 3.8},
-                    { x: new Date(2011, 0), y: 3.2}
-                ]
-            }
-            ]
-        }
-        return (
-        <div>
-            <CanvasJSChart options = {options}
-                /* onRef={ref => this.chart = ref} */
-            />
-            {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-        </div>
-        );
-    }
+import React, { useEffect, useState } from "react";
+import CanvasJSReact from "@canvasjs/react-charts";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOpportunites } from "../../store/opportunite";
+
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+function Chartss4() {
+  const opportunites = useSelector((state) => state.opportunite?.opportunites.items);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOpportunites());
+  }, [dispatch]);
+
+  // Calculate the number of opportunities per day
+  const opportunitesPerDay = {};
+  opportunites.forEach((opportunite) => {
+    const date = new Date(opportunite.createdAt); // Assuming 'createdAt' is the property that holds the opportunity creation date
+    const day = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`; // Format: "YYYY-MM-DD"
+    opportunitesPerDay[day] = (opportunitesPerDay[day] || 0) + 1;
+  });
+
+  // Convert opportunitesPerDay object to an array of objects
+  const dataPoints = Object.entries(opportunitesPerDay).map(([day, count]) => ({
+    x: new Date(day), // Convertir la chaîne de date en objet Date
+    y: count,
+  }));
+
+  const options = {
+    theme: "light2",
+    animationEnabled: true,
+    exportEnabled: true,
+    title: {
+      text: "Nombre d'opportunités par jour",
+    },
+    axisX: {
+      title: "Date",
+      valueFormatString: "DD MMM YYYY",
+    },
+    axisY: {
+      title: "Nombre d'opportunités",
+      includeZero: false,
+    },
+    data: [
+      {
+        type: "area",
+        dataPoints: dataPoints,
+      },
+    ],
+  };
+
+  return (
+    <div>
+      <CanvasJSChart options={options} />
+    </div>
+  );
 }
+
 export default Chartss4;

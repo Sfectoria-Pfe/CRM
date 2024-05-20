@@ -11,6 +11,13 @@ export const fetchComment = createAsyncThunk("comments/fetchComment", async (id)
   const response = await axios.get(`http://localhost:7000/coments/${id}`);
   return response.data;
 });
+export const fetchCommentsByStageClientId = createAsyncThunk(
+  "comments/fetchCommentsByStageClientId",
+  async (stageClientId) => {
+    const response = await axios.get(`http://localhost:7000/coments?stageClientId=${stageClientId}`);
+    return { stageClientId, comments: response.data };
+  }
+);
 
 export const sendComment = createAsyncThunk("comments/sendComment", async (body) => {
   const response = await axios.post("http://localhost:7000/coments", body);
@@ -62,6 +69,11 @@ const commentSlice = createSlice({
           state.comment = updatedComment;
         }
       });
+      builder.addCase(fetchCommentsByStageClientId.fulfilled, (state, action) => {
+        state.comments.byStageClient[action.payload.stageClientId] = action.payload.comments;
+      });
+
+      
       builder.addCase(deleteComment.fulfilled, (state, action) => {
         state.comments.items = state.comments.items.filter(comment => comment.id !== action.payload);
         state.comments.count--;

@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOpportunites } from "../../../store/opportunite";
-import { Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Button, Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
-import { useDemoData } from "@mui/x-data-grid-generator";
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import AddOpportunite from "./AddOpportunite"; // Importer le composant du formulaire d'ajout
+
 function ListOpportunities() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,33 +50,40 @@ function ListOpportunities() {
     },
   ];
 
-  const VISIBLE_FIELDS = [
-    "name",
-    "rating",
-    "country",
-    "dateCreated",
-    "isAdmin",
-  ];
-  const { data } = useDemoData({
-    dataSet: "Employee",
-    visibleFields: VISIBLE_FIELDS,
-    rowLength: 100,
-  });
-
   useEffect(() => {
     dispatch(fetchOpportunites());
   }, [dispatch]);
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleAddOpportuniteSuccess = () => {
+    setShowModal(false); // Ferme la modal après l'ajout réussi
+  };
+
   return (
     <div>
-      <div className="d-flex justify-content-center mb-3" style={{backgroundColor:"#1976D2",color:"#fafafa"}}>
+      <div className="d-flex justify-content-center mb-3" style={{ backgroundColor: "#1976D2", color: "#fafafa" }}>
         <h2>Liste des Opportunités</h2>
-      </div>     
-      <div className="d-flex justify-content-end m-3" >
-        <Link className="btn btn-light" style={{backgroundColor:"#81d4fa"}} to="add">
-          Add Opportunity
-        </Link>
       </div>
-      
+      <div className="d-flex justify-content-end mb-3">
+        <Button variant="primary" onClick={() => setShowModal(true)}>
+          Ajouter une opportunité
+        </Button>
+      </div>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <br/><br/>  <Modal.Header closeButton>
+        </Modal.Header>
+        <Modal.Body>
+          <AddOpportunite onSuccess={handleAddOpportuniteSuccess} /> {/* Afficher le formulaire d'ajout dans la modal */}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Annuler
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}

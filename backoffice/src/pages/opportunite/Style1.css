@@ -115,3 +115,27 @@
   background-color: #f2f2f2; /* Variation de couleur de fond */
 }
 
+.dropdown-menu {
+  position: absolute;
+  top: 20px;
+  right: 0;
+  border: 1px solid #ccc;
+  background: #fff;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-menu button:hover {
+  background-color: #f0f0f0;
+}

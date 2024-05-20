@@ -11,7 +11,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:95134505Yy*@localhost:3306/crm"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -108,6 +108,7 @@ model Service {
   type                 TypeService           @default(vente)
   price                Float?
   imageURL             String?               @db.VarChar(255)
+  createdAt     DateTime      @default(now())
   details              ServiceDetail[]
   DevisLine            DevisLine[]
 }
@@ -178,7 +179,8 @@ model Comment {
   id            Int         @id @default(autoincrement())
   stageClient   StageClient @relation(fields: [stageClientId], references: [id])
   stageClientId Int
-  
+    createdAt            DateTime              @default(now())
+
   content       String
 }
 
