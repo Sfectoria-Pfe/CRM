@@ -31,10 +31,10 @@ function Charts2() {
     exportEnabled: true,
     animationEnabled: true,
     title: {
-      text: "Number of Services Per Day",
+      text: "Nombre des services par jours",
     },
     axisY: {
-      title: "Number of Services",
+      title: "Nombre des Services",
       includeZero: false,
     },
     data: [

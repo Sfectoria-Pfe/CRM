@@ -52,7 +52,7 @@ export default function Adduser() {
         if (!res.error) {
           toast.success("Votre utilisateur a été ajouté avec succès !");
           setTimeout(() => {
-            navigate(-1);
+            navigate(1);
           }, 2000);
         } else {
           toast.error(
@@ -138,7 +138,7 @@ export default function Adduser() {
           handleAddUser();
         }}
         className="form-button"
-        style={{ backgroundColor: "blue" }}
+        style={{ backgroundColor: "#1976D2",color:"#ffffff" }}
       >
         Ajouter l'utilisateur
       </Button>

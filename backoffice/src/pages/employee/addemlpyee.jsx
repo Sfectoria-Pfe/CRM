@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { createEmployee } from "../../store/employee";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box } from "@mui/material";
 
 export default function AddEmployee() {
   const [employee, setEmployee] = useState({
@@ -20,6 +24,7 @@ export default function AddEmployee() {
   const [emailError, setEmailError] = useState("");
   const [cinError, setCinError] = useState("");
   const [telephoneError, setTelephoneError] = useState("");
+  const [open, setOpen] = useState(true); // Ouvrir la popup par défaut
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,7 +35,6 @@ export default function AddEmployee() {
 
   const handleFile = (event) => {
     const file = event.target.files[0];
-    console.log("Fichier sélectionné :", file);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", preset_key);
@@ -50,25 +54,21 @@ export default function AddEmployee() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    let newValue = value; // Par défaut, conservez la valeur saisie
+    let newValue = value;
 
-    // Vérification des contraintes pour différents champs
     if (name === "cin") {
-      // Vérification pour CIN (doit contenir exactement 8 chiffres)
       if (value.length !== 8) {
         setCinError("Le CIN doit comporter exactement 8 chiffres.");
       } else {
         setCinError("");
       }
     } else if (name === "telephone") {
-      // Vérification pour le téléphone (doit contenir exactement 8 chiffres)
       if (value.length !== 8) {
         setTelephoneError("Le numéro de téléphone doit comporter exactement 8 chiffres.");
       } else {
         setTelephoneError("");
       }
     } else if (name === "email") {
-      // Vérification pour l'email (doit être au format email)
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(value)) {
         setEmailError("Veuillez saisir une adresse email valide.");
@@ -77,19 +77,15 @@ export default function AddEmployee() {
       }
     }
 
-    // Mise à jour de l'état avec la nouvelle valeur vérifiée
     setEmployee((prevEmployee) => ({ ...prevEmployee, [name]: newValue }));
   };
 
   const handleAddEmployee = () => {
-    // Vérification si des erreurs sont présentes
     if (cinError || emailError || telephoneError) {
-      // Affichage d'un message d'erreur global
       toast.error("Veuillez corriger les erreurs dans le formulaire.");
       return;
     }
 
-    // Envoi de la requête de création d'employé
     dispatch(createEmployee(employee))
       .then((res) => {
         if (!res.error) {
@@ -110,96 +106,88 @@ export default function AddEmployee() {
       });
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <div className="form-container">
-      <h2>Ajouter un employé</h2>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="CIN"
-          name="cin"
-          onChange={handleChange}
-        />
-        {cinError && <p className="text-danger">{cinError}</p>}
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Nom"
-          name="nom"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Prénom"
-          name="prenom"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Adresse"
-          name="adresse"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Email"
-          name="email"
-          onChange={handleChange}
-        />
-        {emailError && <p className="text-danger">{emailError}</p>}
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Téléphone"
-          name="telephone"
-          onChange={handleChange}
-        />
-        {telephoneError && <p className="text-danger">{telephoneError}</p>}
-      </div>
-      <div className="form-input">
-        <input
-          type="file"
-          className="form-control"
-          placeholder="URL de l'image"
-          name="image"
-          onChange={handleFile}
-        />
-        <br />
-        <br />
-        {image && <img src={image} alt="Uploaded" />}
-      </div>
-      <div className="form-input">
-        <select
-          className="form-control"
-          placeholder="Role"
-          name="role"
-          onChange={handleChange}
-        >
-          <option value="">Sélectionner un rôle</option>
-          <option value="commercial">Commercial</option>
-          <option value="chef">Chef</option>
-        </select>
-      </div>
-      <Button
-        variant="warning"
-        onClick={(e) => {
-          e.preventDefault();
-          handleAddEmployee();
-        }}
-        className="form-button"
-        style={{ backgroundColor: "blue" }}
-      >
-        Ajouter l'employé
-      </Button>
+    <>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Ajouter un employé</DialogTitle>
+        <DialogContent>
+          <Box sx={{ minWidth: 300 }}>
+            <TextField
+              margin="normal"
+              fullWidth
+              label="CIN"
+              name="cin"
+              onChange={handleChange}
+              error={!!cinError}
+              helperText={cinError}
+            />
+            <TextField
+              margin="normal"
+              fullWidth
+              label="Nom"
+              name="nom"
+              onChange={handleChange}
+            />
+            <TextField
+              margin="normal"
+              fullWidth
+              label="Prénom"
+              name="prenom"
+              onChange={handleChange}
+            />
+            <TextField
+              margin="normal"
+              fullWidth
+              label="Adresse"
+              name="adresse"
+              onChange={handleChange}
+            />
+            <TextField
+              margin="normal"
+              fullWidth
+              label="Email"
+              name="email"
+              onChange={handleChange}
+              error={!!emailError}
+              helperText={emailError}
+            />
+            <TextField
+              margin="normal"
+              fullWidth
+              label="Téléphone"
+              name="telephone"
+              onChange={handleChange}
+              error={!!telephoneError}
+              helperText={telephoneError}
+            />
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Rôle</InputLabel>
+              <Select
+                value={employee.role}
+                onChange={handleChange}
+                name="role"
+              >
+                <MenuItem value="commercial">Commercial</MenuItem>
+                <MenuItem value="chef">Chef</MenuItem>
+              </Select>
+            </FormControl>
+            <input
+              type="file"
+              onChange={handleFile}
+            />
+            {image && <img src={image} alt="Uploaded" style={{ width: "100%", marginTop: 10 }} />}
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAddEmployee} variant="contained" color="primary">Ajouter</Button>
+          <Button onClick={handleClose} variant="contained" color="secondary">Annuler</Button>
+        </DialogActions>
+      </Dialog>
       <ToastContainer />
-    </div>
+    </>
   );
 }

@@ -97,10 +97,16 @@ function ListEmployee() {
 
   return (
     <div>
+      <div
+        className="d-flex justify-content-center mb-3"
+        style={{ backgroundColor: "#1976D2", color: "#fafafa" }}
+      >
+        <h2>Liste des Employés</h2>
+      </div>
       {/* Bouton pour ajouter un employé */}
       <div className="d-flex justify-content-end m-3">
-        <Link className="btn btn-light" to="/addemployee">
-          Ajouter Employé
+        <Link  to="/addemployee">
+         <Button style={{backgroundColor:"#1976D2",color:"#ffffff"}}>Ajouter Employé </Button>
         </Link>
       </div>
 

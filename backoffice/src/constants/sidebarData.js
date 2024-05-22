@@ -113,7 +113,7 @@ export const sidebarData = [
         title: " Ajouter Devis",
         icon: <DevisIcon />,
         path: "/InvoiceForm",
-        access: [ 'commercial','chef'],
+        access: [ 'commercial'],
 
       },
       {

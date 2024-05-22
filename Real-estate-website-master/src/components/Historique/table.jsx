@@ -27,18 +27,18 @@ const demandedevis = allDemandeDevis.filter((demande) => demande.clientId === cl
     {
       field: "dateDemande",
       headerName: "dateDemande",
-      width: 150,
+      width: 350,
     },
     {
       field: "description",
       headerName: "description",
-      width: 150,
+      width: 350,
     },
     { field: "sujet", headerName: "sujet", width: 150 },
     { 
       field: "etat", 
       headerName: "etat", 
-      width: 150,
+      width: 350,
       renderCell: ({ row }) => (
         <span style={{ color: row.etat === "Acceptée" ? 'green' : row.etat === "Refusée" ? 'red' : 'inherit' }}>
           {row.etat}
@@ -46,18 +46,18 @@ const demandedevis = allDemandeDevis.filter((demande) => demande.clientId === cl
       )
     },
     
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 180,
-      renderCell: ({ row }) => (
-        <>
-          <Button onClick={() => navigate(`/demande-devis/${row.id}`)}>
-            <VisibilityIcon />
-          </Button>
-        </>
-      ),
-    },
+    // {
+    //   field: "actions",
+    //   headerName: "Actions",
+    //   width: 180,
+    //   renderCell: ({ row }) => (
+    //     <>
+    //       {/* <Button onClick={() => navigate(`/demande-devis/${row.id}`)}>
+    //         <VisibilityIcon />
+    //       </Button> */}
+    //     </>
+    //   ),
+    // },
   ];
 
   return (

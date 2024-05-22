@@ -64,10 +64,17 @@ function ListEquipeCommerciale() {
 
   return (
     <div>
+      <div
+          className="d-flex justify-content-center mb-3"
+          style={{ backgroundColor: "#1976D2", color: "#fafafa",width:"100%" }}
+        >
+          <h2>Liste des equipes Commerciales</h2>
+        </div>
       <div className="d-flex justify-content-end m-3">
-        <Link className="btn btn-light" to="/AddEquipeCommerciale">
-          Ajouter une équipe commerciale
+        <Link  to="/AddEquipeCommerciale">
+          <Button style={{backgroundColor:"#1976D2",color:"#ffffff"}}>Ajouter une équipe commerciale </Button>
         </Link>
+        
       </div>
 
       <div style={{ height: 400, width: "100%" }}>

@@ -41,7 +41,6 @@ function ListRendezvous() {
       headerName: "Heure",
       width: 150,
     },
-
     {
       field: "date",
       headerName: "Date",
@@ -56,8 +55,7 @@ function ListRendezvous() {
       field: "clientId",
       headerName: "Client",
       width: 150,
-      },
-
+    },
     {
       field: "statut",
       headerName: "Statut",
@@ -68,17 +66,16 @@ function ListRendezvous() {
         </span>
       )
     },
-
     {
       field: "actions",
       headerName: "Actions",
-      width: 180,
+      width: 200,
       renderCell: ({ row }) => (
         <>
-          <Button onClick={() => navigate(`/${row.id}`)}>
+          {/* <Button onClick={() => navigate(`/${row.id}`)}>
             <VisibilityIcon />
-          </Button>
-          <Tooltip title="Accepté" placement="top"stycolor="green">
+          </Button> */}
+          <Tooltip title="Accepté" placement="top">
             <Button onClick={() => handleAccept(row.id)}>
               <CheckCircleIcon style={{ color: 'green' }} />
             </Button>
@@ -96,6 +93,9 @@ function ListRendezvous() {
   return (
     <div>
       {/* Liste des rendez-vous */}
+      <div className="d-flex justify-content-center mb-3" style={{ backgroundColor: "#1976D2", color: "#fafafa" }}>
+        <h2>Liste des Rendez-vous</h2>
+      </div>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}

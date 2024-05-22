@@ -53,28 +53,28 @@ function ListHistorique2() {
       width: 150,
     },
     
-    {
-      field: "actions",
-      headerName: "Actions",
-      width: 200,
-      renderCell: () => (
-        <>
-          <Button disabled>
-            <VisibilityIcon />
-          </Button>
-          <Tooltip title="Accepter demande" placement="top">
-            <Button disabled>
-              <CheckCircleIcon style={{ color: 'green' }} />
-            </Button>
-          </Tooltip>
-          <Tooltip title="Refuser demande" placement="top">
-            <Button disabled>
-              <CancelIcon style={{ color: 'red' }} />
-            </Button>
-          </Tooltip>
-        </>
-      ),
-    },
+    // {
+    //   field: "actions",
+    //   headerName: "Actions",
+    //   width: 200,
+    //   renderCell: () => (
+    //     <>
+    //       {/* <Button disabled>
+    //         <VisibilityIcon />
+    //       </Button>
+    //       <Tooltip title="Accepter demande" placement="top">
+    //         <Button disabled>
+    //           <CheckCircleIcon style={{ color: 'green' }} />
+    //         </Button>
+    //       </Tooltip>
+    //       <Tooltip title="Refuser demande" placement="top">
+    //         <Button disabled>
+    //           <CancelIcon style={{ color: 'red' }} />
+    //         </Button>
+    //       </Tooltip> */}
+    //     </>
+    //   ),
+    // },
   ];
 
   useEffect(() => {

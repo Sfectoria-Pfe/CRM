@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, FormControl } from "react-bootstrap";
+import { Button, Form, Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { sendOpportunite } from "../../../store/opportunite";
 import { useNavigate } from "react-router-dom";
@@ -12,9 +12,9 @@ import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -22,20 +22,18 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 220,
+      width: 250,
     },
   },
 };
 
-const AddOpportunite = ({ toggleModal }) => {
+const AddOpportunite = ({ onSuccess }) => {
   const [opportunite, setOpportunite] = useState({
     serviceIds: [],
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const equipesCommerciales = useSelector(
-    (state) => state.Equipe.equipesCommerciales.items
-  );
+  const equipesCommerciales = useSelector((state) => state.Equipe.equipesCommerciales.items);
   const services = useSelector((state) => state.service.services.items);
 
   const handleChange = (e) => {
@@ -49,13 +47,11 @@ const AddOpportunite = ({ toggleModal }) => {
     } else {
       newValue = value;
     }
-
     setOpportunite({ ...opportunite, [name]: newValue });
   };
 
   const handleMemberSelection = (e) => {
     const { value } = e.target;
-
     setOpportunite((prevState) => ({
       ...prevState,
       serviceIds: value,
@@ -73,81 +69,87 @@ const AddOpportunite = ({ toggleModal }) => {
         if (!res.error) {
           toast.success("L'opportunité a été ajoutée avec succès !");
           setTimeout(() => {
-            toggleModal(false);
+            onSuccess();
           }, 2000);
         } else {
           toast.error("Erreur lors de l'ajout de l'opportunité. Veuillez réessayer.");
         }
       })
-      .catch((error) => {
+      .catch(() => {
         toast.error("Erreur lors de l'ajout de l'opportunité. Veuillez réessayer.");
       });
   };
 
   return (
-    <Box className="form-container" sx={{ p: 3 }}>
-      <h2>Ajouter une opportunité</h2>
-      <Box className="form-input" sx={{ mb: 2 }}>
-        <TextField
-          fullWidth
-          variant="outlined"
-          label="Titre"
-          name="title"
-          onChange={handleChange}
-        />
-      </Box>
-      <Box className="form-input" sx={{ mb: 2 }}>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel>Choisir Votre équipe</InputLabel>
-          <Select
-            name="equipeId"
-            onChange={handleChange}
-            label="Choisir Votre équipe"
-          >
-            <MenuItem value={null}>
-              <em>Aucune</em>
-            </MenuItem>
-            {equipesCommerciales.map((elem, i) => (
-              <MenuItem key={i} value={elem.id}>
-                {elem.nom_equipe}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
-      <Box className="form-input" sx={{ mb: 2 }}>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel>Services</InputLabel>
-          <Select
-            label="Services"
-            multiple
-            value={opportunite.serviceIds}
-            onChange={handleMemberSelection}
-            input={<OutlinedInput label="Services" />}
-            renderValue={(selected) =>
-              selected.map((value) => services.find((service) => service.id === value)?.name).join(", ")
-            }
-            MenuProps={MenuProps}
-          >
-            {services.map((elem, i) => (
-              <MenuItem key={i} value={elem.id}>
-                <Checkbox checked={opportunite.serviceIds.includes(elem.id)} />
-                <ListItemText primary={elem.name} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Box>
-      <div className="d-flex justify-content-end" style={{ marginTop: '16px' }}>
-        <Button variant="secondary" onClick={() => toggleModal(false)} className="me-2">
-          Annuler
-        </Button>
-        <Button variant="primary" onClick={handleAddOpportunite}>
-          Ajouter l'opportunité
-        </Button>
-      </div>
+    <Container className="form-container mt-4">
+      <h2 className="text-center mb-4">Ajouter une opportunité</h2>
+      <Form>
+        <Form.Group as={Row} className="mb-3" controlId="formTitle">
+          <Form.Label column sm="3">Titre</Form.Label>
+          <Col sm="9">
+            <Form.Control
+              type="text"
+              placeholder="Titre"
+              name="title"
+              onChange={handleChange}
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3" controlId="formEquipe">
+          <Form.Label column sm="3">Équipe</Form.Label>
+          <Col sm="9">
+            <Form.Control
+              as="select"
+              name="equipeId"
+              required
+              onChange={handleChange}
+            >
+              <option value={null}>Choisir votre équipe</option>
+              {equipesCommerciales.map((elem, i) => (
+                <option key={i} value={elem.id}>
+                  {elem.nom_equipe}
+                </option>
+              ))}
+            </Form.Control>
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} className="mb-3" controlId="formServices">
+          <Form.Label column sm="3">Services</Form.Label>
+          <Col sm="9">
+            <FormControl>
+              <Select
+                style={{ width: "100%" }}
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                multiple
+                value={opportunite.serviceIds}
+                onChange={handleMemberSelection}
+                input={<OutlinedInput label="Services" />}
+                renderValue={(selected) =>
+                  selected
+                    .map((value) => services.find((service) => service.id === value)?.name)
+                    .join(", ")
+                }
+                MenuProps={MenuProps}
+              >
+                {services.map((elem, i) => (
+                  <MenuItem key={i} value={elem.id}>
+                    <Checkbox checked={opportunite.serviceIds.includes(elem.id)} color="primary" />
+                    <ListItemText primary={elem.name} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Col>
+        </Form.Group>
+        <div className="text-center">
+          <Button variant="primary" onClick={handleAddOpportunite}>
+            Ajouter l'opportunité
+          </Button>
+        </div>
+      </Form>
       <ToastContainer />
-    </Box>
+    </Container>
   );
 };
 

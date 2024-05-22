@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOpportunites } from "../../../store/opportunite";
 import { Button, Modal } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import AddOpportunite from "./AddOpportunite"; // Importer le composant du formulaire d'ajout
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import AddOpportunite from "./AddOpportunite"; // Import the AddOpportunite component
 
 function ListOpportunities() {
   const dispatch = useDispatch();
@@ -13,15 +13,18 @@ function ListOpportunities() {
   const opportunities = useSelector(
     (state) => state?.opportunite.opportunites.items
   );
+  
+  const [showModal, setShowModal] = useState(false);
+
   const columns = [
     {
       field: "id",
-      headerName: "Opportunity ID ",
+      headerName: "Opportunity ID",
       width: 150,
     },
     {
       field: "title",
-      headerName: "Name ",
+      headerName: "Name",
       width: 150,
     },
     {
@@ -54,10 +57,12 @@ function ListOpportunities() {
     dispatch(fetchOpportunites());
   }, [dispatch]);
 
-  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
 
-  const handleAddOpportuniteSuccess = () => {
-    setShowModal(false); // Ferme la modal après l'ajout réussi
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -65,25 +70,11 @@ function ListOpportunities() {
       <div className="d-flex justify-content-center mb-3" style={{ backgroundColor: "#1976D2", color: "#fafafa" }}>
         <h2>Liste des Opportunités</h2>
       </div>
-      <div className="d-flex justify-content-end mb-3">
-        <Button variant="primary" onClick={() => setShowModal(true)}>
-          Ajouter une opportunité
+      <div className="d-flex justify-content-end m-3">
+        <Button variant="light" style={{backgroundColor:"#1976D2",color:"#ffffff"}} onClick={handleShowModal}>
+          Ajouter opportunité
         </Button>
       </div>
-
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-      <br/><br/>  <Modal.Header closeButton>
-        </Modal.Header>
-        <Modal.Body>
-          <AddOpportunite onSuccess={handleAddOpportuniteSuccess} /> {/* Afficher le formulaire d'ajout dans la modal */}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Annuler
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}
@@ -91,6 +82,13 @@ function ListOpportunities() {
           slots={{ toolbar: GridToolbar }}
         />
       </div>
+      <Modal show={showModal} onHide={handleCloseModal} >
+        <Modal.Header closeButton style={{padding:'30px'}}>
+        </Modal.Header>
+        <Modal.Body>
+          <AddOpportunite onSuccess={handleCloseModal} />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
