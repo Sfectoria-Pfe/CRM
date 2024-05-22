@@ -12,6 +12,7 @@ function ListOpportunities() {
   const opportunities = useSelector(
     (state) => state?.opportunite.opportunites.items
   );
+  const me = useSelector((state) => state?.auth?.me);
   const columns = [
     {
       field: "id",
@@ -63,8 +64,9 @@ function ListOpportunities() {
   });
 
   useEffect(() => {
-    dispatch(fetchOpportunites());
+    dispatch(fetchOpportunites(me?.id));
   }, [dispatch]);
+  console.log(me,'me');
   return (
     <div>
       <div className="d-flex justify-content-center mb-3" style={{backgroundColor:"#1976D2",color:"#fafafa"}}>

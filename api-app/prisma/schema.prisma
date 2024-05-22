@@ -42,7 +42,7 @@ model Employee {
   user   User[]
   Member Member[]
 }
-
+//hani raje3 
 model Equipe {
   id           Int           @id @default(autoincrement())
   nom_equipe   String
@@ -78,7 +78,7 @@ model Client {
   stages       StageClient[]
   user         User[]
   demandeDevis DemandeDevis[]
-  createdAt Date
+  createdAt DateTime @default(now())
 }
 
 model CategorieClient {

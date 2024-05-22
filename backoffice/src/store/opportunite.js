@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Fonctions asynchrones pour les opérations CRUD sur les opportunités
-export const fetchOpportunites = createAsyncThunk("opportunite/fetchOpportunites", async () => {
-  const response = await axios.get("http://localhost:7000/opportunites");
+export const fetchOpportunites = createAsyncThunk("opportunite/fetchOpportunites", async (id) => {
+  const response = await axios.get(`http://localhost:7000/opportunites/opportunity-commercial/${id}`);
   return response.data;
 });
 

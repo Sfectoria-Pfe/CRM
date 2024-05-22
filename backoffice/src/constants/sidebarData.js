@@ -74,7 +74,7 @@ export const sidebarData = [
     title: "Opportunities",
     path: "/opportunities",
     icon: < DiamondIcon />,
-    access:['chef','admin']
+    access:['chef','admin','commercial']
   },
   {
     title: "Clients",

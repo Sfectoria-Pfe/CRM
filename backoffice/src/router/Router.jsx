@@ -141,7 +141,7 @@ export default function Router() {
                   element={
                     <PrivateRoute
                       Component={Opportunity}
-                      roles={["chef", "admin"]}
+                      roles={["chef", "admin","commercial"]}
                     />
                   }
                 >

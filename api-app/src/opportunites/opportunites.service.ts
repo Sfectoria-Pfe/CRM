@@ -5,7 +5,7 @@ import { UpdateOpportuniteDto } from './dto/update-opportunite.dto';
 
 @Injectable()
 export class OpportunitesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(createOpportuniteDto: CreateOpportuniteDto) {
     const { serviceIds, ...rest } = createOpportuniteDto;
@@ -47,6 +47,23 @@ export class OpportunitesService {
     } else {
       return opportunites;
     }
+  }
+
+
+  async findAllWithCommercial(id: number) {
+    return await this.prisma.opportunite.findMany({
+      where: {
+        equipe: {
+          Member: {
+            some: {
+              employee: {
+                id: id
+              }
+            }
+          }
+        }
+      }
+    })
   }
 
   async findOne(

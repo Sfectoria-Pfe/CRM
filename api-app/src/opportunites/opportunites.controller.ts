@@ -15,7 +15,8 @@ import { UpdateOpportuniteDto } from './dto/update-opportunite.dto';
 import { Role } from 'src/auth/decorator/role';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CurrentUser } from 'src/auth/decorator/current-user';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('opportunites')
 @Controller('opportunites')
 export class OpportunitesController {
   constructor(private readonly opportunitesService: OpportunitesService) {}
@@ -41,6 +42,11 @@ export class OpportunitesController {
     );
   }
 
+@Get("/opportunity-commercial/:id")
+findAllOputunityCommercial(@Param('id') id: string) {
+
+  return this.opportunitesService.findAllWithCommercial(+id);
+}
   @Patch(':id')
   update(
     @Param('id') id: string,
