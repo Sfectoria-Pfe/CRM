@@ -11,6 +11,10 @@ export const fetchOpportunite = createAsyncThunk("opportunite/fetchOpportunite",
   const response = await axios.get(`http://localhost:7000/opportunites/${id}`);
   return response.data;
 });
+export const fetchOpportuniteAdmin = createAsyncThunk("opportunite/fetchOpportuniteAdmin", async () => {
+  const response = await axios.get(`http://localhost:7000/opportunites/getAllOpt`);
+  return response.data;
+});
 
 export const sendOpportunite = createAsyncThunk("opportunite/addOpportunite", async (body) => {
   const response = await axios.post("http://localhost:7000/opportunites", body);
@@ -48,6 +52,10 @@ const opportuniteSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchOpportunites.fulfilled, (state, action) => {
+      state.opportunites.items = action.payload;
+      state.opportunites.count = action.payload.length;
+    });
+    builder.addCase(fetchOpportuniteAdmin.fulfilled, (state, action) => {
       state.opportunites.items = action.payload;
       state.opportunites.count = action.payload.length;
     });

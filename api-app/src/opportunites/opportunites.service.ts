@@ -53,18 +53,29 @@ export class OpportunitesService {
   async findAllWithCommercial(id: number) {
     return await this.prisma.opportunite.findMany({
       where: {
-        equipe: {
-          Member: {
-            some: {
-              employee: {
-                id: id
-              }
-            }
+        OR: [
+          {
+            equipe: {
+              Member: {
+                some: {
+                  employee: {
+                    id,
+                  },
+                },
+              },
+            },
+          },
+          {
+            equipe: {
+              chefId: id
+            },
           }
-        }
-      }
-    })
+        ],
+      },
+    });
   }
+
+
 
   async findOne(
     id: number,
@@ -96,6 +107,27 @@ export class OpportunitesService {
     // }
     return opportunity;
   }
+
+  async getAllOpuportunites() {
+    return await this.prisma.opportunite.findMany({
+      include: {
+        equipe: {
+          include: {
+            chef: true, Member: {
+              include: { employee: true }
+            }
+          }
+        },
+      },
+    });
+  }
+
+  async getOpuportunites() {
+    return await this.prisma.opportunite.findMany({
+
+    });
+  }
+
 
   async update(id: number, UpdateOpportuniteDto: UpdateOpportuniteDto) {
     try {

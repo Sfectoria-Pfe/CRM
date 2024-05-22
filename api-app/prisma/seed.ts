@@ -58,11 +58,27 @@ async function seed() {
         Member: { create: [{ employeeId: 1 }] }
       },
     });
+
+console.log(employees[0],'employee0');
+console.log(employees[1],'employee1');
+console.log(employees[2],'employee2');
+console.log(employees[3],'employee3');
+
+
+
+
     const equipe2 = await prisma.equipe.create({
       data: {
         nom_equipe: 'String',
         chefId: employees[3].id,
         Member: { create: [{ employeeId: 4},{employeeId:2 }] }
+      },
+    });
+    const equipe3 = await prisma.equipe.create({
+      data: {
+        nom_equipe: 'String',
+        chefId: employees[3].id,
+        Member: { create: [{employeeId:3 }] }
       },
     });
     const opportunity = await prisma.opportunite.create({
@@ -138,7 +154,7 @@ async function seed() {
     const opportunity2 = await prisma.opportunite.create({
       data: {
         title: 'Opportunity 2',
-        equipeId: equipe.id,
+        equipeId: equipe3.id,
         service_Opportunites: {
           create: {
             prix: 500,

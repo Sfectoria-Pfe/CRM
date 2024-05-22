@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOpportunites } from "../../../store/opportunite";
+import { fetchOpportuniteAdmin, fetchOpportunites } from "../../../store/opportunite";
 import { Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
@@ -64,9 +64,9 @@ function ListOpportunities() {
   });
 
   useEffect(() => {
-    dispatch(fetchOpportunites(me?.id));
+   me?.Employee?.role ==="admin"? dispatch(fetchOpportuniteAdmin()): dispatch(fetchOpportunites(me?.employeeId));
   }, [dispatch]);
-  console.log(me,'me');
+  console.log(me.id,'me');
   return (
     <div>
       <div className="d-flex justify-content-center mb-3" style={{backgroundColor:"#1976D2",color:"#fafafa"}}>
