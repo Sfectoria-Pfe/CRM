@@ -4,6 +4,7 @@ import { dataServices } from './dataServices';
 import * as bcrypt from 'bcrypt';
 import { dataClient } from './dataClient';
 import { dataLocation, dataVente } from './dataLocation';
+import { create } from 'domain';
 
 const prisma = new PrismaClient();
 
@@ -54,6 +55,30 @@ async function seed() {
       data: {
         nom_equipe: 'String',
         chefId: employees[0].id,
+        Member: { create: [{ employeeId: 1 }] }
+      },
+    });
+
+console.log(employees[0],'employee0');
+console.log(employees[1],'employee1');
+console.log(employees[2],'employee2');
+console.log(employees[3],'employee3');
+
+
+
+
+    const equipe2 = await prisma.equipe.create({
+      data: {
+        nom_equipe: 'String',
+        chefId: employees[3].id,
+        Member: { create: [{ employeeId: 4},{employeeId:2 }] }
+      },
+    });
+    const equipe3 = await prisma.equipe.create({
+      data: {
+        nom_equipe: 'String',
+        chefId: employees[3].id,
+        Member: { create: [{employeeId:3 }] }
       },
     });
     const opportunity = await prisma.opportunite.create({
@@ -82,7 +107,7 @@ async function seed() {
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU4b_B8qlxrK6yMV7ZQD_zRsR-X_avOEZBFO4LSWBO8g&s',
       },
     });
-    
+
 
     const servicesOpportunities1 = await prisma.service_Opportunite.create({
       data: {
@@ -129,7 +154,7 @@ async function seed() {
     const opportunity2 = await prisma.opportunite.create({
       data: {
         title: 'Opportunity 2',
-        equipeId: equipe.id,
+        equipeId: equipe3.id,
         service_Opportunites: {
           create: {
             prix: 500,
@@ -152,7 +177,7 @@ async function seed() {
     const opportunity3 = await prisma.opportunite.create({
       data: {
         title: 'Opportunity 3',
-        equipeId: equipe.id,
+        equipeId: equipe2.id,
         service_Opportunites: {
           create: {
             prix: 500,
@@ -208,20 +233,20 @@ async function seed() {
             },
             include: { user: true },
           }),
-         
+
       ),
     );
 
     const randomDate = (start, end) => {
       return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     };
-    
+
     // Define the range for random dates (e.g., last 6 months)
     // const currentDate = new Date();
     const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 6, 1); // Start date (6 months ago)
     const endDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0); // End date (last day of the previous month)
-    
-    
+
+
     // Array containing data for 15 StageClient entries with different values and random createdAt dates
     const stageClientData = Array(15).fill(null).map((_, index) => ({
       description: `Stage Client ${index + 1}`,
@@ -231,17 +256,17 @@ async function seed() {
       stageId: stage2.id, // Assuming you have a 'stage2' object from the first code snippet
       createdAt: randomDate(startDate, endDate), // Generate a random date within the defined range
     }));
-    
 
-// Adding Stage Clients with different creation dates
-const createdStageClients = await Promise.all(
-  stageClientData.map(async (data) => {
-    const stageClient = await prisma.stageClient.create({
-      data,
-    });
-    return stageClient;
-  })
-);
+
+    // Adding Stage Clients with different creation dates
+    const createdStageClients = await Promise.all(
+      stageClientData.map(async (data) => {
+        const stageClient = await prisma.stageClient.create({
+          data,
+        });
+        return stageClient;
+      })
+    );
     await prisma.promotion.create({
       data: {
         date_debut: new Date('10-10-2023').toISOString(),
@@ -251,10 +276,10 @@ const createdStageClients = await Promise.all(
         categorieClientId: category.id,
       },
     });
-   
-    
+
+
     console.log(clients[0].user[0]);
-    
+
     const locations = await prisma.location.createMany({
       data: dataLocation,
     });
@@ -266,7 +291,7 @@ const createdStageClients = await Promise.all(
       data: [
         {
           senderId: clients[0].user[0].id,
-         
+
           opportunityId: 1,
           content: 'hello',
         },
@@ -298,7 +323,7 @@ const createdStageClients = await Promise.all(
           opportunityId: 1,
           content: 'hi',
         },
-       
+
       ],
     });
     console.log('data seeeeded');

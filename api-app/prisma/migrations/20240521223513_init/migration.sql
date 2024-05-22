@@ -54,6 +54,7 @@ CREATE TABLE `Client` (
     `telephone` VARCHAR(191) NOT NULL,
     `image` VARCHAR(191) NULL,
     `categorieId` INTEGER NULL DEFAULT 1,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `Client_email_key`(`email`),
     PRIMARY KEY (`id`)
@@ -158,8 +159,6 @@ CREATE TABLE `StageClient` (
 CREATE TABLE `Comment` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `stageClientId` INTEGER NOT NULL,
-    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `updatedAt` DATETIME(3) NOT NULL,
     `content` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)

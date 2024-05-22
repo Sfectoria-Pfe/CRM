@@ -15,7 +15,8 @@ import { UpdateOpportuniteDto } from './dto/update-opportunite.dto';
 import { Role } from 'src/auth/decorator/role';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CurrentUser } from 'src/auth/decorator/current-user';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('opportunites')
 @Controller('opportunites')
 export class OpportunitesController {
   constructor(private readonly opportunitesService: OpportunitesService) {}
@@ -30,7 +31,16 @@ export class OpportunitesController {
   findAll(@Query() query:any) { //@Role(['admin','chef']) role
     return this.opportunitesService.findAll(+query.numberService);
   }
+
+  @Get("/getAll") 
+  findAllopt () {
+    return this.opportunitesService.getAllOpuportunites();
+  }
   
+  @Get("/getAllOpt") 
+  findForAdmin() {
+    return this.opportunitesService.getOpuportunites();
+  }
   @Get(':id')
   findOne(@Param('id') id: string,
 // @CurrentUser() user
@@ -41,6 +51,11 @@ export class OpportunitesController {
     );
   }
 
+@Get("/opportunity-commercial/:id")
+findAllOputunityCommercial(@Param('id') id: string) {
+
+  return this.opportunitesService.findAllWithCommercial(+id);
+}
   @Patch(':id')
   update(
     @Param('id') id: string,

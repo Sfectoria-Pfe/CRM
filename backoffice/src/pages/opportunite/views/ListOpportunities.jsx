@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchOpportunites } from "../../../store/opportunite";
-import { Button, Modal } from "react-bootstrap";
+import { fetchOpportuniteAdmin, fetchOpportunites } from "../../../store/opportunite";
+import { Button,Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -16,6 +16,7 @@ function ListOpportunities() {
   
   const [showModal, setShowModal] = useState(false);
 
+  const me = useSelector((state) => state?.auth?.me);
   const columns = [
     {
       field: "id",
@@ -54,7 +55,7 @@ function ListOpportunities() {
   ];
 
   useEffect(() => {
-    dispatch(fetchOpportunites());
+   me?.Employee?.role ==="admin"? dispatch(fetchOpportuniteAdmin()): dispatch(fetchOpportunites(me?.employeeId));
   }, [dispatch]);
 
   const handleShowModal = () => {
@@ -65,6 +66,7 @@ function ListOpportunities() {
     setShowModal(false);
   };
 
+  console.log(me.id,'me');
   return (
     <div>
       <div className="d-flex justify-content-center mb-3" style={{ backgroundColor: "#1976D2", color: "#fafafa" }}>

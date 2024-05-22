@@ -11,15 +11,17 @@ export const fetchEmployee = createAsyncThunk("employee/fetchEmployee", async (i
   const response = await axios.get(`http://localhost:7000/employees/${id}`);
   return response.data;
 });
-
 export const fetchemployeesWithoutAccount = createAsyncThunk(
   "client/fetchEmployeesWithoutAccount",
   async () => {
-
+   
     const response = await axios.get("http://localhost:7000/employees/without-account", );
     return response.data;
   }
 );
+
+
+
 
 export const createEmployee = createAsyncThunk("employee/createEmployee", async (body) => {
   const response = await axios.post("http://localhost:7000/employees", body);
@@ -74,14 +76,11 @@ const employeeSlice = createSlice({
       state.employees.items = state.employees.items.filter(employee => employee.id !== action.payload);
       state.employees.count--;
     });
-  
-  
-  builder.addCase(fetchemployeesWithoutAccount.fulfilled, (state, action) => {
-    state.employees.items = action.payload;
-    state.employees.count = action.payload.length;
-  });
-
-},
+      builder.addCase(fetchemployeesWithoutAccount.fulfilled, (state, action) => {
+      state.employees.items = action.payload;
+      state.employees.count = action.payload.length;
+    });
+  },
 });
 
 export default employeeSlice.reducer;

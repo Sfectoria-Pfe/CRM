@@ -35,6 +35,7 @@ export class ClientsService {
     });
     return response.filter((elem) => elem.user.length === 0);
   }
+  
 
   async findOne(id: number) {
     const client = await this.prisma.client.findUnique({

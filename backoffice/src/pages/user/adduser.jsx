@@ -24,7 +24,7 @@ export default function Adduser() {
   useEffect(() => {
     dispatch(fetchClientsWithoutAccount());
     dispatch(fetchemployeesWithoutAccount());
-    }, [dispatch]);
+  }, [dispatch]);
   useEffect(() => {
     if (user.isClient) setData(clients);
     else setData(employees);
@@ -33,8 +33,9 @@ export default function Adduser() {
   const handleChangeSelect = (e) => {
     if (user.isClient) {
       setUser({ ...user, clientId: +e.target.value });
-        } else {
-          setUser({ ...user, employeeId: +e.target.value });    }
+    } else {
+      setUser({ ...user, employeeId: +e.target.value });
+    }
   };
   
   const handleChange = (e) => {
@@ -47,8 +48,8 @@ export default function Adduser() {
   };
   
   const handleAddUser = () => {
-    dispatch(sendUser(user))
-          .then((res) => {
+   dispatch(sendUser(user))
+      .then((res) => {
         if (!res.error) {
           toast.success("Votre utilisateur a été ajouté avec succès !");
           setTimeout(() => {

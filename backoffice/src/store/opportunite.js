@@ -2,13 +2,17 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Fonctions asynchrones pour les opérations CRUD sur les opportunités
-export const fetchOpportunites = createAsyncThunk("opportunite/fetchOpportunites", async () => {
-  const response = await axios.get("http://localhost:7000/opportunites");
+export const fetchOpportunites = createAsyncThunk("opportunite/fetchOpportunites", async (id) => {
+  const response = await axios.get(`http://localhost:7000/opportunites/opportunity-commercial/${id}`);
   return response.data;
 });
 
 export const fetchOpportunite = createAsyncThunk("opportunite/fetchOpportunite", async (id) => {
   const response = await axios.get(`http://localhost:7000/opportunites/${id}`);
+  return response.data;
+});
+export const fetchOpportuniteAdmin = createAsyncThunk("opportunite/fetchOpportuniteAdmin", async () => {
+  const response = await axios.get(`http://localhost:7000/opportunites/getAllOpt`);
   return response.data;
 });
 
@@ -48,6 +52,10 @@ const opportuniteSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchOpportunites.fulfilled, (state, action) => {
+      state.opportunites.items = action.payload;
+      state.opportunites.count = action.payload.length;
+    });
+    builder.addCase(fetchOpportuniteAdmin.fulfilled, (state, action) => {
       state.opportunites.items = action.payload;
       state.opportunites.count = action.payload.length;
     });
