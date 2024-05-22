@@ -21,10 +21,10 @@ const Header = ({ user }) => {
           <div className="nav">
             <Nav className={navList ? "small" : "flex"}>
               <Nav.Link as={Link} to="/" className="nav-link">
-                <span>Home</span>
+                <span>Acceuil</span>
               </Nav.Link>
               <Nav.Link as={Link} to="/about" className="nav-link">
-                <span>About</span>
+                <span>A propos de nous</span>
               </Nav.Link>
               <Nav.Link as={Link} to="/services" className="nav-link">
                 <span>Services</span>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { sendService } from "../../../store/services";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 export default function AddService() {
+  const [showModal, setShowModal] = useState(false);
   const [service, setService] = useState({
     name: "",
     description: "",
@@ -70,57 +71,69 @@ export default function AddService() {
   };
 
   return (
-    <div className="form-container">
-      <h2>Ajouter un service</h2>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Nom"
-          name="name"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Description"
-          name="description"
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        <select
-          className="form-control"
-          name="type"
-          onChange={handleChange}
-        >
-          <option value="">Sélectionnez un type</option>
-          <option value="vente">Vente</option>
-          <option value="location">Location</option>
-          <option value="autre">Autre</option>
-        </select>
-      </div>
-      <div className="form-input">
-        <input
-          className="form-control"
-          placeholder="Prix"
-          name="price"
-          type="number"
-          min={0}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="form-input">
-        <input
-          type="file"
-          className="form-control"
-          name="image"
-          onChange={handleFile}
-        />
-      </div>
-      <Button variant="warning" onClick={handleAddService} className="form-button">
-        Ajouter le service
-      </Button>
+    <div>
+      <Button variant="primary" onClick={() => setShowModal(true)}>Ajouter un service</Button>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)} style={{
+        padding:"50px",color:"blue", 
+      }}>
+        <Modal.Header closeButton>
+          <Modal.Title>Ajouter un service</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-input">
+            <input
+              className="form-control"
+              placeholder="Nom"
+              name="name"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-input">
+            <input
+              className="form-control"
+              placeholder="Description"
+              name="description"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-input">
+            <select
+              className="form-control"
+              name="type"
+              onChange={handleChange}
+            >
+              <option value="">Sélectionnez un type</option>
+              <option value="vente">Vente</option>
+              <option value="location">Location</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          <div className="form-input">
+            <input
+              className="form-control"
+              placeholder="Prix"
+              name="price"
+              type="number"
+              min={0}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-input">
+            <input
+              type="file"
+              className="form-control"
+              name="image"
+              onChange={handleFile}
+            />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Annuler</Button>
+          <Button variant="primary" onClick={handleAddService}>Ajouter le service</Button>
+        </Modal.Footer>
+      </Modal>
+
       <ToastContainer />
     </div>
   );

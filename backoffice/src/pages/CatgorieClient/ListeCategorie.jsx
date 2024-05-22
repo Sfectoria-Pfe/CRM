@@ -66,13 +66,7 @@ function ListCategoryClients() {
       width: 180,
       renderCell: ({ row }) => (
         <>
-          <Button
-            component={Link}
-            to={`/edit-category/${row.id}`}
-            startIcon={<EditIcon />}
-          >
-            Edit
-          </Button>
+          
           <Button
             onClick={() => handleDelete(row.id)}
             startIcon={<DeleteIcon />}

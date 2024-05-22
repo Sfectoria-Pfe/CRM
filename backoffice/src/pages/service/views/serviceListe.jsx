@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchServices, deleteService } from "../../../store/services";
-import { Link, useParams, useNavigate } from "react-router-dom"; // Import de useParams et useNavigate
+import { Link, useNavigate } from "react-router-dom"; // Import de useNavigate
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+
+import AddService from "./addService";
+
 function ServiceListe() {
   const dispatch = useDispatch();
   const services = useSelector((state) => state.service.services.items);
@@ -62,9 +65,6 @@ function ServiceListe() {
         </Link>
       ),
     },
-    
-   
-
     {
       field: "actions",
       type: "actions",
@@ -87,7 +87,6 @@ function ServiceListe() {
     dispatch(fetchServices());
   }, [dispatch]);
 
-  
   return (
     <div>
       <div
@@ -97,9 +96,15 @@ function ServiceListe() {
         <h2>Liste des Services</h2>
       </div>
       <div className="d-flex justify-content-end m-3">
-        <Link className="btn btn-light" style={{backgroundColor:"#81d4fa"}} to="addservice ">
-          Ajouter Service
-        </Link>
+        <AddService />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/servicesdetails")}
+          style={{ marginLeft: "10px" }}
+        >
+          Liste des détails de service
+        </Button>
       </div>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid

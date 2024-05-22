@@ -1,51 +1,55 @@
-import React, { Component } from 'react';
-import CanvasJSReact from '@canvasjs/react-charts';
-//var CanvasJSReact = require('@canvasjs/react-charts');
- 
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-class Charts2 extends Component {
-    render() {
-        const options = {
-            animationEnabled: true,
-            title:{
-                text: "analyse des services"
-            },
-            axisX: {
-                valueFormatString: "MMM"
-            },
-            axisY: {
-                title: "analyse des services",
-                prefix: ""
-            },
-            data: [{
-                yValueFormatString: "#,###",
-                xValueFormatString: "MMMM",
-                type: "spline",
-                dataPoints: [
-                    { x: new Date(2017, 0), y: 25060 },
-                    { x: new Date(2017, 1), y: 27980 },
-                    { x: new Date(2017, 2), y: 42800 },
-                    { x: new Date(2017, 3), y: 32400 },
-                    { x: new Date(2017, 4), y: 35260 },
-                    { x: new Date(2017, 5), y: 33900 },
-                    { x: new Date(2017, 6), y: 40000 },
-                    { x: new Date(2017, 7), y: 52500 },
-                    { x: new Date(2017, 8), y: 32300 },
-                    { x: new Date(2017, 9), y: 42000 },
-                    { x: new Date(2017, 10), y: 37160 },
-                    { x: new Date(2017, 11), y: 38400 }
-                ]
-            }]
-        }
-        return (
-        <div>
-            <CanvasJSChart options = {options}
-                /* onRef={ref => this.chart = ref} */
-            />
-            {/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-        </div>
-        );
-    }
+import React, { useEffect } from "react";
+import CanvasJSReact from "@canvasjs/react-charts";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchServices } from "../../store/services";
+
+const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+
+function Charts2() {
+  const services = useSelector((state) => state.service?.services.items);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchServices());
+  }, [dispatch]);
+
+  // Calculate the number of services per day
+  const servicesPerDay = {};
+  services.forEach((service) => {
+    const date = new Date(service.createdAt); // Assuming 'createdAt' is the property that holds the service creation date
+    const day = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`; // Format: "YYYY-MM-DD"
+    servicesPerDay[day] = (servicesPerDay[day] || 0) + 1;
+  });
+
+  // Convert servicesPerDay object to an array of objects
+  const dataPoints = Object.entries(servicesPerDay).map(([day, count]) => ({
+    label: day,
+    y: count,
+  }));
+
+  const options = {
+    exportEnabled: true,
+    animationEnabled: true,
+    title: {
+      text: "Nombre des services par jours",
+    },
+    axisY: {
+      title: "Nombre des Services",
+      includeZero: false,
+    },
+    data: [
+      {
+        type: "column",
+        dataPoints: dataPoints,
+      },
+    ],
+  };
+
+  return (
+    <div>
+      <CanvasJSChart options={options} />
+    </div>
+  );
 }
-export default Charts2; 
+
+export default Charts2;

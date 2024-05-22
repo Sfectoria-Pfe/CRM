@@ -72,12 +72,12 @@ function ListDevis() {
 
   return (
     <div>
-      <div className="d-flex justify-content-end m-3">
-        <Link className="btn btn-light" to="addDevis">
-          Add Devis
-        </Link>
+      <div
+        className="d-flex justify-content-center mb-3"
+        style={{ backgroundColor: "#1976D2", color: "#fafafa" }}
+      >
+        <h2>Liste Devis</h2>
       </div>
-
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}

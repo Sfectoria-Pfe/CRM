@@ -67,6 +67,7 @@ import CategoryDataGrid from "../pages/CatgorieClient/ListeCategorie.jsx";
 import ListCategoryClients from "../pages/CatgorieClient/ListeCategorie.jsx";
 import UpdateServicePage from "../pages/service/views/updateservice.jsx";
 import AddCommentForm from "../pages/Comments/Addcomment.jsx";
+import OnePromotion from "../pages/promotion/OnePromotion.jsx";
 export const UserContext = createContext();
 
 function PrivateRoute({ Component, roles }) {
@@ -110,7 +111,13 @@ export default function Router() {
           <Routes>
             {user ? (
               <Route path="/" element={<App />}>
-                <Route index element={<Charts />}  />
+                <Route index 
+                element={
+                  <PrivateRoute
+                    Component={Charts}
+                    roles={["admin"]}
+                  />
+                }/>
                 <Route path="products" element={<Product />}>
                   <Route index element={<ProductList />} />
                   <Route path=":id" element={<ProductDetails />} />
@@ -123,7 +130,13 @@ export default function Router() {
                 <Route path="services" element={<Services />}>
 
                 <Route index element={<ServiceListe />} />
-                <Route path="addservice" element={<AddService />} />
+                <Route path="addservice" 
+               
+                element={
+                  <PrivateRoute
+                    Component={AddService}
+                    roles={["admin"]}
+                  />} />
                 <Route path=":serviceId"  element={<OneService/>} />
                 </Route>
                 <Route path="AddVente" element={<AddVente />} />
@@ -145,8 +158,14 @@ export default function Router() {
                     />
                   }
                 >
-                  <Route index element={<ListOpportunities />} />
-                  <Route path="add" element={<AddOpportunite />} />
+<Route index element={<PrivateRoute Component={ListOpportunities} roles={["chef", "admin", "commercial"]} />} />                  <Route path="add" 
+                  element={
+                    <PrivateRoute
+                      Component={AddOpportunite}
+                      roles={[ "admin","chef","commercial"]}
+                    />
+                  }/>
+                 
                   <Route path=":opportunityId" element={<ViewOpportunity />} />
                 </Route>
                 <Route path="/devis" element={<ListDevis />} />
@@ -158,28 +177,86 @@ export default function Router() {
                 <Route path="todolist" element={<Test />} />
                 <Route path="chats" element={<Chat />} />
                 <Route path="addemployee" element={<Addemployee />} />
-                <Route path="listeemployee" element={<ListEmployee />} />
-                <Route path="listeCommerciale" element={< ListEquipeCommerciale/>} />
-                <Route path="/AddEquipeCommerciale" element={<AddEquipe />} />
-            <Route path="Promotion" element={<PromotionManagementPage />} />
-                <Route path="/Addpromotion" element={<AddPromotion />} />
-                <Route path="listepromotion" element={<ListPromotion />} />
+                <Route path="listeemployee" 
+                 element={
+                  <PrivateRoute
+                    Component={ListEmployee}
+                    roles={[ "admin"]}
+                  />
+                }/>
+                
+                <Route path="listeCommerciale" 
+                element={
+                  <PrivateRoute
+                    Component={ListEquipeCommerciale}
+                    roles={[ "admin","chef"]}
+                  />
+                } /> 
+               
+                <Route path="/AddEquipeCommerciale"
+                element={
+                  <PrivateRoute
+                    Component={AddEquipe}
+                    roles={[ "admin","chef"]}
+                 />}/>
+            <Route path="Promotion"  
+            element={
+              <PrivateRoute
+                Component={PromotionManagementPage}
+                roles={[ "admin",]}
+             />}/>
+                <Route path="/Addpromotion" 
+                element={
+                  <PrivateRoute
+                    Component={AddPromotion}
+                    roles={[ "admin"]}
+                  />
+                } />
+                <Route path="/promotions/:promotionId" element={<OnePromotion />} />
+                <Route path="listepromotion"  
+                element={
+                  <PrivateRoute
+                    Component={ListPromotion }
+                    roles={[ "admin"]}
+                  />
+                }/>
                 <Route path="calendrier" element={<Calendrier />} />
                 <Route path="adduser" element={<Adduser />} />
                 <Route path="ListeRendezvous" element={<ListRendezvous />} />
                 <Route path="ListeDemandedevis" element={<ListDemandeDevis/>} />
                 <Route path="Dashboard" element={<Charts />} />
-                <Route path="listeuser"  element={<ListUser/>} />
+                <Route path="listeuser" 
+                 element={
+                  <PrivateRoute
+                    Component={ListUser}
+                    roles={[ "admin"]}
+                  />
+                }/>
    <Route path="Comment" element={<AddCommentForm/>} />
                 <Route path="InvoiceForm" element={<InvoiceForm />} />
                 <Route path="ChatClient" element={<AlignItemsList />} />
-                <Route path="/services/update/:id" element={<UpdateServicePage />} />
+                <Route path="/services/update/:id" 
+                element={
+                  <PrivateRoute
+                    Component={UpdateServicePage }
+                    roles={[ "admin"]}
+                  />
+                }
+                />
 
                  <Route path="AddCategorie"  element={<AddCategoryForm/>} />
                  <Route path="Listecategory" element={<ListCategoryClients/>} />
                 <Route path="servicesdetails" element={<Servicede />}>
                 <Route index element={<ListServiceDetails />} />
-                <Route path="addservicedetails" element={<AddServiceDetail />} />
+                <Route path="addservicedetails" 
+                  element={
+                    <PrivateRoute
+                      Component={AddServiceDetail}
+                      roles={[ "admin"]}
+                    />
+                  }
+                /> 
+                
                 <Route path=":serviceId"  element={<OneService/>} />
 
                 </Route>

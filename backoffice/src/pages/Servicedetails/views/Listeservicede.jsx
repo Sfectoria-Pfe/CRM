@@ -54,25 +54,25 @@ function ListServiceDetails() {
         />
       ),
     },
-    {
-      field: "actions",
-      type: "actions",
-      width: 80,
-      getActions: (row) => [
-        <Link to={`${row.id}`} key={row.id}>
-          <GridActionsCellItem
-            disableFocusRipple={false}
-            icon={<VisibilityIcon />}
-            label="Look"
-            size="small"
-            edge="start"
-            onClick={() => {
-              navigate(`/service-details/${row.id}`);
-            }}
-          />
-        </Link>,
-      ],
-    },
+    // {
+    //   field: "actions",
+    //   type: "actions",
+    //   width: 80,
+    //   getActions: (row) => [
+    //     <Link to={`${row.id}`} key={row.id}>
+    //       <GridActionsCellItem
+    //         disableFocusRipple={false}
+    //         icon={<VisibilityIcon />}
+    //         label="Look"
+    //         size="small"
+    //         edge="start"
+    //         onClick={() => {
+    //           navigate(`/service-details/${row.id}`);
+    //         }}
+    //       />
+    //     </Link>,
+    //   ],
+    // },
   ];
 
   useEffect(() => {
@@ -82,14 +82,12 @@ function ListServiceDetails() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-6">
+        <div 
+        >
           <div className="d-flex justify-content-center mb-3" style={{ backgroundColor: "#1976D2", color: "#fafafa" }}>
             <h2>Liste des détails de service</h2>
           </div>
-          <br />
-          <br />
-          <br />
-          <div style={{ height: 400, width: "100%" }}>
+          <br/>          <div style={{ height: 400, width: "200%" }}>
             <DataGrid
               columns={columns}
               rows={serviceDetails}
@@ -97,9 +95,9 @@ function ListServiceDetails() {
             />
           </div>
         </div>
-        <div className="col-md-6" style={{ height: 400}}>
+        {/* <div className="col-md-6" style={{ height: 400}}>
           <AddServiceDetail />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -38,6 +38,6 @@ export const store = configureStore({
     serviceDetails,
     Equipe,
     categorieClient,
-     comment,
+   comment,
   },
 });

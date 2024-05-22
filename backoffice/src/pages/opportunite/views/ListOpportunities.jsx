@@ -1,27 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOpportuniteAdmin, fetchOpportunites } from "../../../store/opportunite";
-import { Button } from "react-bootstrap";
+import { Button,Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { DataGrid, GridToolbar, GridActionsCellItem } from "@mui/x-data-grid";
-import { useDemoData } from "@mui/x-data-grid-generator";
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import AddOpportunite from "./AddOpportunite"; // Import the AddOpportunite component
+
 function ListOpportunities() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const opportunities = useSelector(
     (state) => state?.opportunite.opportunites.items
   );
+  
+  const [showModal, setShowModal] = useState(false);
+
   const me = useSelector((state) => state?.auth?.me);
   const columns = [
     {
       field: "id",
-      headerName: "Opportunity ID ",
+      headerName: "Opportunity ID",
       width: 150,
     },
     {
       field: "title",
-      headerName: "Name ",
+      headerName: "Name",
       width: 150,
     },
     {
@@ -50,34 +54,29 @@ function ListOpportunities() {
     },
   ];
 
-  const VISIBLE_FIELDS = [
-    "name",
-    "rating",
-    "country",
-    "dateCreated",
-    "isAdmin",
-  ];
-  const { data } = useDemoData({
-    dataSet: "Employee",
-    visibleFields: VISIBLE_FIELDS,
-    rowLength: 100,
-  });
-
   useEffect(() => {
    me?.Employee?.role ==="admin"? dispatch(fetchOpportuniteAdmin()): dispatch(fetchOpportunites(me?.employeeId));
   }, [dispatch]);
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   console.log(me.id,'me');
   return (
     <div>
-      <div className="d-flex justify-content-center mb-3" style={{backgroundColor:"#1976D2",color:"#fafafa"}}>
+      <div className="d-flex justify-content-center mb-3" style={{ backgroundColor: "#1976D2", color: "#fafafa" }}>
         <h2>Liste des Opportunités</h2>
-      </div>     
-      <div className="d-flex justify-content-end m-3" >
-        <Link className="btn btn-light" style={{backgroundColor:"#81d4fa"}} to="add">
-          Add Opportunity
-        </Link>
       </div>
-      
+      <div className="d-flex justify-content-end m-3">
+        <Button variant="light" style={{backgroundColor:"#1976D2",color:"#ffffff"}} onClick={handleShowModal}>
+          Ajouter opportunité
+        </Button>
+      </div>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}
@@ -85,6 +84,13 @@ function ListOpportunities() {
           slots={{ toolbar: GridToolbar }}
         />
       </div>
+      <Modal show={showModal} onHide={handleCloseModal} >
+        <Modal.Header closeButton style={{padding:'30px'}}>
+        </Modal.Header>
+        <Modal.Body>
+          <AddOpportunite onSuccess={handleCloseModal} />
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

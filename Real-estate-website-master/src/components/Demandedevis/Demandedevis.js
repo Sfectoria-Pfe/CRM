@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { MDBBtn, MDBContainer, MDBCard, MDBCardBody, MDBCardImage, MDBRow, MDBCol, MDBInput } from "mdb-react-ui-kit";
 import { Button } from "react-bootstrap";
 import { FormControl, MenuItem, Select, OutlinedInput, Checkbox, ListItemText } from "@mui/material";
-import { fetchServices} from "../store/services"; // Import fetchServices et fetchService
+import { fetchServices } from "../store/services"; // Import fetchServices et fetchService
 
 const getCurrentDate = () => {
   const currentDate = new Date();
@@ -38,7 +38,7 @@ export default function AddDemandeDevis() {
       .catch((error) => {
         console.error("Error fetching services:", error);
       });
-  }, []);
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,20 +48,22 @@ export default function AddDemandeDevis() {
       [name]: newValue,
     }));
   };
+
   const handleMemberSelection = (e) => {
     const { value } = e.target;
-    // Obtenez les types des services sélectionnés
-    const selectedTypes = value.map((selectedId) => {
+    // Obtenez les titres des services sélectionnés
+    const selectedTitles = value.map((selectedId) => {
       const selectedService = services.find((service) => service.id === selectedId);
-      return selectedService ? selectedService.type : '';
+      return selectedService ? selectedService.name : '';
     });
-    // Mettre à jour le champ "sujet" avec les types sélectionnés
+    // Mettre à jour le champ "sujet" avec les titres sélectionnés
     setDemandeDevis((prevState) => ({
       ...prevState,
-      sujet: selectedTypes.join(', '), // Concaténez les types sélectionnés en une chaîne séparée par des virgules
-      memberIds: value, // Mettez à jour les IDs des services sélectionnés si nécessaire
+      sujet: selectedTitles.join(', '), // Concaténez les titres sélectionnés en une chaîne séparée par des virgules
+      memberIds: value, // Mettez à jour les IDs des services sélectionnés
     }));
   };
+
   const handleAddDemandeDevis = () => {
     console.log("Demande de devis avant envoi :", demandeDevis);
     dispatch(sendDemandeDevis({
@@ -105,33 +107,33 @@ export default function AddDemandeDevis() {
                     onChange={handleChange}
                   />
                   <FormControl style={{ marginBottom: 20 }}>
-  <legend>Choisir sujet :</legend>
-  <Select
-  style={{ width: 440, height: 30 }}
-  labelId="demo-multiple-checkbox-label"
-  id="demo-multiple-checkbox"
-  multiple
-  value={demandeDevis.memberIds} 
-  onChange={handleMemberSelection}
-  input={<OutlinedInput label="service" />}
-  renderValue={(selected) =>
-    services
-      .filter((elem) => selected.includes(elem.id))
-      .map((elem) => `${elem.type}`)
-      .join(", ")
-  }
->
-  {services.map((elem) => (
-    <MenuItem key={elem.id} value={elem.id}>
-      <Checkbox
-        checked={demandeDevis.memberIds.includes(elem.id)}
-        color="primary"
-      />
-      <ListItemText primary={`${elem.type}`} />
-    </MenuItem>
-  ))}
-</Select>
-</FormControl>
+                    <legend>Choisir sujet :</legend>
+                    <Select
+                      style={{ width: 440, height: 30 }}
+                      labelId="demo-multiple-checkbox-label"
+                      id="demo-multiple-checkbox"
+                      multiple
+                      value={demandeDevis.memberIds}
+                      onChange={handleMemberSelection}
+                      input={<OutlinedInput label="service" />}
+                      renderValue={(selected) =>
+                        services
+                          .filter((elem) => selected.includes(elem.id))
+                          .map((elem) => `${elem.name}`)
+                          .join(", ")
+                      }
+                    >
+                      {services.map((elem) => (
+                        <MenuItem key={elem.id} value={elem.id}>
+                          <Checkbox
+                            checked={demandeDevis.memberIds.includes(elem.id)}
+                            color="primary"
+                          />
+                          <ListItemText primary={`${elem.name}`} />
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                   <MDBInput
                     className="form-control mb-3"
                     placeholder="Description"

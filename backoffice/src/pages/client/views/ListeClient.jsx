@@ -160,6 +160,12 @@ function ListClients() {
       >
         <h2>Liste des clients</h2>
       </div>
+      <div className="d-flex justify-content-end m-3">
+        {/* Ajout du lien vers la page d'ajout de client */}
+        <Link className="btn btn-light" style={{ backgroundColor: "#81d4fa" }} to="addClient">
+          Ajouter client
+        </Link>
+      </div>
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           columns={columns}

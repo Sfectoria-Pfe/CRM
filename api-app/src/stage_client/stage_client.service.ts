@@ -95,6 +95,18 @@ export class StageClientService {
     }
   }
 
+
+  async updateArchivedStatus(id: number, archived: boolean) {
+    try {
+      return await this.prisma.stageClient.update({
+        where: { id },
+        data: { archived },
+      });
+    } catch (error) {
+      console.error(`Erreur lors de la mise à jour de l'état archivé du stage client avec l'ID ${id} :`, error);
+      throw error;
+    }
+  }
   async remove(id: number) {
     try {
       const deletedStageClient = await this.prisma.stageClient.delete({

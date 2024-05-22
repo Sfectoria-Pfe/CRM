@@ -11,7 +11,10 @@ export class EmployeesController {
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
     return this.employeesService.create(createEmployeeDto);
   }
+<<<<<<< HEAD
+=======
 
+>>>>>>> 788fdc63a173a0988be491d2a12a5c4b96c9ccb1
   @Get('without-account')
   findAllWithoutAccount( ) {
     return this.employeesService.findAllWithoutAccount();
